@@ -1,0 +1,26 @@
+{
+  "name": "covid19-report-app",
+  "version": "1.0.0",
+  "description": "A web app for reporting cases of covid19 in Nigeria",
+  "main": "index.js",
+  "repository": "git@github.com:Chrismarcel/covid19-report-app.git",
+  "author": "Chrismarcel <cmarcelj@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "dev": "parcel src/**/*.html",
+    "build": "parcel build src/**/*.html",
+    "start:client": "live-server --port=1347 --entry-file=index.html dist"
+  },
+  "dependencies": {
+    "node-sass": "^4.13.1",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1"
+  },
+  "devDependencies": {
+    "babel-core": "^6.26.3",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-react": "^6.24.1",
+    "live-server": "^1.2.1",
+    "parcel-bundler": "^1.12.4"
+  }
+}
