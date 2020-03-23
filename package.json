@@ -12,6 +12,8 @@
     "start:client": "live-server --port=1347 --entry-file=index.html dist"
   },
   "dependencies": {
+    "axios": "^0.19.2",
+    "cheerio": "^1.0.0-rc.3",
     "node-sass": "^4.13.1",
     "react": "^0.14.9 || ^15.3.0 || ^16.0.0-rc || ^16.0",
     "react-dom": "^0.14.9 || ^15.3.0 || ^16.0.0-rc || ^16.0",
