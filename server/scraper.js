@@ -2,16 +2,13 @@ const cheerio = require('cheerio')
 const axios = require('axios')
 const { promisify } = require("util");
 const fs = require('fs')
+const { slugifyKey, trimStr }  = require('./utils')
 
 const readFile = promisify(fs.readFile)
 const writeFile = promisify(fs.writeFile)
 
 const pageUrl = 'http://covid19.ncdc.gov.ng/'
 const filePath = './cases.json'
-
-const slugifyKey = (str) => str.toLowerCase().replace(/ /g, '_')
-
-const trimStr = (element) => element.text().trim()
 
 const scrapePage = async () => {
   try {
