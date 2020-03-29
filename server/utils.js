@@ -24,8 +24,11 @@ const generateChloropheth = (numCases) => {
     case numCases < 5001:
       color = '#923C1E'
       break;
-    default:
+    case numCases < 5001:
       color = '#3F1A0D'
+      break;
+    default:
+      color = '#FEFDFF'
       break;
   }
 
