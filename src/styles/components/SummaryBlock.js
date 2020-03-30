@@ -1,7 +1,7 @@
 import React from 'react'
 import SummaryCard from './SummaryCard'
 
-const SummaryPanel = ({ summary }) => {
+const SummaryBlock = ({ summary }) => {
   return (
     <section className="summary-wrapper">
       <SummaryCard 
@@ -22,4 +22,4 @@ const SummaryPanel = ({ summary }) => {
   )
 }
 
-export default SummaryPanel
+export default SummaryBlock

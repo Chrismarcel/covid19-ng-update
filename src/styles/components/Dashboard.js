@@ -1,7 +1,7 @@
 import React from 'react'
 import MapChart from './MapChart'
 import covid19stats from '../../../server/cases.json'
-import SummmaryPanel from './SummaryPanel'
+import SummmaryPanel from './SummaryBlock'
 import SummaryTable from './SummaryTable'
 
 const { summary, cases } = covid19stats

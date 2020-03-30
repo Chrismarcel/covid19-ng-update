@@ -2,7 +2,7 @@ const cheerio = require('cheerio')
 const axios = require('axios')
 const { promisify } = require("util");
 const fs = require('fs')
-const { slugifyKey, trimStr }  = require('./utils')
+const { slugifyStr, trimStr }  = require('./utils')
 
 const readFile = promisify(fs.readFile)
 const writeFile = promisify(fs.writeFile)
@@ -27,7 +27,7 @@ const scrapePage = async () => {
     
         cell.each(index => {
           if (index % 2 === 0) {
-            const key = slugifyKey(trimStr($(cell[index])))
+            const key = slugifyStr(trimStr($(cell[index])))
             const value = Number(trimStr($(cell[index + 1])))
             data[key] = value
           }
@@ -43,8 +43,23 @@ const scrapePage = async () => {
     const updatedCases = JSON.stringify({ ...prevCases, summary, cases }, null, 2)
     await writeFile(filePath, updatedCases)
   } catch (error) {
-    console.log(error)
+    setInterval(() => scrapePage(), 3600)
   }
+}
+
+const readCasesFromFile = async filePath => {
+  if (fs.existsSync(filePath)) {
+    const casesFile = await readFile(filePath)
+    const prevCases = JSON.parse(casesFile)
+
+    return prevCases
+  }
+
+  createCasesFile()
+}
+
+const createCasesFile = (filePath) => {
+
 }
 
 scrapePage()

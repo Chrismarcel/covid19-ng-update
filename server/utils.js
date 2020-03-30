@@ -1,41 +1,52 @@
+const COLOR_BANDS = {
+  DEFAULT: '#FEFDFF',
+  LESS_THAN_11: '#F5C4B3',
+  LESS_THAN_51: '#EB8967',
+  LESS_THAN_101: '#E66C41',
+  LESS_THAN_501: '#D0562B',
+  LESS_THAN_1001: '#A64523',
+  LESS_THAN_5001: '#682B16',
+  GREATER_THAN_5000: '#2A1209'
+}
+
 const generateChloropheth = (numCases) => {
   // #E45E2F - Base Color used to generate other shades via https://coolors.co
 
   let color
   switch (true) {
     case numCases < 1:
-      color = '#FEFDFF'
+      color = COLOR_BANDS.DEFAULT
       break;
     case numCases < 11:
-      color = '#F5C4B3'
+      color = COLOR_BANDS.LESS_THAN_11
       break;
     case numCases < 51:
-      color = '#EB8967'
+      color = COLOR_BANDS.LESS_THAN_51
       break;
     case numCases < 101:
-      color = '#E66C41'
+      color = COLOR_BANDS.LESS_THAN_101
       break;
     case numCases < 501:
-      color = '#D0562B'
+      color = COLOR_BANDS.LESS_THAN_501
       break;
     case numCases < 1001:
-      color = '#A64523'
+      color = COLOR_BANDS.LESS_THAN_1001
       break;
     case numCases < 5001:
-      color = '#923C1E'
+      color = COLOR_BANDS.LESS_THAN_5001
       break;
-    case numCases > 5001:
-      color = '#3F1A0D'
+    case numCases > 5000:
+      color = COLOR_BANDS.GREATER_THAN_5000
       break;
     default:
-      color = '#FEFDFF'
+      color = COLOR_BANDS.DEFAULT
       break;
   }
 
   return color
 }
 
-const slugifyKey = (str) => str.toLowerCase().replace(/ /g, '_')
+const slugifyStr = (str) => str.toLowerCase().replace(/ /g, '_')
 
 const reverseSlug = (str) => str.replace(/_/g, ' ')
 
@@ -43,7 +54,8 @@ const trimStr = (element) => element.text().trim()
 
 module.exports = {
   generateChloropheth, 
-  slugifyKey, 
+  slugifyStr, 
   trimStr, 
-  reverseSlug
+  reverseSlug,
+  COLOR_BANDS
 }

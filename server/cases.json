@@ -1,11 +1,11 @@
 {
   "summary": {
-    "total_confirmed_cases": 97,
+    "total_confirmed_cases": 111,
     "discharged": 3,
     "death": 1
   },
   "cases": {
-    "abuja_fct": 16,
+    "abuja_fct": 21,
     "abia": 0,
     "adamawa": 0,
     "akwa_ibom": 0,
@@ -29,7 +29,7 @@
     "kebbi": 0,
     "kogi": 0,
     "kwara": 0,
-    "lagos": 59,
+    "lagos": 68,
     "nasarawa": 0,
     "niger": 0,
     "ogun": 3,

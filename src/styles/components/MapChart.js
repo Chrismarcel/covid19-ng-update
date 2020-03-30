@@ -1,8 +1,9 @@
 import React, { useState, memo } from 'react'
 import { ComposableMap, Geographies, Geography } from 'react-simple-maps'
 import nigerianMap from '../../map/map-of-nigeria.json'
-import { slugifyKey, generateChloropheth } from '../../../server/utils'
+import { slugifyStr, generateChloropheth } from '../../../server/utils'
 import ReactTooltip from 'react-tooltip'
+import MapLegends from './MapLegends.js'
 
 const MapChart = ({ cases }) => {
   const [stateStats, setStateStats] = useState({})
@@ -20,7 +21,7 @@ const MapChart = ({ cases }) => {
           {({ geographies }) =>
             geographies.map((geo, index) => {
               const { properties: { name } } = geo
-              const stateName = index === 18 ? 'abuja_fct' : slugifyKey(name)
+              const stateName = index === 18 ? 'abuja_fct' : slugifyStr(name)
               const numCases = cases[stateName]
               return (
                 <Geography 
@@ -37,6 +38,7 @@ const MapChart = ({ cases }) => {
           }
         </Geographies>
       </ComposableMap>
+      <MapLegends />
       {stateStats.name && (
         <ReactTooltip 
           place="bottom"
