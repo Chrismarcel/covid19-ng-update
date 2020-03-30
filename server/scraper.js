@@ -13,7 +13,7 @@ const filePath = './cases.json'
 const scrapePage = async () => {
   try {
     const casesFile = await readFile(filePath)
-    const cases = JSON.parse(casesFile)
+    const prevCases = JSON.parse(casesFile)
 
     const response = await axios.get(pageUrl)
     const $ = cheerio.load(response.data)
@@ -38,9 +38,9 @@ const scrapePage = async () => {
     }
 
     const summary = mapTableToJSON(summaryTable)
-    const states = mapTableToJSON(casesByStates)
+    const cases = mapTableToJSON(casesByStates)
 
-    const updatedCases = JSON.stringify({ ...cases, summary, states }, null, 2)
+    const updatedCases = JSON.stringify({ ...prevCases, summary, cases }, null, 2)
     await writeFile(filePath, updatedCases)
   } catch (error) {
     console.log(error)

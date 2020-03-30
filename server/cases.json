@@ -1,4 +1,46 @@
 {
-  "summary": {},
-  "states": {}
+  "summary": {
+    "total_confirmed_cases": 97,
+    "discharged": 3,
+    "death": 1
+  },
+  "cases": {
+    "abuja_fct": 16,
+    "abia": 0,
+    "adamawa": 0,
+    "akwa_ibom": 0,
+    "anambra": 0,
+    "bauchi": 2,
+    "bayelsa": 0,
+    "benue": 1,
+    "borno": 0,
+    "cross_river": 0,
+    "delta": 0,
+    "ebonyi": 0,
+    "enugu": 2,
+    "edo": 2,
+    "ekiti": 1,
+    "gombe": 0,
+    "imo": 0,
+    "jigawa": 0,
+    "kaduna": 1,
+    "kano": 0,
+    "katsina": 0,
+    "kebbi": 0,
+    "kogi": 0,
+    "kwara": 0,
+    "lagos": 59,
+    "nasarawa": 0,
+    "niger": 0,
+    "ogun": 3,
+    "ondo": 0,
+    "osun": 2,
+    "oyo": 7,
+    "plateau": 0,
+    "rivers": 1,
+    "sokoto": 0,
+    "taraba": 0,
+    "yobe": 0,
+    "zamfara": 0
+  }
 }

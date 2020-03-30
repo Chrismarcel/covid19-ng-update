@@ -1,15 +1,13 @@
 import React, { useState, memo } from 'react'
 import { ComposableMap, Geographies, Geography } from 'react-simple-maps'
-import nigerianMap from './map/map-of-nigeria.json'
-import covid19cases from '../server/cases.json'
-import { slugifyKey, generateChloropheth } from '../server/utils'
+import nigerianMap from '../../map/map-of-nigeria.json'
+import { slugifyKey, generateChloropheth } from '../../../server/utils'
 import ReactTooltip from 'react-tooltip'
 
-const MapChart = () => {
+const MapChart = ({ cases }) => {
   const [stateStats, setStateStats] = useState({})
-
   return (
-    <main>
+    <section className="map-container panel">
       <ComposableMap
         data-tip=""
         projection="geoAzimuthalEqualArea"
@@ -22,8 +20,8 @@ const MapChart = () => {
           {({ geographies }) =>
             geographies.map((geo, index) => {
               const { properties: { name } } = geo
-              const stateKey = index === 18 ? 'abuja_fct' : slugifyKey(name)
-              const numCases = covid19cases['states'][stateKey].toString()
+              const stateName = index === 18 ? 'abuja_fct' : slugifyKey(name)
+              const numCases = cases[stateName]
               return (
                 <Geography 
                   key={geo.rsmKey} 
@@ -39,13 +37,14 @@ const MapChart = () => {
           }
         </Geographies>
       </ComposableMap>
-      <ReactTooltip 
-        place="bottom"
-        backgroundColor="#023436"
-      >
-        {`${stateStats.name}: ${stateStats.numCases}`}
-      </ReactTooltip>
-    </main>
+      {stateStats.name && (
+        <ReactTooltip 
+          place="bottom"
+        >
+          {`${stateStats.name}: ${stateStats.numCases}`}
+        </ReactTooltip>
+      )}
+    </section>
   )
 }
 

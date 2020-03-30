@@ -10,7 +10,7 @@ const generateChloropheth = (numCases) => {
       color = '#F5C4B3'
       break;
     case numCases < 51:
-      color = '#F0A78D'
+      color = '#ED987A'
       break;
     case numCases < 101:
       color = '#E87B54'

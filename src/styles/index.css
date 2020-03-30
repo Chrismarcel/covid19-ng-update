@@ -1,0 +1,101 @@
+*, 
+*::before, 
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  border: none;
+}
+
+body {
+  font-family: 'Open Sans', sans-serif;
+  background: #f5f5f5;
+  color: #1a1b25;
+}
+
+.text-warning {
+  color: #e24e1b;
+}
+
+.text-green {
+  color: #45Be9B;
+}
+
+.dashboard {
+  padding: 45px 0;
+  max-width: 1300px;
+  margin: 0 auto;
+}
+
+.dashboard-title {
+  color: #1F0322;
+  font-weight: 700;
+  letter-spacing: 2px;
+  font-size: 40px;
+  font-family: 'Poppins';
+  text-transform: uppercase;
+  margin-bottom: 50px;
+}
+
+.summary-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 45px;
+}
+
+.panel {
+  background: #ffffff;
+  border-radius: 10px;
+  height: auto;
+  box-shadow: 0 7px 10px -9px #ded8d8;
+}
+
+.panel.summary-card {
+  flex-grow: 1;
+  flex-basis: 0;
+  padding: 30px 50px;
+  height: 150px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.card-warning .summary-card-value {
+  color: #e24e1b;
+}
+
+.card-green .summary-card-value {
+  color: #45Be9B;
+}
+
+.panel.summary-card > .summary-card-title {
+  font-size: 16px;
+  margin-bottom: 10px;
+  color: #717272;
+  font-weight: normal;
+}
+
+.panel.summary-card > .summary-card-value {
+  font-size: 40px;
+  font-weight: 600;
+  font-family: 'Poppins';
+}
+
+.panel.summary-card:not(:last-child) {
+  margin-right: 30px;
+}
+
+.panel.map-container {
+  max-height: 650px;
+}
+
+@media screen and (max-width: 1300px) {
+  .dashboard {
+    padding: 40px;
+  }
+
+  .panel.summary-card { 
+    padding: 30px;
+  }
+}
