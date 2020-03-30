@@ -10,21 +10,21 @@ const generateChloropheth = (numCases) => {
       color = '#F5C4B3'
       break;
     case numCases < 51:
-      color = '#ED987A'
+      color = '#EB8967'
       break;
     case numCases < 101:
-      color = '#E87B54'
+      color = '#E66C41'
       break;
     case numCases < 501:
-      color = '#E45E2F'
+      color = '#D0562B'
       break;
     case numCases < 1001:
-      color = '#BB4D27'
+      color = '#A64523'
       break;
     case numCases < 5001:
       color = '#923C1E'
       break;
-    case numCases < 5001:
+    case numCases > 5001:
       color = '#3F1A0D'
       break;
     default:
@@ -37,8 +37,13 @@ const generateChloropheth = (numCases) => {
 
 const slugifyKey = (str) => str.toLowerCase().replace(/ /g, '_')
 
+const reverseSlug = (str) => str.replace(/_/g, ' ')
+
 const trimStr = (element) => element.text().trim()
 
 module.exports = {
-  generateChloropheth, slugifyKey, trimStr
+  generateChloropheth, 
+  slugifyKey, 
+  trimStr, 
+  reverseSlug
 }

@@ -12,8 +12,8 @@ const MapChart = ({ cases }) => {
         data-tip=""
         projection="geoAzimuthalEqualArea"
         projectionConfig={{ 
-          rotate: [-10, -6],
-          scale: 2000 
+          rotate: [-9.5, -9],
+          scale: 3000 
         }}
       >
         <Geographies geography={nigerianMap}>

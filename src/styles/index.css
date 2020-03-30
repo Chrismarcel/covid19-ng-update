@@ -8,7 +8,7 @@
 }
 
 body {
-  font-family: 'Open Sans', sans-serif;
+  font-family: 'Sen', sans-serif;
   background: #f5f5f5;
   color: #1a1b25;
 }
@@ -34,7 +34,7 @@ body {
   font-size: 40px;
   font-family: 'Poppins';
   text-transform: uppercase;
-  margin-bottom: 50px;
+  margin-bottom: 45px;
 }
 
 .summary-wrapper {
@@ -70,9 +70,9 @@ body {
 }
 
 .panel.summary-card > .summary-card-title {
-  font-size: 16px;
+  font-size: 17px;
   margin-bottom: 10px;
-  color: #717272;
+  color: #465656;
   font-weight: normal;
 }
 
@@ -86,8 +86,81 @@ body {
   margin-right: 30px;
 }
 
+.map-states-wrapper {
+  display: flex;
+}
+
 .panel.map-container {
   max-height: 650px;
+  flex-grow: 1;
+  margin-right: 30px;
+}
+
+.panel.summary-table {
+  height: 650px;
+  flex-basis: 32%;
+  padding: 40px;
+  overflow-y: hidden;
+}
+
+.summary-table table {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.summary-table thead,
+.summary-table tbody {
+  width: 100%;
+}
+
+.summary-table tbody {
+  height: 530px;
+  overflow-y: scroll;
+}
+
+.summary-table thead tr,
+.summary-table tbody tr {
+  display: flex;
+  padding: 15px;
+  justify-content: space-between;
+}
+
+.summary-table thead tr {
+  margin-right: 21px;
+}
+
+.summary-table tbody tr {
+  margin-right: 30px;
+  border-bottom: 1px solid rgba(214, 219, 223, .5);
+}
+
+.summary-table thead tr th:first-child,
+.summary-table tbody tr td:first-child {
+  width: 60%;
+  text-align: left;
+}
+
+.summary-table tbody tr td:first-child {
+  text-transform: capitalize;
+}
+
+.summary-table thead tr th:last-child,
+.summary-table tbody tr td:last-child {
+  width: 40%;
+  text-align: right;
+}
+
+/* Always show scrollbar to enhance UX */
+.summary-table tbody::-webkit-scrollbar {
+  -webkit-appearance: none;
+  width: 7px;
+}
+
+.summary-table tbody::-webkit-scrollbar-thumb {
+  border-radius: 4px;
+  background-color: rgba(0, 0, 0, .5);
+  box-shadow: 0 0 1px rgba(255, 255, 255, .5);
 }
 
 @media screen and (max-width: 1300px) {
