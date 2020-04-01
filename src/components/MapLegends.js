@@ -1,5 +1,5 @@
 import React from 'react'
-import { COLOR_BANDS } from '../../../server/utils'
+import { COLOR_BANDS } from '../../server/utils'
 
 const MapLegends = () => (
   <section className="map-legends-wrapper">

@@ -4,15 +4,15 @@ const { promisify } = require("util");
 const fs = require('fs')
 const { slugifyStr, trimStr }  = require('./utils')
 
-const readFile = promisify(fs.readFile)
-const writeFile = promisify(fs.writeFile)
+const readFileAsync = promisify(fs.readFile)
+const writeFileAsync = promisify(fs.writeFile)
 
 const pageUrl = 'http://covid19.ncdc.gov.ng/'
 const filePath = './cases.json'
 
 const scrapePage = async () => {
   try {
-    const casesFile = await readFile(filePath)
+    const casesFile = await readFileAsync(filePath)
     const prevCases = JSON.parse(casesFile)
 
     const response = await axios.get(pageUrl)
@@ -41,7 +41,7 @@ const scrapePage = async () => {
     const cases = mapTableToJSON(casesByStates)
 
     const updatedCases = JSON.stringify({ ...prevCases, summary, cases }, null, 2)
-    await writeFile(filePath, updatedCases)
+    await writeFileAsync(filePath, updatedCases)
   } catch (error) {
     setInterval(() => scrapePage(), 3600)
   }
@@ -49,7 +49,7 @@ const scrapePage = async () => {
 
 const readCasesFromFile = async filePath => {
   if (fs.existsSync(filePath)) {
-    const casesFile = await readFile(filePath)
+    const casesFile = await readFileAsync(filePath)
     const prevCases = JSON.parse(casesFile)
 
     return prevCases

@@ -1,7 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import MapChart from './styles/components/MapChart';
-import Dashboard from './styles/components/Dashboard';
+import Dashboard from './components/Dashboard';
 
 const App = () => (
   <Dashboard />

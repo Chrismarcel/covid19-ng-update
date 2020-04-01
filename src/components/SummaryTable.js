@@ -1,5 +1,5 @@
 import React from 'react'
-import { reverseSlug } from '../../../server/utils'
+import { reverseSlug } from '../../server/utils'
 
 const SummaryTable = ({ cases }) => {
   const states = Object.keys(cases)

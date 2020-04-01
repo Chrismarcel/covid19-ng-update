@@ -8,23 +8,34 @@
   "license": "MIT",
   "scripts": {
     "dev": "parcel src/**/*.html",
-    "build": "parcel build src/**/*.html",
-    "start:client": "live-server --port=1347 --entry-file=index.html dist"
+    "build": "rimraf dist .cache && yarn build:client && yarn build:server",
+    "build:client": "parcel build src/**/*.html -d dist/client",
+    "build:server": "parcel build server/app.js -d dist/server --target node",
+    "start:dev": "nodemon server/app",
+    "start:production": "node dist/server/app"
   },
   "dependencies": {
+    "@koa/router": "^8.0.8",
     "axios": "^0.19.2",
     "cheerio": "^1.0.0-rc.3",
+    "dotenv": "^8.2.0",
+    "koa": "^2.11.0",
+    "koa-mount": "^4.0.0",
+    "koa-static": "^5.0.0",
+    "koa-static-server": "^1.5.0",
     "node-sass": "^4.13.1",
+    "nodemon": "^2.0.2",
     "react": "^0.14.9 || ^15.3.0 || ^16.0.0-rc || ^16.0",
     "react-dom": "^0.14.9 || ^15.3.0 || ^16.0.0-rc || ^16.0",
+    "react-router-dom": "^5.1.2",
     "react-simple-maps": "^1.0.0-beta.0",
-    "react-tooltip": "^4.1.2"
+    "react-tooltip": "^4.1.2",
+    "rimraf": "^3.0.2"
   },
   "devDependencies": {
     "babel-core": "^6.26.3",
     "babel-preset-env": "^1.7.0",
     "babel-preset-react": "^6.24.1",
-    "live-server": "^1.2.1",
     "parcel-bundler": "^1.12.4"
   }
 }
