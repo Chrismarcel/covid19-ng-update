@@ -6,6 +6,7 @@ import fs from 'fs'
 import mount from 'koa-mount'
 
 import covid19cases from './cases.json'
+import renderSSR from './ssr'
 
 dotenv.config()
 
@@ -15,9 +16,6 @@ const router = new Router()
 const filePath = './server/cases.json'
 let fileUpdated = false
 let currentCases = covid19cases
-
-app.use(mount('/', serve('./dist/client')))
-app.use(mount('/src/', serve('./src')))
 
 app.use(router.routes())
 app.use(async (ctx, next) => {
@@ -37,6 +35,13 @@ fs.watch(filePath, event => {
     })
   }
 })
+
+router.get('/', ctx => {
+  ctx.body = renderSSR(ctx)
+})
+
+app.use(mount('/', serve('./dist/client')))
+app.use(mount('/src/', serve('./src')))
 
 router.get('/updates', ctx => {
   ctx.response.set("Content-Type", "text/event-stream")

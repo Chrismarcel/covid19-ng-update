@@ -1,17 +1,32 @@
 import React, { useState, useEffect } from 'react'
 import MapChart from './MapChart'
-import covid19stats from '../../server/cases.json'
 import SummmaryPanel from './SummaryBlock'
 import SummaryTable from './SummaryTable'
 
+const initialState = {
+  summary: {
+    total_confirmed_cases: 0,
+    discharged: 0,
+    death: 0
+  },
+  cases: {}
+}
+
 const Dashboard = () => {
-  const [stats, setStats] = useState(() => covid19stats)
+  const [stats, setStats] = useState(initialState)
   const { summary, cases } = stats
 
   useEffect(() => {
+    if (window.__INITIAL_DATA__) {
+      const initialData = window.__INITIAL_DATA__
+      setStats(initialData)
+      delete window.__INITIAL_DATA__
+    } 
+
     const eventSource = new EventSource('/updates')
-    eventSource.onmessage = evt => console.log(evt.data)
-  }, [])
+    eventSource.onmessage = ({ data }) => setStats(data) 
+    
+  }, [stats])
 
   return (
     <main className="dashboard">
