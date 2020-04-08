@@ -12,13 +12,13 @@ const HTMLTemplateString = fs.readFileSync(templatePath).toString();
 
 const serializedData = JSON.stringify(cases)
 
-const renderSSR = ctx => {
+const handleSSR = req => {
   const renderedTemplate = $.load(HTMLTemplateString)
   const context = {}
 
   renderedTemplate('#app').html(
     renderToString(
-      <StaticRouter context={context} location={ctx.request.url}>
+      <StaticRouter context={context} location={req.originalUrl}>
         <App />
       </StaticRouter>
     )
@@ -29,4 +29,4 @@ const renderSSR = ctx => {
   return renderedTemplate.html()
 }
 
-export default renderSSR
+export default handleSSR

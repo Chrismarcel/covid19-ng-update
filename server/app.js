@@ -1,58 +1,39 @@
-import Koa from 'koa'
+import express from 'express'
 import dotenv from 'dotenv'
-import Router from '@koa/router'
-import serve from 'koa-static'
-import fs from 'fs'
-import mount from 'koa-mount'
-
-import covid19cases from './cases.json'
-import renderSSR from './ssr'
+import bodyParser from 'body-parser'
+import http from 'http'
+import io from 'socket.io'
+import handleSSR from './ssr'
 
 dotenv.config()
 
-const app = new Koa()
-const router = new Router()
+const app = express()
+const server = http.createServer(app)
+const socket = io(server)
 
-const filePath = './server/cases.json'
-let fileUpdated = false
-let currentCases = covid19cases
-
-app.use(router.routes())
-app.use(async (ctx, next) => {
-  ctx.response.set("Cache-Control", "no-cache")
-  ctx.response.set("Connection", "keep-alive")
-  await next()
-})
-
-fs.watch(filePath, event => {
-  if (event === 'change') {
-    fileUpdated = true
-    fs.readFile(filePath, (err, data) => {
-      if (err) {
-        throw Error(err)
-      }
-      currentCases = JSON.parse(data)
-    })
-  }
-})
-
-router.get('/', ctx => {
-  ctx.body = renderSSR(ctx)
-})
-
-app.use(mount('/', serve('./dist/client')))
-app.use(mount('/src/', serve('./src')))
-
-router.get('/updates', ctx => {
-  ctx.response.set("Content-Type", "text/event-stream")
-  ctx.response.status = 200
-  
-  return new Promise(resolve => {
-    if (fileUpdated) {
-      resolve(ctx.res.write(`data: ${JSON.stringify(currentCases)}\n\n`))
-      fileUpdated = false
-    }
+socket.on('connect', (socket) => {
+  socket.on('disconnect', () => {
+    // TODO: Handle socket disconnection
   })
 })
 
-app.listen(process.env.PORT || 5000)
+app.get('/', (req, res) => {
+  res.send(handleSSR(req, res))
+})
+
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+
+app.use('/', express.static(`${__dirname}/../client`))
+app.use('/src', express.static('./src'))
+
+
+app.post('/update', (req, res) => {
+  const { cases } = req.body
+  socket.emit('updated cases', { message: cases })
+  return res.json()
+})
+
+const PORT = process.env.PORT || 5000
+
+server.listen(PORT, () => console.log(`Listening on Port ${PORT}`))

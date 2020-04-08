@@ -2,6 +2,12 @@ import React, { useState, useEffect } from 'react'
 import MapChart from './MapChart'
 import SummmaryPanel from './SummaryBlock'
 import SummaryTable from './SummaryTable'
+import socketClient from 'socket.io-client'
+import dotenve from 'dotenv'
+
+dotenve.config()
+
+const socket = socketClient(process.env.HOST)
 
 const initialState = {
   summary: {
@@ -21,11 +27,10 @@ const Dashboard = () => {
       const initialData = window.__INITIAL_DATA__
       setStats(initialData)
       delete window.__INITIAL_DATA__
-    } 
-
-    const eventSource = new EventSource('/updates')
-    eventSource.onmessage = ({ data }) => setStats(data) 
-    
+    }
+    socket.on('updated cases', ({ message: { cases, summary } }) => {
+      setStats({cases, summary})
+    })
   }, [stats])
 
   return (

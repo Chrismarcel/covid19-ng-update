@@ -1,26 +1,24 @@
+require('dotenv').config()
 const cheerio = require('cheerio')
 const axios = require('axios')
-const { promisify } = require("util");
-const fs = require('fs')
+const fs = require('fs-extra')
 const { slugifyStr, trimStr }  = require('./utils')
 
-const readFileAsync = promisify(fs.readFile)
-const writeFileAsync = promisify(fs.writeFile)
-
 const pageUrl = 'http://covid19.ncdc.gov.ng/'
-const filePath = './cases.json'
+const filePath = `${__dirname}/cases.json`
 
 const scrapePage = async () => {
   try {
-    const casesFile = await readFileAsync(filePath)
-    const prevCases = JSON.parse(casesFile)
+    const casesFile = await fs.readFile(filePath)
+    const {summary: prevSummary} = JSON.parse(casesFile)
+    const updateStatsEndpoint = `${process.env.HOST}/update`
 
     const response = await axios.get(pageUrl)
     const $ = cheerio.load(response.data)
     const summaryTable = $('table#custom1 tbody tr')
     const casesByStates = $('table#custom3 tbody tr')
 
-    const mapTableToJSON = (rows) => {
+    const mapTableToField = (rows) => {
       const data = {}
       rows.each((_, element) => {
         const cell = $(element).find('td')
@@ -37,29 +35,21 @@ const scrapePage = async () => {
       return data
     }
 
-    const summary = mapTableToJSON(summaryTable)
-    const cases = mapTableToJSON(casesByStates)
+    const summary = mapTableToField(summaryTable)
+    const cases = mapTableToField(casesByStates)
 
-    const updatedCases = JSON.stringify({ ...prevCases, summary, cases }, null, 2)
-    await writeFileAsync(filePath, updatedCases)
+    // If there's a new update
+    if (prevSummary.total_confirmed_cases !== summary.total_confirmed_cases) {
+      const updatedCases = { summary, cases }
+      await fs.writeFile(filePath, JSON.stringify(updatedCases, null, 2))
+      await axios.post(updateStatsEndpoint, { cases: updatedCases })
+    }
   } catch (error) {
-    setInterval(() => scrapePage(), 3600)
+    console.log(error)
+    // TODO: Find more robust ways to handle errors
+    // If any error, wait for 2 minutes and scrape page again
+    setInterval(() => scrapePage(), 2 * 60 * 1000)
   }
-}
-
-const readCasesFromFile = async filePath => {
-  if (fs.existsSync(filePath)) {
-    const casesFile = await readFileAsync(filePath)
-    const prevCases = JSON.parse(casesFile)
-
-    return prevCases
-  }
-
-  createCasesFile()
-}
-
-const createCasesFile = (filePath) => {
-
 }
 
 scrapePage()
