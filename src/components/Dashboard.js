@@ -10,17 +10,16 @@ dotenve.config()
 const socket = socketClient(process.env.HOST)
 
 const initialState = {
-  summary: {
-    total_confirmed_cases: 0,
-    discharged: 0,
-    death: 0
-  },
-  cases: {}
+  total: {
+    confirmedCases: 0,
+    death: 0,
+    discharged: 0
+  }
 }
 
 const Dashboard = () => {
   const [stats, setStats] = useState(initialState)
-  const { summary, cases } = stats
+  const { total } = stats
 
   useEffect(() => {
     if (window.__INITIAL_DATA__) {
@@ -28,18 +27,18 @@ const Dashboard = () => {
       setStats(initialData)
       delete window.__INITIAL_DATA__
     }
-    socket.on('updated cases', ({ message: { cases, summary } }) => {
-      setStats({cases, summary})
+    socket.on('updated cases', ({ message: { cases } }) => {
+      setStats(cases)
     })
   }, [stats])
 
   return (
     <main className="dashboard">
       <h1 className="dashboard-title">Covid-19 NG Report</h1>
-      <SummmaryPanel summary={summary} />
-      <section className="map-states-wrapper">
-        <MapChart cases={cases} />
-        <SummaryTable cases={cases} />
+      <SummmaryPanel total={total} />
+      <section className="map-stats-wrapper">
+        <MapChart stats={stats} />
+        <SummaryTable stats={stats} />
       </section>
     </main>
   )

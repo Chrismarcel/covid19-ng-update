@@ -1,22 +1,26 @@
 import React from 'react'
 import SummaryCard from './SummaryCard'
 
-const SummaryBlock = ({ summary }) => {
+const SummaryBlock = ({ total }) => {
   return (
     <section className="summary-wrapper">
       <SummaryCard 
         title="Total number of confirmed cases" 
-        value={summary.total_confirmed_cases} 
+        value={total.confirmedCases} 
+      />
+      <SummaryCard 
+        title="Total number of admitted cases" 
+        value={total.admitted} 
       />
       <SummaryCard 
         className="card-green" 
         title="Total number of recovered patients" 
-        value={summary.discharged} 
+        value={total.discharged} 
       />
       <SummaryCard 
         className="card-warning" 
-        title="Total number of deaths" 
-        value={summary.death} 
+        title="Total number of deaths recorded" 
+        value={total.death} 
       />
     </section>
   )

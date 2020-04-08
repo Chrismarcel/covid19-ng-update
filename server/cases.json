@@ -1,46 +1,110 @@
 {
-  "summary": {
-    "total_confirmed_cases": 174,
-    "discharged": 9,
+  "lagos": {
+    "confirmedCases": 130,
+    "admitted": 96,
+    "discharged": 32,
     "death": 2
   },
-  "cases": {
-    "abuja_fct": 35,
-    "abia": 0,
-    "adamawa": 0,
-    "akwa_ibom": 5,
-    "anambra": 0,
-    "bauchi": 3,
-    "bayelsa": 0,
-    "benue": 1,
-    "borno": 0,
-    "cross_river": 0,
-    "delta": 0,
-    "ebonyi": 0,
-    "enugu": 2,
-    "edo": 4,
-    "ekiti": 2,
-    "gombe": 0,
-    "imo": 0,
-    "jigawa": 0,
-    "kaduna": 4,
-    "kano": 0,
-    "katsina": 0,
-    "kebbi": 0,
-    "kogi": 0,
-    "kwara": 0,
-    "lagos": 91,
-    "nasarawa": 0,
-    "niger": 0,
-    "ogun": 4,
-    "ondo": 0,
-    "osun": 14,
-    "oyo": 8,
-    "plateau": 0,
-    "rivers": 1,
-    "sokoto": 0,
-    "taraba": 0,
-    "yobe": 0,
-    "zamfara": 0
+  "abuja_fct": {
+    "confirmedCases": 50,
+    "admitted": 35,
+    "discharged": 7,
+    "death": 2
+  },
+  "osun": {
+    "confirmedCases": 20,
+    "admitted": 19,
+    "discharged": 1,
+    "death": 0
+  },
+  "edo": {
+    "confirmedCases": 11,
+    "admitted": 8,
+    "discharged": 0,
+    "death": 1
+  },
+  "oyo": {
+    "confirmedCases": 11,
+    "admitted": 10,
+    "discharged": 0,
+    "death": 0
+  },
+  "bauchi": {
+    "confirmedCases": 6,
+    "admitted": 3,
+    "discharged": 0,
+    "death": 0
+  },
+  "akwa_ibom": {
+    "confirmedCases": 5,
+    "admitted": 5,
+    "discharged": 0,
+    "death": 0
+  },
+  "kaduna": {
+    "confirmedCases": 5,
+    "admitted": 4,
+    "discharged": 0,
+    "death": 0
+  },
+  "ogun": {
+    "confirmedCases": 4,
+    "admitted": 2,
+    "discharged": 2,
+    "death": 0
+  },
+  "enugu": {
+    "confirmedCases": 2,
+    "admitted": 2,
+    "discharged": 0,
+    "death": 0
+  },
+  "ekiti": {
+    "confirmedCases": 2,
+    "admitted": 1,
+    "discharged": 1,
+    "death": 0
+  },
+  "kwara": {
+    "confirmedCases": 2,
+    "admitted": 0,
+    "discharged": 0,
+    "death": 0
+  },
+  "rivers": {
+    "confirmedCases": 2,
+    "admitted": 2,
+    "discharged": 1,
+    "death": 0
+  },
+  "benue": {
+    "confirmedCases": 1,
+    "admitted": 1,
+    "discharged": 0,
+    "death": 0
+  },
+  "ondo": {
+    "confirmedCases": 1,
+    "admitted": 1,
+    "discharged": 0,
+    "death": 0
+  },
+  "delta": {
+    "confirmedCases": 1,
+    "admitted": 1,
+    "discharged": 0,
+    "death": 0
+  },
+  "katsina": {
+    "confirmedCases": 1,
+    "admitted": 1,
+    "discharged": 0,
+    "death": 1
+  },
+  "total": {
+    "confirmedCases": 254,
+    "admitted": 202,
+    "discharged": 44,
+    "death": 6
   }
 }

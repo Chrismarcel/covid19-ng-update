@@ -22,19 +22,19 @@ body {
 }
 
 .dashboard {
-  padding: 45px 0;
-  max-width: 1300px;
   margin: 0 auto;
+  padding: 15px;
 }
 
 .dashboard-title {
   color: #1F0322;
   font-weight: 700;
   letter-spacing: 2px;
-  font-size: 40px;
   font-family: 'Poppins';
   text-transform: uppercase;
   margin-bottom: 45px;
+  font-size: 36px;
+  margin-top: 40px;
 }
 
 .summary-wrapper {
@@ -54,11 +54,11 @@ body {
 .panel.summary-card {
   flex-grow: 1;
   flex-basis: 0;
-  padding: 30px 50px;
   height: 150px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-evenly;
+  padding: 15px;
 }
 
 .card-warning .summary-card-value {
@@ -70,8 +70,7 @@ body {
 }
 
 .panel.summary-card > .summary-card-title {
-  font-size: 17px;
-  margin-bottom: 10px;
+  font-size: 16px;
   color: #465656;
   font-weight: normal;
 }
@@ -87,21 +86,24 @@ body {
   margin-right: 30px;
 }
 
-.map-states-wrapper {
+.map-stats-wrapper {
   display: flex;
 }
 
+.panel.map-container,
+.panel.summary-table {
+  max-height: 700px;
+
+}
 .panel.map-container {
-  max-height: 650px;
   flex-grow: 1;
   margin-right: 30px;
   position: relative;
 }
 
 .panel.summary-table {
-  height: 650px;
-  flex-basis: 32%;
-  padding: 40px;
+  flex-basis: 35%;
+  padding: 25px;
   overflow-y: hidden;
 }
 
@@ -119,6 +121,7 @@ body {
 .summary-table tbody {
   height: 530px;
   overflow-y: scroll;
+  overflow-x: hidden;
 }
 
 .summary-table thead tr,
@@ -133,7 +136,7 @@ body {
 }
 
 .summary-table tbody tr {
-  margin-right: 30px;
+  margin-right: 20px;
   border-bottom: 1px solid rgba(214, 219, 223, .5);
   cursor: pointer;
 }
@@ -142,9 +145,9 @@ body {
   background: rgb(244, 248, 250, .6);
 }
 
-.summary-table thead tr th:first-child,
-.summary-table tbody tr td:first-child {
-  width: 60%;
+.summary-table thead tr th,
+.summary-table tbody tr td {
+  width: calc(100% / 5);
   text-align: left;
 }
 
@@ -152,10 +155,14 @@ body {
   text-transform: capitalize;
 }
 
-.summary-table thead tr th:last-child,
-.summary-table tbody tr td:last-child {
-  width: 40%;
+.summary-table thead tr th:not(:first-child),
+.summary-table tbody tr td:not(:first-child) {
   text-align: right;
+}
+
+.summary-table tbody tr td:last-child,
+.summary-table thead tr th:last-child {
+  width: 60px;
 }
 
 /* Keep scrollbar shown */
@@ -171,9 +178,10 @@ body {
 }
 
 .map-legends-wrapper {
-  position: absolute;
-  right: 40px;
-  bottom: 56px;
+  position: relative;
+  width: 100%;
+  padding: 10px 18px;
+  margin-top: 30px;
 }
 
 .map-legend {
@@ -196,12 +204,115 @@ body {
   font-size: 15px;
 }
 
-@media screen and (max-width: 1300px) {
+@media screen and (min-width: 501px)  {
   .dashboard {
+    padding: 30px;
+  }
+
+  .dashboard-title {
+    font-size: 40px;
+    margin-top: 0;
+  }
+
+  .panel.summary-card {
+    padding: 20px;
+  }
+}
+
+@media screen and (min-width: 1426px) {
+  .dashboard {
+    max-width: 1600px;
     padding: 40px;
+  }
+
+  .map-legends-wrapper {
+    position: absolute;
+    right: 25px;
+    bottom: 56px;
+    width: auto;
+  }
+}
+
+@media screen and (max-width: 1600px) {
+  .panel.summary-table {
+    flex-basis: 40%;
   }
 
   .panel.summary-card { 
     padding: 30px;
+  }
+}
+
+@media screen and (max-width: 1425px) {
+  .panel.summary-table {
+    flex-basis: 45%;
+  }
+
+  .map-container svg {
+    margin-top: 60px;
+  }
+
+  .map-legends-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    right: 0;
+    position: relative;
+    width: 90%;
+    margin: 0 auto;
+    bottom: 35px;
+  }
+
+  .map-legend {
+    width: auto;
+  }
+}
+
+@media screen and (max-width: 1250px) {
+  .summary-table thead, 
+  .summary-table tbody {
+    min-width: 490px;
+  }
+
+  .panel.summary-table {
+    flex-basis: 40%;
+  }
+}
+
+@media screen and (max-width: 1024px) {
+  .summary-wrapper {
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+  }
+
+  .panel.summary-card {
+    flex-basis: calc(50% - 20px);
+    margin-bottom: 20px;
+  }
+
+  .panel.summary-card:not(:last-child) {
+    margin-right: 0;
+  }
+
+  .panel.summary-card:nth-of-type(odd) {
+    margin-right: 20px;
+  }
+
+  .map-stats-wrapper {
+    flex-wrap: wrap;
+  }
+
+  .panel.map-container {
+    flex-basis: 100%;
+    margin-right: 0;
+    margin-bottom: 40px;
+    max-height: unset;
+  }
+
+  .panel.summary-table {
+    flex-basis: 100%;
+  }
+
+  .map-legends-wrapper {
+    bottom: 50px;
   }
 }

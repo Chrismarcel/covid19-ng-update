@@ -10,13 +10,12 @@ const filePath = `${__dirname}/cases.json`
 const scrapePage = async () => {
   try {
     const casesFile = await fs.readFile(filePath)
-    const {summary: prevSummary} = JSON.parse(casesFile)
+    const {total: prevTotal} = JSON.parse(casesFile)
     const updateStatsEndpoint = `${process.env.HOST}/update`
 
     const response = await axios.get(pageUrl)
     const $ = cheerio.load(response.data)
-    const summaryTable = $('table#custom1 tbody tr')
-    const casesByStates = $('table#custom3 tbody tr')
+    const statsByStates = $('table#custom3 tbody tr')
 
     const mapTableToField = (rows) => {
       const data = {}
@@ -24,25 +23,26 @@ const scrapePage = async () => {
         const cell = $(element).find('td')
     
         cell.each(index => {
-          if (index % 2 === 0) {
+          if (index === 0) {
             const key = slugifyStr(trimStr($(cell[index])))
-            const value = Number(trimStr($(cell[index + 1])))
-            data[key] = value
+            data[key] = {}
+            data[key].confirmedCases = Number(trimStr($(cell[index + 1])))
+            data[key].admitted = Number(trimStr($(cell[index + 2])))
+            data[key].discharged = Number(trimStr($(cell[index + 3])))
+            data[key].death = Number(trimStr($(cell[index + 4])))
           }
         })
       })
-
       return data
     }
-
-    const summary = mapTableToField(summaryTable)
-    const cases = mapTableToField(casesByStates)
+    
+    const stats = mapTableToField(statsByStates)
+    const { total: currentTotal } = stats
 
     // If there's a new update
-    if (prevSummary.total_confirmed_cases !== summary.total_confirmed_cases) {
-      const updatedCases = { summary, cases }
-      await fs.writeFile(filePath, JSON.stringify(updatedCases, null, 2))
-      await axios.post(updateStatsEndpoint, { cases: updatedCases })
+    if (prevTotal.confirmedCases !== currentTotal.confirmedCases) {
+      await fs.writeFile(filePath, JSON.stringify(stats, null, 2))
+      await axios.post(updateStatsEndpoint, { stats })
     }
   } catch (error) {
     console.log(error)

@@ -29,8 +29,8 @@ app.use('/src', express.static('./src'))
 
 
 app.post('/update', (req, res) => {
-  const { cases } = req.body
-  socket.emit('updated cases', { message: cases })
+  const { stats } = req.body
+  socket.emit('updated cases', { message: stats })
   return res.json()
 })
 

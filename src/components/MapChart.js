@@ -4,8 +4,7 @@ import { slugifyStr, generateChloropheth } from '../../server/utils'
 import ReactTooltip from 'react-tooltip'
 import MapLegends from './MapLegends.js'
 
-
-const MapChart = ({ cases }) => {
+const MapChart = ({ stats }) => {
   const [stateStats, setStateStats] = useState({})
   return (
     <section className="map-container panel">
@@ -13,7 +12,7 @@ const MapChart = ({ cases }) => {
         data-tip=""
         projection="geoAzimuthalEqualArea"
         projectionConfig={{ 
-          rotate: [-9.5, -9],
+          rotate: [-8.9, -8.5],
           scale: 3000 
         }}
       >
@@ -22,7 +21,7 @@ const MapChart = ({ cases }) => {
             geographies.map((geo, index) => {
               const { properties: { name } } = geo
               const stateName = index === 18 ? 'abuja_fct' : slugifyStr(name)
-              const numCases = cases[stateName]
+              const numCases = stats[stateName] ? stats[stateName].confirmedCases : 0
               return (
                 <Geography 
                   key={geo.rsmKey} 
