@@ -27,8 +27,8 @@ const Dashboard = () => {
       setStats(initialData)
       delete window.__INITIAL_DATA__
     }
-    socket.on('updated cases', ({ message: { cases } }) => {
-      setStats(cases)
+    socket.on('updated cases', ({ message: stats }) => {
+      setStats(stats)
     })
   }, [stats])
 

@@ -12,7 +12,7 @@ const MapChart = ({ stats }) => {
         data-tip=""
         projection="geoAzimuthalEqualArea"
         projectionConfig={{ 
-          rotate: [-8.9, -8.5],
+          rotate: [-9.2, -8.5],
           scale: 3000 
         }}
       >

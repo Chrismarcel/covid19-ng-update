@@ -8,7 +8,7 @@ const SummaryTable = ({ stats }) => {
       <table>
         <thead>
           <tr>
-            <th>State</th>
+            <th>States</th>
             <th>Confirmed Cases</th>
             <th>Admitted</th>
             <th>Discharged</th>
