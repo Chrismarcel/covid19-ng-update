@@ -4,6 +4,7 @@ import bodyParser from 'body-parser'
 import http from 'http'
 import io from 'socket.io'
 import handleSSR from './ssr'
+import compression from 'compression'
 
 dotenv.config()
 
@@ -17,12 +18,13 @@ socket.on('connect', (socket) => {
   })
 })
 
+app.use(bodyParser.urlencoded({ extended: true }))
+app.use(bodyParser.json())
+app.use(compression())
+
 app.get('/', (req, res) => {
   res.send(handleSSR(req, res))
 })
-
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
 
 app.use('/', express.static(`${__dirname}/../client`))
 app.use('/src', express.static('./src'))

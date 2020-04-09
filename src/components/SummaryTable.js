@@ -17,13 +17,14 @@ const SummaryTable = ({ stats }) => {
         </thead>
         <tbody>
           {states.map((state, index) => {
+            const { confirmedCases, admitted, discharged, death } = stats[state]
             return (
               <tr key={index}>
                 <td>{reverseSlug(state)}</td>
-                <td>{stats[state].confirmedCases}</td>
-                <td>{stats[state].admitted}</td>
-                <td>{stats[state].discharged}</td>
-                <td>{stats[state].death}</td>
+                <td>{confirmedCases}</td>
+                <td>{admitted}</td>
+                <td>{discharged}</td>
+                <td>{death}</td>
               </tr>
             )
           })}

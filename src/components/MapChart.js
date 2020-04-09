@@ -26,6 +26,7 @@ const MapChart = ({ stats }) => {
                 <Geography 
                   key={geo.rsmKey} 
                   geography={geo}
+                  role="region"
                   fill={generateChloropheth(numCases)}
                   stroke="#008751"
                   strokeWidth={0.7}
