@@ -2,7 +2,7 @@ const CACHE_NAME = 'cache-v1'
 const urlsToCache = [
   '/',
   '/src.e31bb0bc.js',
-  'styles.6145e9cd.css',
+  '/styles.6145e9cd.css',
   '/src/map-of-nigeria.json',
   'https://fonts.googleapis.com/css2?family=Sen:wght@400;700&family=Poppins:wght@600;700&display=swap'
 ]
