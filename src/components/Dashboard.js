@@ -7,10 +7,12 @@ import MapChart from './MapChart'
 import SummmaryPanel from './SummaryBlock'
 import SummaryTable from './SummaryTable'
 import firebaseInit from '../config/firebaseInit'
+import Header from './Header'
 
 dotenv.config()
 
 const socket = socketClient(process.env.HOST)
+let messaging, toggleNotifications
 
 const initialState = {
   total: {
@@ -23,23 +25,22 @@ const initialState = {
 
 const Dashboard = () => {
   const [stats, setStats] = useState(initialState)
-  const [vapidKeySet, setVapidKey] = useState(false)
+  const [DOMInit, setDOMInit] = useState(true)
   const { total } = stats
-  let messaging
 
   useEffect(() => {
     // FCM needs to be initialized inside of useEffect to prevent Firebase error of 'self is not defined'
     messaging = firebaseInit.messaging()
 
     // Prevent Firebase from throwing error about multiple VAPID keys being set
-    if (!vapidKeySet) {
+    if (DOMInit) {
       messaging.usePublicVapidKey(
         'BC3mXezEfA6tfalai7D3nKl98i6iiWBS1fWchketvSPcfd5DJ_rJxuxm9PsAfrI-jjyJd-RdumUKKr0G-InetlU'
       )
 
       if ('serviceWorker' in navigator) {
         window.addEventListener('load', () => {
-          navigator.serviceWorker.register('/sw.js')
+          navigator.serviceWorker.register('../sw.js')
           .then(registration => {
             messaging.useServiceWorker(registration)
             console.log('Successfully registered service worker')
@@ -60,30 +61,27 @@ const Dashboard = () => {
       setStats(stats)
     })
 
-    setVapidKey(true)
+    setDOMInit(false)
   }, [stats])
 
-  const enableNotifications = async () => {
+  toggleNotifications = async (type) => {
     try {
       await messaging.requestPermission()
       const registrationToken = await messaging.getToken()
-      const {data: { statusCode }} = await axios.post(`${process.env.HOST}/subscribe`, { registrationToken })
-      if (statusCode === 200) {
-        localStorage.setItem('registrationToken', registrationToken)
+      const {data: { statusCode }} = await axios.post(`${process.env.HOST}/${type}`, { registrationToken })
+      if (type === 'subscribe' && statusCode === 200) {
+        localStorage.setItem('subscribed', true)
       } else {
-        localStorage.removeItem('registrationToken')
+        localStorage.setItem('subscribed', false)
       }
     } catch (error) {
-      localStorage.removeItem('registrationToken')
+      localStorage.setItem('subscribed', false)
     }
   }
 
   return (
     <main className="dashboard">
-      <h1 className="dashboard-title">Covid-19 NG Update</h1>
-      <button onClick={enableNotifications}>
-        Enable notifications
-      </button>
+      <Header />
       <SummmaryPanel total={total} />
       <section className="map-stats-wrapper">
         <MapChart stats={stats} />
@@ -92,5 +90,7 @@ const Dashboard = () => {
     </main>
   )
 }
+
+export { toggleNotifications }
 
 export default Dashboard

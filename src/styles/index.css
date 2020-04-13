@@ -26,15 +26,113 @@ body {
   padding: 15px;
 }
 
+.dashboard-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 40px;
+  margin-top: 25px;
+  align-items: flex-start;
+  color: #1f0322;
+}
+
 .dashboard-title {
-  color: #1F0322;
+  color: inherit;
   font-weight: 700;
   letter-spacing: 2px;
   font-family: 'Poppins';
   text-transform: uppercase;
-  margin-bottom: 45px;
   font-size: 8vw;
-  margin-top: 40px;
+}
+
+.menu-trigger {
+  padding: 15px;
+  background: transparent;
+  margin-right: -15px;
+  color: inherit;
+}
+
+.panel.menu-body {
+  display: none;
+  position: absolute;
+  right: 20px;
+  padding: 15px;
+  width: 240px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.menu-trigger[data-menu-open="true"] + .panel.menu-body {
+  display: block;
+}
+
+.toggle-slider {
+  width: 100%;
+  position: relative;
+  padding: 3px;
+  height: 100%;
+}
+
+.toggle-switch.off .knob {
+  transform: translateX(33px);
+  transition: transform 250ms ease-in;
+}
+
+.toggle-switch.off .knob + span {
+  transform: translateX(-28px);
+  animation: moveText 600ms ease-in;
+}
+
+.toggle-switch.on .knob + span {
+  right: 6px;
+  animation: moveText 600ms ease-in;
+}
+
+.toggle-switch {
+  padding: 4px;
+  border-radius: 25px;
+  background: #c1c7cd;
+  width: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  height: 33px;
+}
+
+.toggle-switch.off {
+  opacity: .45;
+}
+
+.toggle-switch input[type="checkbox"] {
+  width: 0;
+  height: 0;
+  opacity: 0;
+}
+
+.toggle-switch .knob {
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  background: #ffffff;
+  margin-left: -11px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  left: 12px;
+  top: -0.5px;
+  transition: transform 250ms ease-in;
+  z-index: 100;
+}
+
+.toggle-switch .knob + span {
+  position: absolute;    
+  right: 6px;
+  top: 1.5px;
+}
+
+.toggle-switch .knob svg {
+  margin-left: -1px;
 }
 
 .summary-wrapper {
@@ -117,6 +215,10 @@ body {
 
 .map-container svg {
   margin-top: 30px;
+}
+
+.map-container path {
+  outline: none;
 }
 
 .summary-table table {
@@ -220,6 +322,15 @@ body {
 
 .map-legend-text {
   font-size: 15px;
+}
+
+@keyframes moveText {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 @media screen and (min-width: 451px) {

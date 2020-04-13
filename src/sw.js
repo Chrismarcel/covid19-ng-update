@@ -1,5 +1,4 @@
 import firebaseInit from './config/firebaseInit'
-firebaseInit.analytics()
 
 let messaging = firebaseInit.messaging()
 messaging.usePublicVapidKey('BC3mXezEfA6tfalai7D3nKl98i6iiWBS1fWchketvSPcfd5DJ_rJxuxm9PsAfrI-jjyJd-RdumUKKr0G-InetlU')
@@ -15,7 +14,6 @@ const urlsToCache = [
 ]
 
 self.addEventListener('activate', event => {
-  window.messaging = messaging
   event.waitUntil(
     caches.keys().then(cacheNames => {
       Promise.all(cacheNames.map(cacheName => {
@@ -50,7 +48,11 @@ self.addEventListener('fetch', event => {
         
         const clonedResponse = response.clone()
         caches.open(CACHE_NAME)
-        .then(cache => cache.put(event.request, clonedResponse))
+        .then(cache => {
+          if (event.request.method !== 'POST') {
+            return cache.put(event.request, clonedResponse)
+          }
+        })
 
         return response
       })
