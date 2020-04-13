@@ -5,6 +5,7 @@ import http from 'http'
 import io from 'socket.io'
 import handleSSR from './ssr'
 import compression from 'compression'
+import firebaseInstance from './firebase-config'
 
 dotenv.config()
 
@@ -29,11 +30,53 @@ app.get('/', (req, res) => {
 app.use('/', express.static(`${__dirname}/../client`))
 app.use('/src', express.static('./src'))
 
+const topic = 'covid19updates'
 
 app.post('/update', (req, res) => {
   const { stats } = req.body
+  // const payload = {
+  //   data: {
+  //     title: 'Random Title',
+  //     body: 'Random Body'
+  //   },
+  //   topic
+  // }
   socket.emit('updated cases', { message: stats })
   return res.json()
+})
+
+app.post('/subscribe', (req, res) => {
+  const { registrationToken } = req.body
+  firebaseInstance.messaging().subscribeToTopic(registrationToken, topic)
+  .then(response => console.log('Successfully subscribed to topic', response))
+  .catch(error => {
+    return res.status(500).json({
+      statusCode: 500,
+      error: 'Failed to subscribe to real time Covid alerts.'
+    })
+  })
+
+  return res.status(200).json({
+    statusCode: 200,
+    message: 'Successfully subscribed to real time Covid alerts.'
+  })
+})
+
+app.post('/unsubscribe', (req, res) => {
+  const { registrationToken } = req
+  firebaseInstance.messaging().unsubscribeFromTopic(registrationToken, topic)
+  .then(response => console.log('Successfully unsubscribed from topic', response))
+  .catch(error => {
+    return res.status(500).json({
+      statusCode: 500,
+      error: 'Failed to unsubscribe from real time Covid alerts.'
+    })
+  })
+
+  return res.status(200).json({
+    statusCode: 200,
+    message: 'Successfully unsubscribed from real time Covid alerts.'
+  })
 })
 
 const PORT = process.env.PORT || 5000

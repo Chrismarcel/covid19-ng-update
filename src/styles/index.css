@@ -33,7 +33,7 @@ body {
   font-family: 'Poppins';
   text-transform: uppercase;
   margin-bottom: 45px;
-  font-size: 36px;
+  font-size: 8vw;
   margin-top: 40px;
 }
 
@@ -47,46 +47,48 @@ body {
 
 .panel {
   background: #ffffff;
-  border-radius: 10px;
+  border-radius: 5px;
   height: auto;
   box-shadow: 0 7px 10px -9px #ded8d8;
 }
 
 .panel.summary-card {
   flex-grow: 1;
-  height: 170px;
+  height: 140px;
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
-  padding: 15px;
-  flex-basis: calc(50% - 20px);
-  margin-bottom: 20px;
+  padding: 20px;
+  flex-basis: calc(50% - 15px);
+  margin-bottom: 15px;
 }
 
 .panel.summary-card:nth-of-type(odd) {
-  margin-right: 20px;
+  margin-right: 15px;
 }
 
-.card-warning .summary-card-value {
+.death-cases .summary-card-value {
   color: #e24e1b;
 }
 
-.card-green .summary-card-value {
-  color: #417969;
+.recovered-cases .summary-card-value {
+  color: #1a68e6;
 }
 
 .panel.summary-card > .summary-card-title {
-  font-size: 16px;
+  font-size: 15px;
   color: #465656;
   font-weight: normal;
-  margin-bottom: 20px;
 }
 
 .panel.summary-card > .summary-card-value {
-  font-size: 40px;
+  font-size: 32px;
   font-weight: 600;
   font-family: 'Poppins';
   letter-spacing: 4px;
+  line-height: 2.5rem;
+  margin-bottom: 10px;
+  flex-grow: 1;
 }
 
 .map-stats-wrapper {
@@ -191,7 +193,7 @@ body {
 
 .map-legends-wrapper {
   position: relative;
-  padding: 10px 18px;
+  padding: 10px;
   margin-top: 30px;
   bottom: 20px;
   display: flex;
@@ -220,7 +222,13 @@ body {
   font-size: 15px;
 }
 
-@media screen and (min-width: 501px)  {
+@media screen and (min-width: 451px) {
+  .dashboard-title {
+    font-size: 36px;
+  }
+}
+
+@media screen and (min-width: 501px) {
   .dashboard {
     padding: 30px;
   }
@@ -231,17 +239,29 @@ body {
   }
 
   .panel.summary-card {
-    padding: 20px;
+    padding: 25px;
+    height: 155px;
+    flex-basis: calc(50% - 20px);
+    margin-bottom: 20px;
+  }
+  
+  .panel.summary-card:nth-of-type(odd) {
+    margin-right: 20px;
+  }
+
+  .panel.summary-card > .summary-card-value {
+    font-size: 42px;
   }
 
   .panel.summary-card > .summary-card-title {
-    margin-bottom: 10px;
+    font-size: 16px;
   }
 
   .map-legends-wrapper {
     width: 90%;
     margin: 0 auto;
     bottom: 35px;
+    padding: 10px 18px;
   }
 }
 
@@ -270,6 +290,11 @@ body {
     flex-basis: 0;
     margin-bottom: unset;
     padding: 30px;
+    height: 165px;
+  }
+
+  .panel.summary-card > .summary-card-value {
+    font-size: 50px;
   }
 
   .panel.summary-card:not(:last-child) {
@@ -278,10 +303,6 @@ body {
 
   .panel.summary-card:nth-of-type(odd) {
     margin-right: 30px;
-  }
-
-  .panel.summary-card > .summary-card-title {
-    margin-bottom: 10px;
   }
 
   .panel.map-container,

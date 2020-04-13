@@ -1,14 +1,14 @@
 {
   "lagos": {
-    "confirmedCases": 130,
-    "admitted": 96,
-    "discharged": 32,
-    "death": 2
+    "confirmedCases": 174,
+    "admitted": 119,
+    "discharged": 50,
+    "death": 5
   },
   "abuja_fct": {
-    "confirmedCases": 50,
-    "admitted": 35,
-    "discharged": 7,
+    "confirmedCases": 56,
+    "admitted": 43,
+    "discharged": 11,
     "death": 2
   },
   "osun": {
@@ -18,20 +18,32 @@
     "death": 0
   },
   "edo": {
-    "confirmedCases": 11,
-    "admitted": 8,
+    "confirmedCases": 12,
+    "admitted": 11,
     "discharged": 0,
     "death": 1
   },
   "oyo": {
     "confirmedCases": 11,
-    "admitted": 10,
-    "discharged": 0,
+    "admitted": 7,
+    "discharged": 4,
+    "death": 0
+  },
+  "ogun": {
+    "confirmedCases": 7,
+    "admitted": 5,
+    "discharged": 2,
     "death": 0
   },
   "bauchi": {
     "confirmedCases": 6,
-    "admitted": 3,
+    "admitted": 6,
+    "discharged": 0,
+    "death": 0
+  },
+  "kaduna": {
+    "confirmedCases": 6,
+    "admitted": 6,
     "discharged": 0,
     "death": 0
   },
@@ -41,17 +53,17 @@
     "discharged": 0,
     "death": 0
   },
-  "kaduna": {
-    "confirmedCases": 5,
-    "admitted": 4,
-    "discharged": 0,
-    "death": 0
-  },
-  "ogun": {
+  "katsina": {
     "confirmedCases": 4,
+    "admitted": 3,
+    "discharged": 0,
+    "death": 1
+  },
+  "delta": {
+    "confirmedCases": 3,
     "admitted": 2,
-    "discharged": 2,
-    "death": 0
+    "discharged": 0,
+    "death": 1
   },
   "enugu": {
     "confirmedCases": 2,
@@ -67,14 +79,20 @@
   },
   "kwara": {
     "confirmedCases": 2,
-    "admitted": 0,
+    "admitted": 2,
     "discharged": 0,
     "death": 0
   },
   "rivers": {
     "confirmedCases": 2,
-    "admitted": 2,
+    "admitted": 1,
     "discharged": 1,
+    "death": 0
+  },
+  "ondo": {
+    "confirmedCases": 2,
+    "admitted": 2,
+    "discharged": 0,
     "death": 0
   },
   "benue": {
@@ -83,28 +101,28 @@
     "discharged": 0,
     "death": 0
   },
-  "ondo": {
+  "niger": {
     "confirmedCases": 1,
     "admitted": 1,
     "discharged": 0,
     "death": 0
   },
-  "delta": {
+  "anambra": {
     "confirmedCases": 1,
     "admitted": 1,
     "discharged": 0,
     "death": 0
   },
-  "katsina": {
+  "kano": {
     "confirmedCases": 1,
     "admitted": 1,
     "discharged": 0,
-    "death": 1
+    "death": 0
   },
   "total": {
-    "confirmedCases": 254,
-    "admitted": 202,
-    "discharged": 44,
-    "death": 6
+    "confirmedCases": 318,
+    "admitted": 238,
+    "discharged": 70,
+    "death": 10
   }
 }

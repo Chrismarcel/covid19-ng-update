@@ -1,23 +1,34 @@
-const CACHE_NAME = 'cache-v1'
+import firebaseInit from './config/firebaseInit'
+firebaseInit.analytics()
+
+let messaging = firebaseInit.messaging()
+messaging.usePublicVapidKey('BC3mXezEfA6tfalai7D3nKl98i6iiWBS1fWchketvSPcfd5DJ_rJxuxm9PsAfrI-jjyJd-RdumUKKr0G-InetlU')
+
+const CACHE_VERSION = 1
+const CACHE_NAME = `cache-v${CACHE_VERSION}`
 const urlsToCache = [
   '/',
   '/src.e31bb0bc.js',
   '/styles.6145e9cd.css',
-  '/src/map-of-nigeria.json',
+  '/src/map/map-of-nigeria.json',
   'https://fonts.googleapis.com/css2?family=Sen:wght@400;700&family=Poppins:wght@600;700&display=swap'
 ]
 
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => {
-    navigator.serviceWorker.register('/sw.js')
-    .then(() => {
-      console.log('Successfully registered service worker')
+self.addEventListener('activate', event => {
+  window.messaging = messaging
+  event.waitUntil(
+    caches.keys().then(cacheNames => {
+      Promise.all(cacheNames.map(cacheName => {
+        if (cacheName !== CACHE_NAME) {
+          return caches.delete(cacheName)
+        }
+      }))
     })
-    .catch(error => console.log('Failed to register service worker', error))
-  })
-}
+  )
+})
 
 self.addEventListener('install', event => {
+  self.skipWaiting()
   event.waitUntil(
     caches.open(CACHE_NAME)
     .then(cache => cache.addAll(urlsToCache))
@@ -45,4 +56,4 @@ self.addEventListener('fetch', event => {
       })
     })
   )
-})
+})  

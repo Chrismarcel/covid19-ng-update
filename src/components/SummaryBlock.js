@@ -13,12 +13,12 @@ const SummaryBlock = ({ total }) => {
         value={total.admitted} 
       />
       <SummaryCard 
-        className="card-green" 
+        className="recovered-cases" 
         title="Total number of recovered patients" 
         value={total.discharged} 
       />
       <SummaryCard 
-        className="card-warning" 
+        className="death-cases" 
         title="Total number of deaths recorded" 
         value={total.death} 
       />

@@ -7,8 +7,8 @@ import { renderToString } from 'react-dom/server'
 import App from '../../src/App'
 import cases from '../cases.json'
 
-const templatePath = path.join(__dirname, '..', 'client', 'index.html');
-const HTMLTemplateString = fs.readFileSync(templatePath).toString();
+const templatePath = path.join(__dirname, '..', 'client', 'index.html')
+const HTMLTemplateString = fs.readFileSync(`${templatePath}`)
 
 const serializedData = JSON.stringify(cases)
 
@@ -24,7 +24,11 @@ const handleSSR = req => {
     )
   );
 
-  renderedTemplate('body').after(`<script>window.__INITIAL_DATA__ = ${serializedData}</script>`)
+  renderedTemplate('body').after(`
+    <script>
+      window.__INITIAL_DATA__ = ${serializedData}
+    </script>`
+  )
   
   return renderedTemplate.html()
 }

@@ -52,10 +52,51 @@ const reverseSlug = (str) => str.replace(/_/g, ' ')
 
 const trimStr = (element) => element.text().trim()
 
+const allStates = [
+  "abuja_fct",
+  "abia",
+  "adamawa",
+  "akwa_ibom",
+  "anambra",
+  "bauchi",
+  "bayelsa",
+  "benue",
+  "borno",
+  "cross_river",
+  "delta",
+  "ebonyi",
+  "enugu",
+  "edo",
+  "ekiti",
+  "gombe",
+  "imo",
+  "jigawa",
+  "kaduna",
+  "kano",
+  "katsina",
+  "kebbi",
+  "kogi",
+  "kwara",
+  "lagos",
+  "nasarawa",
+  "niger",
+  "ogun",
+  "ondo",
+  "osun",
+  "oyo",
+  "plateau",
+  "rivers",
+  "sokoto",
+  "taraba",
+  "yobe",
+  "zamfara"
+]
+
 module.exports = {
   generateChloropheth, 
   slugifyStr, 
   trimStr, 
   reverseSlug,
-  COLOR_BANDS
+  COLOR_BANDS,
+  allStates
 }

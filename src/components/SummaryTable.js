@@ -1,8 +1,7 @@
 import React from 'react'
-import { reverseSlug } from '../../server/utils'
+import { reverseSlug, allStates } from '../../server/utils'
 
 const SummaryTable = ({ stats }) => {
-  const states = Object.keys(stats).slice(0, -1)
   return (
     <section className="panel summary-table">
       <table>
@@ -16,8 +15,11 @@ const SummaryTable = ({ stats }) => {
           </tr>
         </thead>
         <tbody>
-          {states.map((state, index) => {
-            const { confirmedCases, admitted, discharged, death } = stats[state]
+          {allStates.map((state, index) => {
+            const confirmedCases = stats[state]?.confirmedCases || 0
+            const admitted = stats[state]?.admitted || 0
+            const discharged = stats[state]?.discharged || 0
+            const death = stats[state]?.death || 0
             return (
               <tr key={index}>
                 <td>{reverseSlug(state)}</td>
