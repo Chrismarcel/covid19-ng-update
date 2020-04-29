@@ -128,7 +128,7 @@ body {
 .toggle-switch .knob + span {
   position: absolute;    
   right: 6px;
-  top: 1.5px;
+  top: 2.5px;
 }
 
 .toggle-switch .knob svg {
@@ -183,7 +183,7 @@ body {
   font-size: 32px;
   font-weight: 600;
   font-family: 'Poppins';
-  letter-spacing: 4px;
+  letter-spacing: 2px;
   line-height: 2.5rem;
   margin-bottom: 10px;
   flex-grow: 1;
@@ -401,7 +401,7 @@ body {
     flex-basis: 0;
     margin-bottom: unset;
     padding: 30px;
-    height: 165px;
+    height: 150px;
   }
 
   .panel.summary-card > .summary-card-value {
@@ -452,5 +452,11 @@ body {
 
   .panel.summary-table {
     flex-basis: 45%;
+  }
+}
+
+@media screen and (min-width: 1500px) {
+  .panel.summary-card > .summary-card-title {
+    font-size: 17px;
   }
 }

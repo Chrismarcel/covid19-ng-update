@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import ToggleSwitch from './ToggleSwitch'
 import { MoreVertical } from 'react-feather'
-import FeatherIcon from 'feather-icons-react'
 
 const Header = () => {
   const [menuOpen, setMenuOpen] = useState(false)
@@ -14,7 +13,7 @@ const Header = () => {
           data-menu-open={menuOpen} 
           onClick={() => setMenuOpen(true)}
         >
-          <FeatherIcon icon="more-vertical" />
+          <MoreVertical />
         </button>
         <div className="panel menu-body">
           Notifications
