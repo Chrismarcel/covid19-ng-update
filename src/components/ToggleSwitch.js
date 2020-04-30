@@ -6,12 +6,21 @@ const ToggleSwitch = () => {
   const { 
     setSubscriptionStatus,
     subscriptionEnabled,
-    notificationEnabled
+    notificationEnabled,
+    subscribeUser,
+    unsubscribeUser
   } = useContext(NotificationContext)
 
   const handleSwitchToggle = () => {
     if (notificationEnabled) {
-      setSubscriptionStatus(!subscriptionEnabled)
+      if (subscriptionEnabled === true) {
+        setSubscriptionStatus(false)
+        unsubscribeUser()
+      } 
+      if (subscriptionEnabled === false) {
+        setSubscriptionStatus(true)
+        subscribeUser()
+      }
     }
   }
 

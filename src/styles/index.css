@@ -13,6 +13,25 @@ body {
   color: #1a1b25;
 }
 
+.btn {
+  width: 120px;
+  height: 50px;
+  border-radius: 4px;
+  padding: 14px;
+  font-size: inherit;
+  font-family: inherit;
+}
+
+.btn-solid {
+  background: #1a68e6;
+  color: #ffffff;
+}
+
+.btn-hollow {
+  background: transparent;
+  border: 2px solid #1a68e6;
+}
+
 .text-warning {
   color: #e24e1b;
 }
@@ -322,6 +341,41 @@ body {
 
 .map-legend-text {
   font-size: 15px;
+}
+
+.panel.popup-bar-wrapper {
+  padding: 25px;
+  position: fixed;
+  transform: translateY(200px);
+  transition: all 500ms ease-out;
+  bottom: 0;
+  z-index: 300;
+  display: none;
+}
+
+.panel.popup-bar-wrapper[data-visible="true"] {
+  display: initial;
+  transform: translateY(0);
+  transition: all 500ms ease-in;
+}
+
+.notification-request .notification-message {
+  margin-bottom: 20px;
+}
+
+.notifications-button-group .btn:not(:last-child) {
+  margin-right: 20px;
+}
+
+.notif-popup-overlay[data-popup-open="true"] {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: #1f0322;
+  opacity: 0.6;
+  z-index: 200;
 }
 
 @keyframes moveText {

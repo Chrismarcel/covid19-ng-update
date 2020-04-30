@@ -44,9 +44,14 @@ app.post('/update', (req, res) => {
   socket.emit('updated cases', { message: stats })
 
   firebaseInstance.messaging().send(payload)
-  .then(res => {
-    return res.end()
+  .then(response => {
+    return res.status(200).json({
+      statusCode: 200,
+      response
+    })
   })
+
+  return res.end()
 })
 
 app.post('/subscribe', (req, res) => {
@@ -55,7 +60,7 @@ app.post('/subscribe', (req, res) => {
   .then(response => {
     return res.status(200).json({
       statusCode: 200,
-      message: 'Successfully unsubscribed from real time Covid alerts.',
+      message: 'Successfully subscribed from real time Covid alerts.',
       response
     })
   })
