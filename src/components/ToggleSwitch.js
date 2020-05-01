@@ -8,8 +8,19 @@ const ToggleSwitch = () => {
     subscriptionEnabled,
     notificationEnabled,
     subscribeUser,
-    unsubscribeUser
+    unsubscribeUser,
+    requestNotificationPermission
   } = useContext(NotificationContext)
+
+  const requestPermission = () => {
+    if ("Notification" in window) {
+      Notification.requestPermission(permission => {
+        if (permission === 'granted') {
+          requestNotificationPermission()
+        }
+      })
+    }
+  }
 
   const handleSwitchToggle = () => {
     if (notificationEnabled) {
@@ -21,6 +32,8 @@ const ToggleSwitch = () => {
         setSubscriptionStatus(true)
         subscribeUser()
       }
+    } else {
+      requestPermission()
     }
   }
 

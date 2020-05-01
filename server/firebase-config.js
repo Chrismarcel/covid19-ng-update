@@ -13,6 +13,8 @@ const FIREBASE_CONFIG = {
   client_x509_cert_url: process.env.FIREBASE_CLIENT_CERT_URL
 }
 
+export const FIREBASE_SERVER_KEY = process.env.FIREBASE_SERVER_KEY
+
 const firebaseInstance = firebase.initializeApp({
   credential: firebase.credential.cert(FIREBASE_CONFIG),
   databaseURL: process.env.FIREBASE_DB_URL

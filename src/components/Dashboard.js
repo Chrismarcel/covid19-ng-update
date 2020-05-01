@@ -32,7 +32,7 @@ const Dashboard = () => {
   const [DOMInit, setDOMInit] = useState(true)
   const [subscriptionEnabled, setSubscriptionStatus] = useState(false)
   const [notificationEnabled, setNotificationStatus] = useState(false)
-  const [overlayVisible, showOverlay] = useState(false)
+  const [notificationPopupVisible, showNotificationPopup] = useState(false)
   const { total } = stats
 
   useEffect(() => {
@@ -48,16 +48,39 @@ const Dashboard = () => {
 
       setSubscriptionStatus(Boolean(subscriptionStatus))
       setNotificationStatus(Boolean(notificationStatus))
-      showOverlay(Boolean(!notificationStatus))
+      showNotificationPopup(Boolean(!notificationStatus))
 
       if ('serviceWorker' in navigator) {
         window.addEventListener('load', () => {
           navigator.serviceWorker.register('../../sw.js')
           .then(registration => {
             messaging.useServiceWorker(registration)
+            // Retrieve token & subscribe user
+            // If user has already subscribed but cleared their storage
+            // or uninstalled their service worker
+            registration.addEventListener('updatefound', () => {
+              registration.installing.addEventListener('statechange', event => {
+                if (event.target.state === 'activated') {
+                  const notificationStatus = JSON.parse(localStorage.getItem('allow-notifications'))
+                  const subscriptionStatus = JSON.parse(localStorage.getItem('subscribed'))
+                  if (Boolean(notificationStatus) && !subscriptionStatus) {
+                    messaging.getToken().then(registrationToken => {
+                      if (registrationToken) {
+                        localStorage.setItem('registrationToken', registrationToken)
+                        localStorage.setItem('subscribed', true)
+                        subscribeUser()
+                        setSubscriptionStatus(true)
+                      }
+                    })
+                  }
+                }
+              })
+            })
             console.log('Successfully registered service worker')
           })
-          .catch(error => console.log('Failed to register service worker', error))
+          .catch(error => {
+            console.log('Failed to register service worker', error)
+          })
         })
       }
     }
@@ -66,6 +89,19 @@ const Dashboard = () => {
       const initialData = window.__INITIAL_DATA__
       setStats(initialData)
       delete window.__INITIAL_DATA__
+    }
+
+    if ("Notification" in window) {
+      if (Notification.permission === 'denied') {
+        localStorage.setItem('allow-notifications', false)
+        setNotificationStatus(false)
+        setSubscriptionStatus(false)
+        showNotificationPopup(false)
+      } else if (Notification.permission === 'granted') {
+        localStorage.setItem('allow-notifications', true)
+        setNotificationStatus(true)
+        showNotificationPopup(false)
+      }
     }
 
     // Update statistics if there are new cases
@@ -82,15 +118,15 @@ const Dashboard = () => {
       localStorage.setItem('allow-notifications', true)
       localStorage.setItem('registrationToken', registrationToken)
       setNotificationStatus(true)
-      showOverlay(false)
+      showNotificationPopup(false)
 
-      await subscribeUser()
+      subscribeUser()
       setSubscriptionStatus(true)
     } catch (error) {
       if (error.code === 'messaging/permission-blocked') {
         // TODO: Display notification on how users can enable notifications later
         setNotificationStatus(true)
-        showOverlay(false)
+        showNotificationPopup(false)
         localStorage.setItem('allow-notifications', false)
       }
     }
@@ -124,6 +160,11 @@ const Dashboard = () => {
     }
   }
 
+  const hideNotificationPopup = () => {
+    showNotificationPopup(false)
+    localStorage.setItem('allow-notifications', false)
+  }
+
   return (
     <NotificationContext.Provider 
       value={{
@@ -131,10 +172,11 @@ const Dashboard = () => {
         subscriptionEnabled,
         notificationEnabled,
         subscribeUser,
-        unsubscribeUser
+        unsubscribeUser,
+        requestNotificationPermission
        }}
     >
-      <div className="notif-popup-overlay" data-popup-open={overlayVisible}></div>
+      <div className="notif-popup-overlay" data-popup-open={notificationPopupVisible}></div>
       <main className="dashboard">
         <Header />
         <SummmaryPanel total={total} />
@@ -145,13 +187,17 @@ const Dashboard = () => {
       </main>
       
       {/* TODO: Move this to Portal */}
-      <PopupBar popupVisible={!notificationEnabled} className="notification-request">
+      <PopupBar popupVisible={notificationPopupVisible} className="notification-request">
         <p className="notification-message">
           Would you like to enable real time covid alerts?
         </p>
         <div className="notifications-button-group">
-          <button className="btn btn-solid" id="yes" onClick={requestNotificationPermission}>Yes</button>
-          <button className="btn btn-hollow" id="no" onClick={() => showOverlay(false)}>No</button>
+          <button className="btn btn-solid" onClick={requestNotificationPermission}>
+            Yes
+          </button>
+          <button className="btn btn-hollow" onClick={hideNotificationPopup}>
+            No
+          </button>
         </div>
       </PopupBar>
     </NotificationContext.Provider>

@@ -5,7 +5,8 @@ import http from 'http'
 import io from 'socket.io'
 import handleSSR from './ssr'
 import compression from 'compression'
-import firebaseInstance from './firebase-config'
+import axios from 'axios'
+import firebaseInstance, { FIREBASE_SERVER_KEY } from './firebase-config'
 
 dotenv.config()
 
@@ -64,7 +65,7 @@ app.post('/subscribe', (req, res) => {
       response
     })
   })
-  .catch(error => {
+  .catch(() => {
     return res.status(500).json({
       statusCode: 500,
       error: 'Failed to subscribe to real time Covid alerts.'
@@ -82,7 +83,7 @@ app.post('/unsubscribe', (req, res) => {
       response
     })
   })
-  .catch(error => {
+  .catch(() => {
     return res.status(500).json({
       statusCode: 500,
       error: 'Failed to unsubscribe from real time Covid alerts.'

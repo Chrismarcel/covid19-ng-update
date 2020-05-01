@@ -116,6 +116,7 @@ body {
   align-items: center;
   justify-content: space-evenly;
   height: 33px;
+  cursor: pointer;
 }
 
 .toggle-switch.off {
