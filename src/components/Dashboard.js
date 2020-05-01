@@ -54,6 +54,7 @@ const Dashboard = () => {
         window.addEventListener('load', () => {
           navigator.serviceWorker.register('../../sw.js')
           .then(registration => {
+            console.log('Successfully registered service worker')
             messaging.useServiceWorker(registration)
             // Retrieve token & subscribe user
             // If user has already subscribed but cleared their storage
@@ -76,7 +77,6 @@ const Dashboard = () => {
                 }
               })
             })
-            console.log('Successfully registered service worker')
           })
           .catch(error => {
             console.log('Failed to register service worker', error)

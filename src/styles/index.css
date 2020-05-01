@@ -70,19 +70,28 @@ body {
   color: inherit;
 }
 
-.panel.menu-body {
-  display: none;
+.notification-menu-wrapper {
+  position: relative;
+}
+
+.panel.notification-menu {
   position: absolute;
-  right: 20px;
-  padding: 15px;
+  right: 10px;
   width: 240px;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  height: 0;
+  max-height: 0;
+  overflow: hidden;
+  padding: 0;
 }
 
-.menu-trigger[data-menu-open="true"] + .panel.menu-body {
-  display: block;
+.menu-trigger[data-menu-open="true"] + .panel.notification-menu {
+  display: flex;
+  height: auto;
+  max-height: 65px;
+  padding: 15px;
 }
 
 .toggle-slider {
@@ -428,6 +437,14 @@ body {
     margin: 0 auto;
     bottom: 35px;
     padding: 10px 18px;
+  }
+}
+
+@media screen and (min-width: 800px) {
+  .panel.notification-menu {
+    top: 50%;
+    right: 25px;
+    transform: translateY(-50%);
   }
 }
 
