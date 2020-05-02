@@ -9,6 +9,7 @@ import SummaryTable from './SummaryTable'
 import firebaseInit, { FIREBASE_VAPID_KEY } from '../config/firebaseInit'
 import Header from './Header'
 import PopupBar from './PopupBar'
+import { LOCAL_STORAGE_KEYS } from '../util'
 
 dotenv.config()
 
@@ -20,12 +21,13 @@ const initialState = {
   total: {
     confirmedCases: 0,
     death: 0,
-    admitted: 0,
+    activeCases: 0,
     discharged: 0
   }
 }
 
 let messaging, subscriptionStatus, notificationStatus
+const { NOTIFICATION_STATUS, SUBSCRIPTION_STATUS, REGISTRATION_TOKEN } = LOCAL_STORAGE_KEYS
 
 const Dashboard = () => {
   const [stats, setStats] = useState(initialState)
@@ -43,8 +45,8 @@ const Dashboard = () => {
     // Prevent Firebase from throwing error about multiple VAPID keys being set
     if (DOMInit) {
       messaging.usePublicVapidKey(FIREBASE_VAPID_KEY)
-      notificationStatus = JSON.parse(localStorage.getItem('allow-notifications'))
-      subscriptionStatus = JSON.parse(localStorage.getItem('subscribed'))
+      notificationStatus = JSON.parse(localStorage.getItem(NOTIFICATION_STATUS))
+      subscriptionStatus = JSON.parse(localStorage.getItem(SUBSCRIPTION_STATUS))
 
       setSubscriptionStatus(Boolean(subscriptionStatus))
       setNotificationStatus(Boolean(notificationStatus))
@@ -62,13 +64,13 @@ const Dashboard = () => {
             registration.addEventListener('updatefound', () => {
               registration.installing.addEventListener('statechange', event => {
                 if (event.target.state === 'activated') {
-                  const notificationStatus = JSON.parse(localStorage.getItem('allow-notifications'))
-                  const subscriptionStatus = JSON.parse(localStorage.getItem('subscribed'))
+                  const notificationStatus = JSON.parse(localStorage.getItem(NOTIFICATION_STATUS))
+                  const subscriptionStatus = JSON.parse(localStorage.getItem(SUBSCRIPTION_STATUS))
                   if (Boolean(notificationStatus) && !subscriptionStatus) {
                     messaging.getToken().then(registrationToken => {
                       if (registrationToken) {
-                        localStorage.setItem('registrationToken', registrationToken)
-                        localStorage.setItem('subscribed', true)
+                        localStorage.setItem(REGISTRATION_TOKEN, registrationToken)
+                        localStorage.setItem(SUBSCRIPTION_STATUS, true)
                         subscribeUser()
                         setSubscriptionStatus(true)
                       }
@@ -93,12 +95,12 @@ const Dashboard = () => {
 
     if ("Notification" in window) {
       if (Notification.permission === 'denied') {
-        localStorage.setItem('allow-notifications', false)
+        localStorage.setItem(NOTIFICATION_STATUS, false)
         setNotificationStatus(false)
         setSubscriptionStatus(false)
         showNotificationPopup(false)
       } else if (Notification.permission === 'granted') {
-        localStorage.setItem('allow-notifications', true)
+        localStorage.setItem(NOTIFICATION_STATUS, true)
         setNotificationStatus(true)
         showNotificationPopup(false)
       }
@@ -115,8 +117,8 @@ const Dashboard = () => {
   const requestNotificationPermission = async () => {
     try {
       const registrationToken = await messaging.getToken()
-      localStorage.setItem('allow-notifications', true)
-      localStorage.setItem('registrationToken', registrationToken)
+      localStorage.setItem(NOTIFICATION_STATUS, true)
+      localStorage.setItem(REGISTRATION_TOKEN, registrationToken)
       setNotificationStatus(true)
       showNotificationPopup(false)
 
@@ -127,17 +129,17 @@ const Dashboard = () => {
         // TODO: Display notification on how users can enable notifications later
         setNotificationStatus(true)
         showNotificationPopup(false)
-        localStorage.setItem('allow-notifications', false)
+        localStorage.setItem(NOTIFICATION_STATUS, false)
       }
     }
   }
 
   const subscribeUser = async () => {
     try {
-      const registrationToken = localStorage.getItem('registrationToken')
+      const registrationToken = localStorage.getItem(REGISTRATION_TOKEN)
       const {data: { statusCode }} = await axios.post(`${process.env.HOST}/subscribe`, { registrationToken })
       if (statusCode === 200) {
-        localStorage.setItem('subscribed', true)
+        localStorage.setItem(SUBSCRIPTION_STATUS, true)
       } 
     } catch (error) {
       setSubscriptionStatus(false)
@@ -148,10 +150,10 @@ const Dashboard = () => {
 
   const unsubscribeUser = async () => {
     try {
-      const registrationToken = localStorage.getItem('registrationToken')
+      const registrationToken = localStorage.getItem(REGISTRATION_TOKEN)
       const {data: { statusCode }} = await axios.post(`${process.env.HOST}/unsubscribe`, { registrationToken })
       if (statusCode === 200) {
-        localStorage.setItem('subscribed', false)
+        localStorage.setItem(SUBSCRIPTION_STATUS, false)
       }
     } catch (error) {
       setSubscriptionStatus(true)
@@ -162,7 +164,7 @@ const Dashboard = () => {
 
   const hideNotificationPopup = () => {
     showNotificationPopup(false)
-    localStorage.setItem('allow-notifications', false)
+    localStorage.setItem(NOTIFICATION_STATUS, false)
   }
 
   return (
@@ -174,7 +176,7 @@ const Dashboard = () => {
         subscribeUser,
         unsubscribeUser,
         requestNotificationPermission
-       }}
+      }}
     >
       <div className="notif-popup-overlay" data-popup-open={notificationPopupVisible}></div>
       <main className="dashboard">

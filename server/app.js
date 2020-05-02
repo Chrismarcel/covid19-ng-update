@@ -5,8 +5,7 @@ import http from 'http'
 import io from 'socket.io'
 import handleSSR from './ssr'
 import compression from 'compression'
-import axios from 'axios'
-import firebaseInstance, { FIREBASE_SERVER_KEY } from './firebase-config'
+import firebaseInstance from './firebase-config'
 
 dotenv.config()
 

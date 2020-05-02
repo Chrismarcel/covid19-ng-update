@@ -198,6 +198,10 @@ body {
   color: #e24e1b;
 }
 
+.active-cases .summary-card-value {
+  color: #676720;
+}
+
 .recovered-cases .summary-card-value {
   color: #1a68e6;
 }

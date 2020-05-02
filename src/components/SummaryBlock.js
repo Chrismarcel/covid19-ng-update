@@ -9,8 +9,9 @@ const SummaryBlock = ({ total }) => {
         value={total.confirmedCases} 
       />
       <SummaryCard 
-        title="Total number of admitted cases" 
-        value={total.admitted} 
+        className="active-cases" 
+        title="Total number of active cases" 
+        value={total.activeCases} 
       />
       <SummaryCard 
         className="recovered-cases" 

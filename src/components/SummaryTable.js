@@ -9,7 +9,7 @@ const SummaryTable = ({ stats }) => {
           <tr>
             <th>States</th>
             <th>Confirmed Cases</th>
-            <th>Admitted</th>
+            <th>Active Cases</th>
             <th>Discharged</th>
             <th>Death</th>
           </tr>
@@ -17,14 +17,14 @@ const SummaryTable = ({ stats }) => {
         <tbody>
           {allStates.map((state, index) => {
             const confirmedCases = stats[state]?.confirmedCases || 0
-            const admitted = stats[state]?.admitted || 0
+            const activeCases = stats[state]?.activeCases || 0
             const discharged = stats[state]?.discharged || 0
             const death = stats[state]?.death || 0
             return (
               <tr key={index}>
                 <td>{reverseSlug(state)}</td>
                 <td>{confirmedCases}</td>
-                <td>{admitted}</td>
+                <td>{activeCases}</td>
                 <td>{discharged}</td>
                 <td>{death}</td>
               </tr>
