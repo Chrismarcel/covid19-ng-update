@@ -11,7 +11,7 @@ const SummaryTable = ({ stats }) => {
             <th>Confirmed Cases</th>
             <th>Active Cases</th>
             <th>Discharged</th>
-            <th>Death</th>
+            <th>Deaths</th>
           </tr>
         </thead>
         <tbody>

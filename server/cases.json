@@ -1,79 +1,79 @@
 {
   "lagos": {
-    "confirmedCases": 1006,
-    "activeCases": 753,
-    "discharged": 225,
-    "death": 28
+    "confirmedCases": 1068,
+    "activeCases": 791,
+    "discharged": 247,
+    "death": 30
   },
   "kano": {
-    "confirmedCases": 311,
-    "activeCases": 308,
-    "discharged": 0,
-    "death": 3
+    "confirmedCases": 313,
+    "activeCases": 300,
+    "discharged": 7,
+    "death": 6
   },
   "fct": {
-    "confirmedCases": 214,
-    "activeCases": 175,
+    "confirmedCases": 266,
+    "activeCases": 227,
     "discharged": 36,
     "death": 3
   },
   "gombe": {
-    "confirmedCases": 92,
-    "activeCases": 92,
+    "confirmedCases": 96,
+    "activeCases": 96,
     "discharged": 0,
     "death": 0
   },
   "borno": {
-    "confirmedCases": 69,
-    "activeCases": 63,
+    "confirmedCases": 75,
+    "activeCases": 64,
     "discharged": 0,
-    "death": 6
+    "death": 11
+  },
+  "kaduna": {
+    "confirmedCases": 66,
+    "activeCases": 59,
+    "discharged": 6,
+    "death": 1
   },
   "ogun": {
     "confirmedCases": 56,
-    "activeCases": 47,
-    "discharged": 8,
-    "death": 1
+    "activeCases": 45,
+    "discharged": 9,
+    "death": 2
+  },
+  "sokoto": {
+    "confirmedCases": 54,
+    "activeCases": 45,
+    "discharged": 1,
+    "death": 8
   },
   "bauchi": {
-    "confirmedCases": 48,
-    "activeCases": 42,
+    "confirmedCases": 53,
+    "activeCases": 47,
     "discharged": 6,
     "death": 0
   },
   "edo": {
-    "confirmedCases": 47,
-    "activeCases": 34,
+    "confirmedCases": 52,
+    "activeCases": 39,
     "discharged": 10,
     "death": 3
   },
-  "sokoto": {
-    "confirmedCases": 41,
-    "activeCases": 33,
-    "discharged": 1,
-    "death": 7
-  },
   "katsina": {
-    "confirmedCases": 40,
-    "activeCases": 32,
+    "confirmedCases": 38,
+    "activeCases": 26,
     "discharged": 6,
-    "death": 2
-  },
-  "kaduna": {
-    "confirmedCases": 35,
-    "activeCases": 28,
-    "discharged": 6,
-    "death": 1
+    "death": 6
   },
   "osun": {
-    "confirmedCases": 34,
-    "activeCases": 13,
-    "discharged": 18,
+    "confirmedCases": 36,
+    "activeCases": 11,
+    "discharged": 22,
     "death": 3
   },
   "oyo": {
-    "confirmedCases": 29,
-    "activeCases": 18,
+    "confirmedCases": 33,
+    "activeCases": 22,
     "discharged": 9,
     "death": 2
   },
@@ -90,8 +90,8 @@
     "death": 2
   },
   "kwara": {
-    "confirmedCases": 14,
-    "activeCases": 12,
+    "confirmedCases": 16,
+    "activeCases": 14,
     "discharged": 2,
     "death": 0
   },
@@ -101,11 +101,29 @@
     "discharged": 2,
     "death": 2
   },
+  "yobe": {
+    "confirmedCases": 13,
+    "activeCases": 12,
+    "discharged": 0,
+    "death": 1
+  },
   "ondo": {
     "confirmedCases": 13,
     "activeCases": 10,
     "discharged": 3,
     "death": 0
+  },
+  "kebbi": {
+    "confirmedCases": 12,
+    "activeCases": 12,
+    "discharged": 0,
+    "death": 0
+  },
+  "zamfara": {
+    "confirmedCases": 12,
+    "activeCases": 11,
+    "discharged": 0,
+    "death": 1
   },
   "ekiti": {
     "confirmedCases": 11,
@@ -113,11 +131,17 @@
     "discharged": 2,
     "death": 1
   },
-  "zamfara": {
+  "nasarawa": {
     "confirmedCases": 9,
-    "activeCases": 8,
+    "activeCases": 9,
     "discharged": 0,
-    "death": 1
+    "death": 0
+  },
+  "enugu": {
+    "confirmedCases": 8,
+    "activeCases": 6,
+    "discharged": 2,
+    "death": 0
   },
   "taraba": {
     "confirmedCases": 8,
@@ -131,28 +155,16 @@
     "discharged": 0,
     "death": 1
   },
-  "nasarawa": {
-    "confirmedCases": 7,
-    "activeCases": 7,
-    "discharged": 0,
-    "death": 0
-  },
   "bayelsa": {
     "confirmedCases": 5,
     "activeCases": 5,
     "discharged": 0,
     "death": 0
   },
-  "yobe": {
-    "confirmedCases": 4,
-    "activeCases": 4,
+  "ebonyi": {
+    "confirmedCases": 5,
+    "activeCases": 5,
     "discharged": 0,
-    "death": 0
-  },
-  "enugu": {
-    "confirmedCases": 4,
-    "activeCases": 2,
-    "discharged": 2,
     "death": 0
   },
   "adamawa": {
@@ -161,13 +173,13 @@
     "discharged": 0,
     "death": 0
   },
-  "niger": {
+  "plateau": {
     "confirmedCases": 3,
     "activeCases": 3,
     "discharged": 0,
     "death": 0
   },
-  "ebonyi": {
+  "niger": {
     "confirmedCases": 3,
     "activeCases": 3,
     "discharged": 0,
@@ -185,22 +197,10 @@
     "discharged": 0,
     "death": 0
   },
-  "kebbi": {
-    "confirmedCases": 2,
-    "activeCases": 2,
-    "discharged": 0,
-    "death": 0
-  },
   "anambra": {
     "confirmedCases": 1,
     "activeCases": 0,
     "discharged": 1,
-    "death": 0
-  },
-  "plateau": {
-    "confirmedCases": 1,
-    "activeCases": 1,
-    "discharged": 0,
     "death": 0
   },
   "benue": {
@@ -210,9 +210,9 @@
     "death": 0
   },
   "total": {
-    "confirmedCases": 2170,
-    "activeCases": 1751,
-    "discharged": 351,
-    "death": 68
+    "confirmedCases": 2388,
+    "activeCases": 1918,
+    "discharged": 385,
+    "death": 85
   }
 }

@@ -20,7 +20,7 @@ const MapChart = ({ stats }) => {
           {({ geographies }) =>
             geographies.map((geo, index) => {
               const { properties: { name } } = geo
-              const stateName = index === 18 ? 'abuja_fct' : slugifyStr(name)
+              const stateName = index === 18 ? 'fct' : slugifyStr(name)
               const numCases = stats[stateName] ? stats[stateName].confirmedCases : 0
               return (
                 <Geography 
