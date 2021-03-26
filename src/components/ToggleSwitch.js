@@ -3,18 +3,15 @@ import { NotificationContext } from './Dashboard'
 import { Bell, BellOff } from 'react-feather'
 
 const ToggleSwitch = () => {
-  const { 
-    setSubscriptionStatus,
-    subscriptionEnabled,
-    notificationEnabled,
-    subscribeUser,
-    unsubscribeUser,
-    requestNotificationPermission
-  } = useContext(NotificationContext)
+  const { setSubscriptionEnabled, subscriptionEnabled, subscribeUser, unsubscribeUser, requestNotificationPermission } = useContext(
+    NotificationContext
+  )
+
+  console.log('se', subscriptionEnabled)
 
   const requestPermission = () => {
-    if ("Notification" in window) {
-      Notification.requestPermission(permission => {
+    if ('Notification' in window) {
+      Notification.requestPermission((permission) => {
         if (permission === 'granted') {
           requestNotificationPermission()
         }
@@ -22,14 +19,13 @@ const ToggleSwitch = () => {
     }
   }
 
-  const handleSwitchToggle = () => {
+  const handleSwitchToggle = (evt) => {
     if (notificationEnabled) {
-      if (subscriptionEnabled === true) {
-        setSubscriptionStatus(false)
+      if (subscriptionEnabled) {
+        setSubscriptionEnabled(false)
         unsubscribeUser()
-      } 
-      if (subscriptionEnabled === false) {
-        setSubscriptionStatus(true)
+      } else {
+        setSubscriptionEnabled(true)
         subscribeUser()
       }
     } else {
@@ -39,15 +35,9 @@ const ToggleSwitch = () => {
 
   return (
     <label className={`toggle-switch ${subscriptionEnabled ? 'on' : 'off'}`}>
-      <input 
-        type="checkbox"
-        onChange={handleSwitchToggle} 
-      />
+      <input type="checkbox" onChange={handleSwitchToggle} />
       <div className="toggle-slider">
-        <div className="knob">
-          {subscriptionEnabled && <Bell size={16} />}
-          {!subscriptionEnabled && <BellOff size={16} />}
-        </div>
+        <div className="knob">{subscriptionEnabled ? <Bell size={16} /> : <BellOff size={16} />}</div>
         <span>{subscriptionEnabled ? 'On' : 'Off'}</span>
       </div>
     </label>

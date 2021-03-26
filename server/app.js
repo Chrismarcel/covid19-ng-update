@@ -41,7 +41,7 @@ app.post('/update', (req, res) => {
     },
     topic,
   }
-  socket.emit('updated cases', { message: stats })
+  socket.emit('updated_cases', { message: stats })
 
   firebaseInstance
     .messaging()
