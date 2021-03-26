@@ -1,37 +1,41 @@
 import React, { useState, memo } from 'react'
 import { ComposableMap, Geographies, Geography } from 'react-simple-maps'
-import { slugifyStr, generateChloropheth } from '../../server/utils'
+import { slugifyStr, generateChloropheth, formatNumber } from '../../server/utils'
 import ReactTooltip from 'react-tooltip'
 import MapLegends from './MapLegends.js'
 
 const MapChart = ({ stats }) => {
-  const [stateStats, setStateStats] = useState({})
+  const [stateName, setStateName] = useState('')
+  const slug = stateName === 'Federal Capital Territory' ? 'fct' : slugifyStr(stateName)
+
   return (
     <section className="map-container panel">
       <ComposableMap
         data-tip=""
         projection="geoAzimuthalEqualArea"
-        projectionConfig={{ 
+        projectionConfig={{
           rotate: [-9.2, -8.5],
-          scale: 3000 
-        }}
-      >
-        <Geographies geography='/src/map/map-of-nigeria.json'>
+          scale: 3000,
+        }}>
+        <Geographies geography="/src/map/map-of-nigeria.json">
           {({ geographies }) =>
-            geographies.map((geo, index) => {
-              const { properties: { name } } = geo
-              const stateName = index === 18 ? 'fct' : slugifyStr(name)
-              const numCases = stats[stateName] ? stats[stateName].confirmedCases : 0
+            geographies.map((geo) => {
+              const {
+                properties: { name },
+              } = geo
+
+              const stateName = name === 'Federal Capital Territory' ? 'fct' : slugifyStr(name)
+              const numCases = stats[stateName]?.confirmedCases || 0
               return (
-                <Geography 
-                  key={geo.rsmKey} 
+                <Geography
+                  key={geo.rsmKey}
                   geography={geo}
                   role="region"
                   fill={generateChloropheth(numCases)}
                   stroke="#008751"
                   strokeWidth={0.7}
-                  onMouseEnter={() => setStateStats({ ...stateStats, name, numCases })}
-                  onMouseLeave={() => setStateStats({})}
+                  onMouseEnter={() => setStateName(name)}
+                  onMouseLeave={() => setStateName('')}
                 />
               )
             })
@@ -39,11 +43,14 @@ const MapChart = ({ stats }) => {
         </Geographies>
       </ComposableMap>
       <MapLegends />
-      {stateStats.name && (
-        <ReactTooltip 
-          place="bottom"
-        >
-          {`${stateStats.name}: ${stateStats.numCases}`}
+      {stateName && (
+        <ReactTooltip place="bottom">
+          <p>{stateName}</p>
+          <br />
+          <p>Confirmed: {formatNumber(stats[slug].confirmedCases)}</p>
+          <p>Active: {formatNumber(stats[slug].activeCases)}</p>
+          <p>Discharged: {formatNumber(stats[slug].discharged)}</p>
+          <p>Deaths: {formatNumber(stats[slug].death)}</p>
         </ReactTooltip>
       )}
     </section>

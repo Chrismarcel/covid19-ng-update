@@ -1,5 +1,5 @@
 import React from 'react'
-import { reverseSlug, allStates } from '../../server/utils'
+import { reverseSlug, allStates, formatNumber } from '../../server/utils'
 
 const SummaryTable = ({ stats }) => {
   return (
@@ -8,8 +8,8 @@ const SummaryTable = ({ stats }) => {
         <thead>
           <tr>
             <th>States</th>
-            <th>Confirmed Cases</th>
-            <th>Active Cases</th>
+            <th>Confirmed</th>
+            <th>Active</th>
             <th>Discharged</th>
             <th>Deaths</th>
           </tr>
@@ -23,10 +23,10 @@ const SummaryTable = ({ stats }) => {
             return (
               <tr key={index}>
                 <td>{reverseSlug(state)}</td>
-                <td>{confirmedCases}</td>
-                <td>{activeCases}</td>
-                <td>{discharged}</td>
-                <td>{death}</td>
+                <td>{formatNumber(confirmedCases)}</td>
+                <td>{formatNumber(activeCases)}</td>
+                <td>{formatNumber(discharged)}</td>
+                <td>{formatNumber(death)}</td>
               </tr>
             )
           })}

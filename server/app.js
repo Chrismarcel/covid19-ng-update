@@ -36,58 +36,61 @@ app.post('/update', (req, res) => {
   const { stats } = req.body
   const payload = {
     data: {
-      title: 'Random Title',
-      body: 'Random Body'
+      title: 'Covid-19 NG Update',
+      body: 'Random Body',
     },
-    topic
+    topic,
   }
   socket.emit('updated cases', { message: stats })
 
-  firebaseInstance.messaging().send(payload)
-  .then(response => {
-    return res.status(200).json({
-      statusCode: 200,
-      response
+  firebaseInstance
+    .messaging()
+    .send(payload)
+    .then((response) => {
+      return response
     })
-  })
 
   return res.end()
 })
 
 app.post('/subscribe', (req, res) => {
   const { registrationToken } = req.body
-  firebaseInstance.messaging().subscribeToTopic(registrationToken, topic)
-  .then(response => {
-    return res.status(200).json({
-      statusCode: 200,
-      message: 'Successfully subscribed from real time Covid alerts.',
-      response
+  firebaseInstance
+    .messaging()
+    .subscribeToTopic(registrationToken, topic)
+    .then((response) => {
+      return res.status(200).json({
+        statusCode: 200,
+        message: 'Successfully subscribed from real time Covid alerts.',
+        response,
+      })
     })
-  })
-  .catch(() => {
-    return res.status(500).json({
-      statusCode: 500,
-      error: 'Failed to subscribe to real time Covid alerts.'
+    .catch(() => {
+      return res.status(500).json({
+        statusCode: 500,
+        error: 'Failed to subscribe to real time Covid alerts.',
+      })
     })
-  })
 })
 
 app.post('/unsubscribe', (req, res) => {
   const { registrationToken } = req.body
-  firebaseInstance.messaging().unsubscribeFromTopic(registrationToken, topic)
-  .then(response => {
-    return res.status(200).json({
-      statusCode: 200,
-      message: 'Successfully unsubscribed from real time Covid alerts.',
-      response
+  firebaseInstance
+    .messaging()
+    .unsubscribeFromTopic(registrationToken, topic)
+    .then((response) => {
+      return res.status(200).json({
+        statusCode: 200,
+        message: 'Successfully unsubscribed from real time Covid alerts.',
+        response,
+      })
     })
-  })
-  .catch(() => {
-    return res.status(500).json({
-      statusCode: 500,
-      error: 'Failed to unsubscribe from real time Covid alerts.'
+    .catch(() => {
+      return res.status(500).json({
+        statusCode: 500,
+        error: 'Failed to unsubscribe from real time Covid alerts.',
+      })
     })
-  })
 })
 
 const PORT = process.env.PORT || 5000

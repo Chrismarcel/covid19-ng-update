@@ -12,7 +12,7 @@ const HTMLTemplateString = fs.readFileSync(`${templatePath}`)
 
 const serializedData = JSON.stringify(cases)
 
-const handleSSR = req => {
+const handleSSR = (req) => {
   const renderedTemplate = $.load(HTMLTemplateString)
   const context = {}
 
@@ -22,14 +22,13 @@ const handleSSR = req => {
         <App />
       </StaticRouter>
     )
-  );
+  )
 
   renderedTemplate('body').after(`
     <script>
       window.__INITIAL_DATA__ = ${serializedData}
-    </script>`
-  )
-  
+    </script>`)
+
   return renderedTemplate.html()
 }
 

@@ -1,12 +1,13 @@
 const COLOR_BANDS = {
-  DEFAULT: '#FEFDFF',
-  LESS_THAN_11: '#F5C4B3',
+  DEFAULT: '#F88379',
+  LESS_THAN_11: '#FF0800',
   LESS_THAN_51: '#EB8967',
   LESS_THAN_101: '#E66C41',
   LESS_THAN_501: '#D0562B',
-  LESS_THAN_1001: '#A64523',
-  LESS_THAN_5001: '#682B16',
-  GREATER_THAN_5000: '#2A1209'
+  LESS_THAN_1001: '#B31B1B',
+  LESS_THAN_3001: '#682B16',
+  LESS_THAN_5001: '#8A0707',
+  GREATER_THAN_5000: '#5B342E',
 }
 
 const generateChloropheth = (numCases) => {
@@ -16,31 +17,34 @@ const generateChloropheth = (numCases) => {
   switch (true) {
     case numCases < 1:
       color = COLOR_BANDS.DEFAULT
-      break;
+      break
     case numCases < 11:
       color = COLOR_BANDS.LESS_THAN_11
-      break;
+      break
     case numCases < 51:
       color = COLOR_BANDS.LESS_THAN_51
-      break;
+      break
     case numCases < 101:
       color = COLOR_BANDS.LESS_THAN_101
-      break;
+      break
     case numCases < 501:
       color = COLOR_BANDS.LESS_THAN_501
-      break;
+      break
     case numCases < 1001:
       color = COLOR_BANDS.LESS_THAN_1001
-      break;
+      break
+    case numCases < 3001:
+      color = COLOR_BANDS.LESS_THAN_3001
+      break
     case numCases < 5001:
       color = COLOR_BANDS.LESS_THAN_5001
-      break;
+      break
     case numCases > 5000:
       color = COLOR_BANDS.GREATER_THAN_5000
-      break;
+      break
     default:
       color = COLOR_BANDS.DEFAULT
-      break;
+      break
   }
 
   return color
@@ -53,50 +57,55 @@ const reverseSlug = (str) => str.replace(/_/g, ' ')
 const trimStr = (element) => element.text().trim()
 
 const allStates = [
-  "abuja_fct",
-  "abia",
-  "adamawa",
-  "akwa_ibom",
-  "anambra",
-  "bauchi",
-  "bayelsa",
-  "benue",
-  "borno",
-  "cross_river",
-  "delta",
-  "ebonyi",
-  "enugu",
-  "edo",
-  "ekiti",
-  "gombe",
-  "imo",
-  "jigawa",
-  "kaduna",
-  "kano",
-  "katsina",
-  "kebbi",
-  "kogi",
-  "kwara",
-  "lagos",
-  "nasarawa",
-  "niger",
-  "ogun",
-  "ondo",
-  "osun",
-  "oyo",
-  "plateau",
-  "rivers",
-  "sokoto",
-  "taraba",
-  "yobe",
-  "zamfara"
+  'fct',
+  'abia',
+  'adamawa',
+  'akwa_ibom',
+  'anambra',
+  'bauchi',
+  'bayelsa',
+  'benue',
+  'borno',
+  'cross_river',
+  'delta',
+  'ebonyi',
+  'enugu',
+  'edo',
+  'ekiti',
+  'gombe',
+  'imo',
+  'jigawa',
+  'kaduna',
+  'kano',
+  'katsina',
+  'kebbi',
+  'kogi',
+  'kwara',
+  'lagos',
+  'nasarawa',
+  'niger',
+  'ogun',
+  'ondo',
+  'osun',
+  'oyo',
+  'plateau',
+  'rivers',
+  'sokoto',
+  'taraba',
+  'yobe',
+  'zamfara',
 ]
 
+const formatNumber = (number) => {
+  return new Intl.NumberFormat().format(number)
+}
+
 module.exports = {
-  generateChloropheth, 
-  slugifyStr, 
-  trimStr, 
+  generateChloropheth,
+  slugifyStr,
+  trimStr,
   reverseSlug,
   COLOR_BANDS,
-  allStates
+  allStates,
+  formatNumber,
 }

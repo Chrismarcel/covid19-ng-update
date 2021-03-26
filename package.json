@@ -23,11 +23,9 @@
     "compression": "^1.7.4",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
-    "fire": "^0.55.1",
     "firebase": "^7.14.0",
     "firebase-admin": "^8.10.0",
     "fs-extra": "^9.0.0",
-    "koa-static-server": "^1.5.0",
     "node-sass": "^4.13.1",
     "nodemon": "^2.0.2",
     "react": "^0.14.9 || ^15.3.0 || ^16.0.0-rc || ^16.0",
@@ -45,6 +43,11 @@
     "babel-core": "^6.26.3",
     "babel-preset-env": "^1.7.0",
     "babel-preset-react": "^6.24.1",
+    "eslint-config-standard": "^14.1.1",
+    "eslint-plugin-import": "^2.21.2",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-standard": "^4.0.1",
     "parcel-bundler": "^1.12.4"
   }
 }

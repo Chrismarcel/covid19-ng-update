@@ -28,12 +28,16 @@ const MapLegends = () => (
       <p className="map-legend-text">501 - 1000</p>
     </div>
     <div className="map-legend">
+      <div style={{ background: COLOR_BANDS.LESS_THAN_3001 }} className="map-legend-color"></div>
+      <p className="map-legend-text">1001 - 3000</p>
+    </div>
+    <div className="map-legend">
       <div style={{ background: COLOR_BANDS.LESS_THAN_5001 }} className="map-legend-color"></div>
-      <p className="map-legend-text">1001 - 5000</p>
+      <p className="map-legend-text">3001 - 5000</p>
     </div>
     <div className="map-legend">
       <div style={{ background: COLOR_BANDS.GREATER_THAN_5000 }} className="map-legend-color"></div>
-      <p className="map-legend-text">> 5000</p>
+      <p className="map-legend-text"> 5001+</p>
     </div>
   </section>
 )

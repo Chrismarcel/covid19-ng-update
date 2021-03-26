@@ -1,218 +1,230 @@
 {
   "lagos": {
-    "confirmedCases": 1068,
-    "activeCases": 791,
-    "discharged": 247,
-    "death": 30
-  },
-  "kano": {
-    "confirmedCases": 313,
-    "activeCases": 300,
-    "discharged": 7,
-    "death": 6
+    "confirmedCases": 57448,
+    "activeCases": 30,
+    "discharged": 56990,
+    "death": 428
   },
   "fct": {
-    "confirmedCases": 266,
-    "activeCases": 227,
-    "discharged": 36,
-    "death": 3
-  },
-  "gombe": {
-    "confirmedCases": 96,
-    "activeCases": 96,
-    "discharged": 0,
-    "death": 0
-  },
-  "borno": {
-    "confirmedCases": 75,
-    "activeCases": 64,
-    "discharged": 0,
-    "death": 11
-  },
-  "kaduna": {
-    "confirmedCases": 66,
-    "activeCases": 59,
-    "discharged": 6,
-    "death": 1
-  },
-  "ogun": {
-    "confirmedCases": 56,
-    "activeCases": 45,
-    "discharged": 9,
-    "death": 2
-  },
-  "sokoto": {
-    "confirmedCases": 54,
-    "activeCases": 45,
-    "discharged": 1,
-    "death": 8
-  },
-  "bauchi": {
-    "confirmedCases": 53,
-    "activeCases": 47,
-    "discharged": 6,
-    "death": 0
-  },
-  "edo": {
-    "confirmedCases": 52,
-    "activeCases": 39,
-    "discharged": 10,
-    "death": 3
-  },
-  "katsina": {
-    "confirmedCases": 38,
-    "activeCases": 26,
-    "discharged": 6,
-    "death": 6
-  },
-  "osun": {
-    "confirmedCases": 36,
-    "activeCases": 11,
-    "discharged": 22,
-    "death": 3
-  },
-  "oyo": {
-    "confirmedCases": 33,
-    "activeCases": 22,
-    "discharged": 9,
-    "death": 2
-  },
-  "delta": {
-    "confirmedCases": 17,
-    "activeCases": 11,
-    "discharged": 4,
-    "death": 2
-  },
-  "akwa_ibom": {
-    "confirmedCases": 16,
-    "activeCases": 4,
-    "discharged": 10,
-    "death": 2
-  },
-  "kwara": {
-    "confirmedCases": 16,
-    "activeCases": 14,
-    "discharged": 2,
-    "death": 0
-  },
-  "rivers": {
-    "confirmedCases": 14,
-    "activeCases": 10,
-    "discharged": 2,
-    "death": 2
-  },
-  "yobe": {
-    "confirmedCases": 13,
-    "activeCases": 12,
-    "discharged": 0,
-    "death": 1
-  },
-  "ondo": {
-    "confirmedCases": 13,
-    "activeCases": 10,
-    "discharged": 3,
-    "death": 0
-  },
-  "kebbi": {
-    "confirmedCases": 12,
-    "activeCases": 12,
-    "discharged": 0,
-    "death": 0
-  },
-  "zamfara": {
-    "confirmedCases": 12,
-    "activeCases": 11,
-    "discharged": 0,
-    "death": 1
-  },
-  "ekiti": {
-    "confirmedCases": 11,
-    "activeCases": 8,
-    "discharged": 2,
-    "death": 1
-  },
-  "nasarawa": {
-    "confirmedCases": 9,
-    "activeCases": 9,
-    "discharged": 0,
-    "death": 0
-  },
-  "enugu": {
-    "confirmedCases": 8,
-    "activeCases": 6,
-    "discharged": 2,
-    "death": 0
-  },
-  "taraba": {
-    "confirmedCases": 8,
-    "activeCases": 8,
-    "discharged": 0,
-    "death": 0
-  },
-  "jigawa": {
-    "confirmedCases": 7,
-    "activeCases": 6,
-    "discharged": 0,
-    "death": 1
-  },
-  "bayelsa": {
-    "confirmedCases": 5,
-    "activeCases": 5,
-    "discharged": 0,
-    "death": 0
-  },
-  "ebonyi": {
-    "confirmedCases": 5,
-    "activeCases": 5,
-    "discharged": 0,
-    "death": 0
-  },
-  "adamawa": {
-    "confirmedCases": 4,
-    "activeCases": 4,
-    "discharged": 0,
-    "death": 0
+    "confirmedCases": 19601,
+    "activeCases": 2395,
+    "discharged": 17049,
+    "death": 157
   },
   "plateau": {
-    "confirmedCases": 3,
+    "confirmedCases": 9019,
+    "activeCases": 63,
+    "discharged": 8899,
+    "death": 57
+  },
+  "kaduna": {
+    "confirmedCases": 8896,
+    "activeCases": 69,
+    "discharged": 8762,
+    "death": 65
+  },
+  "rivers": {
+    "confirmedCases": 6877,
+    "activeCases": 61,
+    "discharged": 6717,
+    "death": 99
+  },
+  "oyo": {
+    "confirmedCases": 6835,
+    "activeCases": 498,
+    "discharged": 6221,
+    "death": 116
+  },
+  "edo": {
+    "confirmedCases": 4873,
+    "activeCases": 47,
+    "discharged": 4634,
+    "death": 192
+  },
+  "ogun": {
+    "confirmedCases": 4613,
+    "activeCases": 170,
+    "discharged": 4394,
+    "death": 49
+  },
+  "kano": {
+    "confirmedCases": 3896,
+    "activeCases": 23,
+    "discharged": 3763,
+    "death": 110
+  },
+  "ondo": {
+    "confirmedCases": 3162,
+    "activeCases": 1007,
+    "discharged": 2094,
+    "death": 61
+  },
+  "kwara": {
+    "confirmedCases": 3070,
+    "activeCases": 201,
+    "discharged": 2814,
+    "death": 55
+  },
+  "delta": {
+    "confirmedCases": 2599,
+    "activeCases": 784,
+    "discharged": 1744,
+    "death": 71
+  },
+  "osun": {
+    "confirmedCases": 2519,
+    "activeCases": 27,
+    "discharged": 2440,
+    "death": 52
+  },
+  "nasarawa": {
+    "confirmedCases": 2317,
+    "activeCases": 1931,
+    "discharged": 373,
+    "death": 13
+  },
+  "enugu": {
+    "confirmedCases": 2221,
+    "activeCases": 327,
+    "discharged": 1865,
+    "death": 29
+  },
+  "katsina": {
+    "confirmedCases": 2082,
+    "activeCases": 18,
+    "discharged": 2030,
+    "death": 34
+  },
+  "gombe": {
+    "confirmedCases": 2030,
     "activeCases": 3,
-    "discharged": 0,
-    "death": 0
+    "discharged": 1983,
+    "death": 44
   },
-  "niger": {
-    "confirmedCases": 3,
-    "activeCases": 3,
-    "discharged": 0,
-    "death": 0
-  },
-  "imo": {
-    "confirmedCases": 2,
-    "activeCases": 2,
-    "discharged": 0,
-    "death": 0
-  },
-  "abia": {
-    "confirmedCases": 2,
-    "activeCases": 2,
-    "discharged": 0,
-    "death": 0
+  "ebonyi": {
+    "confirmedCases": 1993,
+    "activeCases": 23,
+    "discharged": 1938,
+    "death": 32
   },
   "anambra": {
-    "confirmedCases": 1,
-    "activeCases": 0,
-    "discharged": 1,
-    "death": 0
+    "confirmedCases": 1909,
+    "activeCases": 64,
+    "discharged": 1826,
+    "death": 19
+  },
+  "akwa_ibom": {
+    "confirmedCases": 1747,
+    "activeCases": 369,
+    "discharged": 1364,
+    "death": 14
+  },
+  "abia": {
+    "confirmedCases": 1649,
+    "activeCases": 9,
+    "discharged": 1619,
+    "death": 21
+  },
+  "imo": {
+    "confirmedCases": 1642,
+    "activeCases": 70,
+    "discharged": 1535,
+    "death": 37
+  },
+  "bauchi": {
+    "confirmedCases": 1516,
+    "activeCases": 75,
+    "discharged": 1424,
+    "death": 17
+  },
+  "borno": {
+    "confirmedCases": 1327,
+    "activeCases": 89,
+    "discharged": 1200,
+    "death": 38
   },
   "benue": {
-    "confirmedCases": 1,
-    "activeCases": 1,
-    "discharged": 0,
-    "death": 0
+    "confirmedCases": 1188,
+    "activeCases": 575,
+    "discharged": 591,
+    "death": 22
+  },
+  "adamawa": {
+    "confirmedCases": 1051,
+    "activeCases": 745,
+    "discharged": 274,
+    "death": 32
+  },
+  "niger": {
+    "confirmedCases": 930,
+    "activeCases": 496,
+    "discharged": 417,
+    "death": 17
+  },
+  "taraba": {
+    "confirmedCases": 910,
+    "activeCases": 24,
+    "discharged": 864,
+    "death": 22
+  },
+  "ekiti": {
+    "confirmedCases": 864,
+    "activeCases": 46,
+    "discharged": 807,
+    "death": 11
+  },
+  "bayelsa": {
+    "confirmedCases": 846,
+    "activeCases": 36,
+    "discharged": 784,
+    "death": 26
+  },
+  "sokoto": {
+    "confirmedCases": 774,
+    "activeCases": 5,
+    "discharged": 741,
+    "death": 28
+  },
+  "jigawa": {
+    "confirmedCases": 513,
+    "activeCases": 12,
+    "discharged": 485,
+    "death": 16
+  },
+  "kebbi": {
+    "confirmedCases": 442,
+    "activeCases": 34,
+    "discharged": 392,
+    "death": 16
+  },
+  "cross_river": {
+    "confirmedCases": 366,
+    "activeCases": 8,
+    "discharged": 341,
+    "death": 17
+  },
+  "yobe": {
+    "confirmedCases": 313,
+    "activeCases": 20,
+    "discharged": 284,
+    "death": 9
+  },
+  "zamfara": {
+    "confirmedCases": 232,
+    "activeCases": 3,
+    "discharged": 221,
+    "death": 8
+  },
+  "kogi": {
+    "confirmedCases": 5,
+    "activeCases": 0,
+    "discharged": 3,
+    "death": 2
   },
   "total": {
-    "confirmedCases": 2388,
-    "activeCases": 1918,
-    "discharged": 385,
-    "death": 85
+    "confirmedCases": 162275,
+    "activeCases": 10357,
+    "discharged": 149882,
+    "death": 2036
   }
 }

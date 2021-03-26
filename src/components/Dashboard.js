@@ -1,5 +1,5 @@
 import 'regenerator-runtime/runtime'
-import React, { useState, useEffect, useReducer, createContext } from 'react'
+import React, { useState, useEffect, createContext } from 'react'
 import socketClient from 'socket.io-client'
 import dotenv from 'dotenv'
 import axios from 'axios'
@@ -45,6 +45,7 @@ const Dashboard = () => {
     // Prevent Firebase from throwing error about multiple VAPID keys being set
     if (DOMInit) {
       messaging.usePublicVapidKey(FIREBASE_VAPID_KEY)
+      // TODO: Migrate notification settings to IndexedDB as LocalStorage is synchronous/blocking
       notificationStatus = JSON.parse(localStorage.getItem(NOTIFICATION_STATUS))
       subscriptionStatus = JSON.parse(localStorage.getItem(SUBSCRIPTION_STATUS))
 
@@ -121,9 +122,9 @@ const Dashboard = () => {
       localStorage.setItem(REGISTRATION_TOKEN, registrationToken)
       setNotificationStatus(true)
       showNotificationPopup(false)
+      setSubscriptionStatus(true)
 
       subscribeUser()
-      setSubscriptionStatus(true)
     } catch (error) {
       if (error.code === 'messaging/permission-blocked') {
         // TODO: Display notification on how users can enable notifications later

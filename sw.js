@@ -1,21 +1,17 @@
 import firebaseInit from './src/config/firebaseInit'
 
-const CACHE_VERSION = 4
+const CACHE_VERSION = 1 
 const CACHE_NAME = `cache-v${CACHE_VERSION}`
-
-let messaging = firebaseInit.messaging()
 
 // In order to prevent the Firebase error: (messaging/only-available-in-sw).
 // The error is caused by worker scripts being executed twice, first in the global 'window' context
 // Then secondly in the context of the worker
-
-if (typeof window === undefined) {
-  messaging.setBackgroundMessageHandler(payload => {
-    console.log('[firebase-messaging-sw.js] Received background message ', payload);
-    // Customize notification here
-    const notificationTitle = 'Background Message Title';
+if (typeof window === 'undefined') {
+  const messaging = firebaseInit.messaging()
+  messaging.setBackgroundMessageHandler(({ title, body }) => {
+    const notificationTitle = title;
     const notificationOptions = {
-      body: 'Background Message body.'
+      body
     };
   
     return self.registration.showNotification(notificationTitle,

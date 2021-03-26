@@ -1,5 +1,5 @@
-*, 
-*::before, 
+*,
+*::before,
 *::after {
   box-sizing: border-box;
   margin: 0;
@@ -37,7 +37,7 @@ body {
 }
 
 .text-green {
-  color: #45Be9B;
+  color: #45be9b;
 }
 
 .dashboard {
@@ -68,6 +68,7 @@ body {
   background: transparent;
   margin-right: -15px;
   color: inherit;
+  cursor: pointer;
 }
 
 .notification-menu-wrapper {
@@ -87,7 +88,7 @@ body {
   padding: 0;
 }
 
-.menu-trigger[data-menu-open="true"] + .panel.notification-menu {
+.menu-trigger[data-menu-open='true'] + .panel.notification-menu {
   display: flex;
   height: auto;
   max-height: 65px;
@@ -129,10 +130,10 @@ body {
 }
 
 .toggle-switch.off {
-  opacity: .45;
+  opacity: 0.45;
 }
 
-.toggle-switch input[type="checkbox"] {
+.toggle-switch input[type='checkbox'] {
   width: 0;
   height: 0;
   opacity: 0;
@@ -155,7 +156,7 @@ body {
 }
 
 .toggle-switch .knob + span {
-  position: absolute;    
+  position: absolute;
   right: 6px;
   top: 2.5px;
 }
@@ -285,13 +286,13 @@ body {
 
 .summary-table tbody tr {
   margin-right: 20px;
-  border-bottom: 1px solid rgba(214, 219, 223, .5);
+  border-bottom: 1px solid rgba(214, 219, 223, 0.5);
   cursor: pointer;
   align-items: center;
 }
 
 .summary-table tbody tr:hover {
-  background: rgb(244, 248, 250, .6);
+  background: rgb(244, 248, 250, 0.6);
 }
 
 .summary-table thead tr th,
@@ -322,8 +323,8 @@ body {
 
 .summary-table tbody::-webkit-scrollbar-thumb {
   border-radius: 4px;
-  background-color: rgba(0, 0, 0, .5);
-  box-shadow: 0 0 1px rgba(255, 255, 255, .5);
+  background-color: rgba(0, 0, 0, 0.5);
+  box-shadow: 0 0 1px rgba(255, 255, 255, 0.5);
 }
 
 .map-legends-wrapper {
@@ -367,7 +368,7 @@ body {
   display: none;
 }
 
-.panel.popup-bar-wrapper[data-visible="true"] {
+.panel.popup-bar-wrapper[data-visible='true'] {
   display: initial;
   transform: translateY(0);
   transition: all 500ms ease-in;
@@ -381,7 +382,7 @@ body {
   margin-right: 20px;
 }
 
-.notif-popup-overlay[data-popup-open="true"] {
+.notif-popup-overlay[data-popup-open='true'] {
   position: fixed;
   top: 0;
   bottom: 0;
@@ -423,7 +424,7 @@ body {
     flex-basis: calc(50% - 20px);
     margin-bottom: 20px;
   }
-  
+
   .panel.summary-card:nth-of-type(odd) {
     margin-right: 20px;
   }
@@ -470,7 +471,7 @@ body {
     flex-basis: 35%;
     padding: 25px;
     overflow-y: hidden;
-    flex-basis: 40%;
+    flex-basis: 50%;
   }
 
   .panel.summary-card {
@@ -502,7 +503,7 @@ body {
   }
 
   .map-container svg {
-    margin-top: 60px;
+    margin-top: 30px;
   }
 
   .summary-table tbody {
@@ -512,9 +513,6 @@ body {
 
 @media screen and (min-width: 1281px) {
   .map-legends-wrapper {
-    display: block;
-    position: absolute;
-    right: 20px;
     bottom: 56px;
     width: auto;
   }
@@ -527,7 +525,7 @@ body {
   }
 
   .panel.summary-table {
-    flex-basis: 45%;
+    flex-basis: 50%;
   }
 }
 
