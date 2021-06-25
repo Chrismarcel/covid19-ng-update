@@ -3,6 +3,7 @@ import { ComposableMap, Geographies, Geography } from 'react-simple-maps'
 import { slugifyStr, generateChloropheth, formatNumber } from '../../server/utils'
 import ReactTooltip from 'react-tooltip'
 import MapLegends from './MapLegends.js'
+import mapOfNigeria from '../map/map-of-nigeria.json'
 
 const MapChart = ({ stats }) => {
   const [stateName, setStateName] = useState('')
@@ -11,13 +12,13 @@ const MapChart = ({ stats }) => {
   return (
     <section className="map-container panel">
       <ComposableMap
-        data-tip=""
+        data-tip
         projection="geoAzimuthalEqualArea"
         projectionConfig={{
           rotate: [-9.2, -8.5],
           scale: 3000,
         }}>
-        <Geographies geography="/src/map/map-of-nigeria.json">
+        <Geographies geography={mapOfNigeria}>
           {({ geographies }) =>
             geographies.map((geo) => {
               const {

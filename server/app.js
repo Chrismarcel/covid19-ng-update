@@ -32,6 +32,19 @@ app.use('/src', express.static('./src'))
 
 const topic = 'covid19updates'
 
+// firebaseInstance
+//   .messaging()
+//   .send({
+//     data: {
+//       title: 'Covid-19 NG Update',
+//       body: 'Random Body',
+//     },
+//     topic,
+//   })
+//   .then((response) => {
+//     return response
+//   })
+
 app.post('/update', (req, res) => {
   const { stats } = req.body
   const payload = {
@@ -41,7 +54,6 @@ app.post('/update', (req, res) => {
     },
     topic,
   }
-  socket.emit('updated_cases', { message: stats })
 
   firebaseInstance
     .messaging()
@@ -50,6 +62,7 @@ app.post('/update', (req, res) => {
       return response
     })
 
+  socket.emit('updated_cases', { message: stats })
   return res.end()
 })
 

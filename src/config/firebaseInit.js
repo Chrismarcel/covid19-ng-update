@@ -1,5 +1,6 @@
 import firebase from 'firebase/app'
 import 'firebase/messaging'
+import 'firebase/analytics'
 
 const firebaseInit = firebase.initializeApp({
   apiKey: "AIzaSyB_W2xCtpsurZt2boSmdlPNzRf81Do21tI",
