@@ -1,17 +1,10 @@
 import React, { useState, useEffect } from 'react'
 import ToggleSwitch from './ToggleSwitch'
 import { MoreVertical } from 'react-feather'
+import { isChildNode } from '../../server/utils'
 
 const Header = () => {
   const [menuOpen, setMenuOpen] = useState(false)
-
-  const isChildNode = (parentNode, childNode) => {
-    if ('contains' in parentNode) {
-      return parentNode.contains(childNode);
-    } else {
-      return parentNode.compareDocumentPosition(childNode) % 16 !== 4;
-    }
-  }
 
   const notificationMenuListener = ({ target }) => {
     const menuWrapper = document.getElementById("notification-menu")

@@ -1,8 +1,11 @@
 import React from 'react'
-import Dashboard from './components/Dashboard';
+import Dashboard from './components/Dashboard'
+import ErrorBoundary from './components/ErrorBoundary'
 
 const App = () => (
-  <Dashboard />
+  <ErrorBoundary>
+    <Dashboard />
+  </ErrorBoundary>
 )
 
 export default App

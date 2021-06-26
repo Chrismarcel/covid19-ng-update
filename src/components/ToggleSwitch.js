@@ -3,30 +3,26 @@ import { NotificationContext } from './Dashboard'
 import { Bell, BellOff } from 'react-feather'
 
 const ToggleSwitch = () => {
-  const { notificationEnabled, handleSubscription, handlePermission } = useContext(NotificationContext)
-  const [alertOn, setAlertOn] = useState(notificationEnabled)
+  const { alertStatus, handlePermission } = useContext(NotificationContext)
+  const [showAlert, setShowAlert] = useState(alertStatus)
 
   const requestPermission = () => {
+    setShowAlert(!showAlert)
     if ('Notification' in window) {
       Notification.requestPermission((permission) => {
         if (permission === 'granted') {
-          handlePermission()
+          handlePermission(!showAlert)
         }
       })
     }
   }
 
-  const handleSwitchToggle = (evt) => {
-    setAlertOn(evt.target.checked)
-    handleSubscription(evt.target.checked)
-  }
-
   return (
-    <label className={`toggle-switch ${alertOn ? 'on' : 'off'}`}>
-      <input type="checkbox" onChange={handleSwitchToggle} />
+    <label className={`toggle-switch ${showAlert ? 'on' : 'off'}`}>
+      <input type="checkbox" onChange={requestPermission} />
       <div className="toggle-slider">
-        <div className="knob">{alertOn ? <Bell size={16} /> : <BellOff size={16} />}</div>
-        <span>{alertOn ? 'On' : 'Off'}</span>
+        <div className="knob">{showAlert ? <Bell size={16} /> : <BellOff size={16} />}</div>
+        <span>{showAlert ? 'On' : 'Off'}</span>
       </div>
     </label>
   )

@@ -1,16 +1,15 @@
 import path from 'path'
-import fs from 'fs'
+import fs from 'fs-extra'
 import $ from 'cheerio'
 import React from 'react'
 import { StaticRouter } from 'react-router-dom'
 import { renderToString } from 'react-dom/server'
 import App from '../../src/App'
-import cases from '../cases.json'
 
 const templatePath = path.join(__dirname, '..', 'client', 'index.html')
 const HTMLTemplateString = fs.readFileSync(`${templatePath}`)
 
-const serializedData = JSON.stringify(cases)
+const cases = fs.readFileSync(path.join(__dirname, '../..', 'server', 'cases.txt'))
 
 const handleSSR = (req) => {
   const renderedTemplate = $.load(HTMLTemplateString)
@@ -26,7 +25,7 @@ const handleSSR = (req) => {
 
   renderedTemplate('body').after(`
     <script>
-      window.__INITIAL_DATA__ = ${serializedData}
+      window.__INITIAL_DATA__ = ${cases}
     </script>`)
 
   return renderedTemplate.html()

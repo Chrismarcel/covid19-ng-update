@@ -100,6 +100,14 @@ const formatNumber = (number) => {
   return new Intl.NumberFormat().format(number)
 }
 
+const isChildNode = (parentNode, childNode) => {
+  if ('contains' in parentNode) {
+    return parentNode.contains(childNode);
+  } else {
+    return parentNode.compareDocumentPosition(childNode) % 16 !== 4;
+  }
+}
+
 module.exports = {
   generateChloropheth,
   slugifyStr,
@@ -108,4 +116,5 @@ module.exports = {
   COLOR_BANDS,
   allStates,
   formatNumber,
+  isChildNode
 }

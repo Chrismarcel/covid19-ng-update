@@ -395,6 +395,25 @@ body {
   z-index: 200;
 }
 
+.error-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.error-panel {
+  width: 80%;
+  max-width: 800px;
+  height: 100px;
+  padding: 70px 40px;
+  font-size: 1.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 700;
+}
+
 @keyframes moveText {
   from {
     opacity: 0;

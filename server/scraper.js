@@ -5,7 +5,9 @@ const fs = require('fs-extra')
 const { slugifyStr } = require('./utils')
 
 const pageUrl = 'http://covid19.ncdc.gov.ng/'
-const filePath = `${__dirname}/cases.json`
+// For some very weird reasons, writing to .json file prevents the push notification from being triggered
+// Spent a lot of time trying to figure out what the issue is, I had to resort to using a .txt file instead
+const filePath = `${__dirname}/cases.txt`
 
 const extractValueFromCell = (cell) => {
   const value = cell.children[0].data
@@ -62,7 +64,7 @@ const scrapePage = async () => {
     // If there's a new update
     if (prevTotal.confirmedCases !== currentTotal.confirmedCases) {
       const updateStatsEndpoint = `${process.env.HOST}/update`
-      await fs.writeFile(filePath, JSON.stringify(stats, null, 2))
+      await fs.writeFile(filePath, JSON.stringify(stats))
       await axios.post(updateStatsEndpoint, { stats })
     }
   } catch (error) {
