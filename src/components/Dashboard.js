@@ -9,6 +9,7 @@ import SummaryTable from './SummaryTable'
 import firebaseInit, { FIREBASE_VAPID_KEY } from '../config/firebaseInit'
 import Header from './Header'
 import { LOCAL_STORAGE_KEYS } from '../constants'
+import AreaChartPanel from './Charts'
 
 dotenv.config()
 
@@ -134,6 +135,9 @@ const Dashboard = () => {
           <main className="dashboard">
             <Header />
             <SummmaryPanel total={stats.total} />
+            <section>
+              <AreaChartPanel />
+            </section>
             <section className="map-stats-wrapper">
               <MapChart stats={stats} />
               <SummaryTable stats={stats} />

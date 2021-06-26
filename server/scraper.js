@@ -4,7 +4,7 @@ const axios = require('axios')
 const fs = require('fs-extra')
 const { slugifyStr } = require('./utils')
 
-const pageUrl = 'http://covid19.ncdc.gov.ng/'
+const urlToScrape = 'http://covid19.ncdc.gov.ng/'
 // For some very weird reasons, writing to .json file prevents the push notification from being triggered
 // Spent a lot of time trying to figure out what the issue is, I had to resort to using a .txt file instead
 const filePath = `${__dirname}/cases.txt`
@@ -14,12 +14,18 @@ const extractValueFromCell = (cell) => {
   return value.replace(/[,\n]/g, '').trim()
 }
 
+// I noticed some states returned negative value
+// As on the 27th of June, 2021, Abia state returned a value of -2 😐
+const pickMaxValue = (value) => {
+  return Math.max(0, Number(extractValueFromCell(value)))
+}
+
 const scrapePage = async () => {
   try {
     const casesFile = await fs.readFile(filePath)
     const { total: prevTotal } = JSON.parse(casesFile)
 
-    const response = await axios.get(pageUrl)
+    const response = await axios.get(urlToScrape)
     const $ = cheerio.load(response.data, { ignoreWhitespace: true })
     const statsByStates = $('table#custom1 tbody tr')
 
@@ -32,10 +38,10 @@ const scrapePage = async () => {
           if (index === 0) {
             const state = slugifyStr(extractValueFromCell(cell[index]))
             data[state] = {}
-            data[state].confirmedCases = Number(extractValueFromCell(cell[index + 1]))
-            data[state].activeCases = Number(extractValueFromCell(cell[index + 2]))
-            data[state].discharged = Number(extractValueFromCell(cell[index + 3]))
-            data[state].death = Number(extractValueFromCell(cell[index + 4]))
+            data[state].confirmedCases = pickMaxValue(cell[index + 1])
+            data[state].activeCases = pickMaxValue(cell[index + 2])
+            data[state].discharged = pickMaxValue(cell[index + 3])
+            data[state].death = pickMaxValue(cell[index + 4])
           }
         })
       })

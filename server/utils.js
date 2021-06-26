@@ -56,46 +56,6 @@ const reverseSlug = (str) => str.replace(/_/g, ' ')
 
 const trimStr = (element) => element.text().trim()
 
-const allStates = [
-  'fct',
-  'abia',
-  'adamawa',
-  'akwa_ibom',
-  'anambra',
-  'bauchi',
-  'bayelsa',
-  'benue',
-  'borno',
-  'cross_river',
-  'delta',
-  'ebonyi',
-  'enugu',
-  'edo',
-  'ekiti',
-  'gombe',
-  'imo',
-  'jigawa',
-  'kaduna',
-  'kano',
-  'katsina',
-  'kebbi',
-  'kogi',
-  'kwara',
-  'lagos',
-  'nasarawa',
-  'niger',
-  'ogun',
-  'ondo',
-  'osun',
-  'oyo',
-  'plateau',
-  'rivers',
-  'sokoto',
-  'taraba',
-  'yobe',
-  'zamfara',
-]
-
 const formatNumber = (number) => {
   return new Intl.NumberFormat().format(number)
 }
@@ -114,7 +74,6 @@ module.exports = {
   trimStr,
   reverseSlug,
   COLOR_BANDS,
-  allStates,
   formatNumber,
   isChildNode,
 }
