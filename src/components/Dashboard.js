@@ -3,13 +3,13 @@ import React, { useState, useEffect, createContext } from 'react'
 import socketClient from 'socket.io-client'
 import dotenv from 'dotenv'
 import axios from 'axios'
-import MapChart from './MapChart'
+import CountryMap from './CountryMap'
 import SummmaryPanel from './SummaryBlock'
 import SummaryTable from './SummaryTable'
 import firebaseInit, { FIREBASE_VAPID_KEY } from '../config/firebaseInit'
 import Header from './Header'
 import { LOCAL_STORAGE_KEYS } from '../constants'
-import AreaChartPanel from './Charts'
+import { LineChart, PieChart } from './Charts'
 
 dotenv.config()
 
@@ -135,11 +135,12 @@ const Dashboard = () => {
           <main className="dashboard">
             <Header />
             <SummmaryPanel total={stats.total} />
-            <section>
-              <AreaChartPanel />
+            <section className="charts-container">
+              <LineChart stats={stats} />
+              <PieChart stats={stats} />
             </section>
             <section className="map-stats-wrapper">
-              <MapChart stats={stats} />
+              <CountryMap stats={stats} />
               <SummaryTable stats={stats} />
             </section>
           </main>

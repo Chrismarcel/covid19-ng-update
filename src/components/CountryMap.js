@@ -5,7 +5,7 @@ import ReactTooltip from 'react-tooltip'
 import MapLegends from './MapLegends.js'
 import mapOfNigeria from '../map/map-of-nigeria.json'
 
-const MapChart = ({ stats }) => {
+const CountryMap = ({ stats }) => {
   const [stateName, setStateName] = useState('')
   const slug = stateName === 'Federal Capital Territory' ? 'fct' : slugifyStr(stateName)
 
@@ -58,4 +58,4 @@ const MapChart = ({ stats }) => {
   )
 }
 
-export default memo(MapChart)
+export default memo(CountryMap)
