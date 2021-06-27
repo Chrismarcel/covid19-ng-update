@@ -33,10 +33,17 @@ const TableHeadRow = ({ data, onSort }) => {
       <tr>
         {data.map(({ columnName, dataKey }) => (
           <th key={dataKey} onClick={() => onTableHeadClick(dataKey, ascending)}>
-            {columnName}
-            {dataKey === activeColumn && (
-              <ChevronIcon ascending={ascending} size={20} strokeWidth={2} />
-            )}
+            <p className="row-data">
+              {columnName}
+              {dataKey === activeColumn && (
+                <ChevronIcon
+                  className="active-table-head"
+                  ascending={ascending}
+                  size={20}
+                  strokeWidth={2}
+                />
+              )}
+            </p>
           </th>
         ))}
       </tr>
@@ -76,11 +83,7 @@ const SummaryTable = ({ stats }) => {
           }}
         />
       </div>
-      {!filteredStats.length && (
-        <p>
-          <strong>No results found</strong>
-        </p>
-      )}
+      {!filteredStats.length && <p className="no-results">No results found</p>}
       {filteredStats.length > 0 && (
         <table>
           <TableHeadRow
