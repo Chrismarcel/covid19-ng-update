@@ -240,6 +240,11 @@ input.error {
   justify-content: center;
 }
 
+.pie-chart-legend {
+  font-size: 13px;
+  margin-right: 10px;
+}
+
 .recovered-cases .summary-card-value {
   color: #1a68e6;
 }

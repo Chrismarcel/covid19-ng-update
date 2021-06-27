@@ -10,6 +10,7 @@ import {
   PieChart as RPieChart,
   Pie,
   Cell,
+  Legend,
 } from 'recharts'
 import { generatePieChartsData, reverseSlug, toSentenceCase } from '../../server/utils'
 import { DATA_KEYS } from '../constants'
@@ -49,6 +50,7 @@ export const LineChart = ({ stats }) => {
           />
           <YAxis />
           <Tooltip />
+          <Legend wrapperStyle={{ bottom: -10 }} />
           <Line type="monotone" dataKey="Confirmed cases" stroke="#1a1b25" />
           <Line type="monotone" dataKey="Active cases" stroke="#757166" />
           <Line type="monotone" dataKey="Discharged" stroke="#1a68e6" />
@@ -59,9 +61,9 @@ export const LineChart = ({ stats }) => {
   )
 }
 
-const formatTooltip = (value, label, { data, total }) => {
+const formatTooltip = ({ value, index, data, total }) => {
   const toPercentage = (value / total) * 100
-  const tooltipLabel = data[label].text
+  const tooltipLabel = data[index].text
   const tooltipValue = `${value} (${toPercentage.toFixed(2)}%)`
   return [tooltipValue, `${tooltipLabel} cases`]
 }
@@ -73,6 +75,11 @@ export const PieChart = ({ stats }) => {
     <div className="panel chart-wrapper pie-chart">
       <ResponsiveContainer>
         <RPieChart width="100%" height={400}>
+          <Legend
+            iconType="circle"
+            wrapperStyle={{ bottom: -10 }}
+            formatter={(index) => <span className="pie-chart-legend">{data[index].text}</span>}
+          />
           <Pie
             data={data}
             innerRadius="55%"
@@ -84,9 +91,7 @@ export const PieChart = ({ stats }) => {
               <Cell key={data[index].color} fill={data[index].color} />
             ))}
           </Pie>
-          <Tooltip
-            formatter={(value, label) => formatTooltip(value, label, { data, total })}
-          />
+          <Tooltip formatter={(value, index) => formatTooltip({ value, index, data, total })} />
         </RPieChart>
       </ResponsiveContainer>
     </div>
