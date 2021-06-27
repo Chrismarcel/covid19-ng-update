@@ -1,6 +1,6 @@
 import React, { useState, memo } from 'react'
 import { ComposableMap, Geographies, Geography } from 'react-simple-maps'
-import { slugifyStr, generateChloropheth, formatNumber } from '../../server/utils'
+import { slugifyStr, generateChloropheth, formatNumber } from '../../utils'
 import ReactTooltip from 'react-tooltip'
 import MapLegends from './MapLegends.js'
 import mapOfNigeria from '../map/map-of-nigeria.json'

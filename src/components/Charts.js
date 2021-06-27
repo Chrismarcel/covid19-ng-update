@@ -12,7 +12,7 @@ import {
   Cell,
   Legend,
 } from 'recharts'
-import { generatePieChartsData, reverseSlug, toSentenceCase } from '../../server/utils'
+import { generatePieChartsData, reverseSlug, toSentenceCase } from '../../utils'
 import { DATA_KEYS } from '../constants'
 
 const mergeStatsWithState = (stats) => {

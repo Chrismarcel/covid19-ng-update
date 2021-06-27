@@ -1,5 +1,5 @@
 import React from 'react'
-import { COLOR_BANDS } from '../../server/utils'
+import { COLOR_BANDS } from '../../utils'
 
 const legends = Object.values(COLOR_BANDS)
 

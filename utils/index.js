@@ -1,4 +1,4 @@
-const { DATA_KEYS } = require('../src/constants')
+const { DATA_KEYS } = require('./src/constants')
 
 const COLOR_BANDS = {
   LESS_THAN_101: { color: '#ff6347', text: '1 - 100' },

@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { reverseSlug, formatNumber } from '../../server/utils'
+import { reverseSlug, formatNumber } from '../../utils'
 import SearchInput from './SearchInput'
 import { ChevronDown, ChevronUp } from 'react-feather'
 import { DATA_KEYS } from '../constants'
@@ -12,8 +12,8 @@ const tableHeadData = [
   { columnName: 'Deaths', dataKey: DATA_KEYS.DEATHS },
 ]
 
-const ChevronIcon = ({ ascending, ...otherProps }) => {
-  return ascending ? <ChevronUp {...otherProps} /> : <ChevronDown {...otherProps} />
+const ChevronIcon = ({ ascending, ...iconProps }) => {
+  return ascending ? <ChevronUp {...iconProps} /> : <ChevronDown {...iconProps} />
 }
 
 const TableHeadRow = ({ data, onSort }) => {
