@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { reverseSlug, formatNumber } from '../../utils'
+import { reverseSlug, formatNumber } from '../../src/utils'
 import SearchInput from './SearchInput'
 import { ChevronDown, ChevronUp } from 'react-feather'
 import { DATA_KEYS } from '../constants'
@@ -22,7 +22,7 @@ const TableHeadRow = ({ data, onSort }) => {
 
   const onTableHeadClick = (dataKey, ascending) => {
     setActiveColumn(dataKey)
-    setAscending(!ascending)
+    setAscending(dataKey !== activeColumn ? ascending : !ascending)
     if (onSort) {
       onSort({ dataKey, ascending })
     }

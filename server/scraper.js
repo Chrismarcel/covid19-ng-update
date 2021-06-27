@@ -2,7 +2,7 @@ require('dotenv').config()
 const cheerio = require('cheerio')
 const axios = require('axios')
 const fs = require('fs-extra')
-const { slugifyStr } = require('../utils')
+const { slugifyStr } = require('../src/utils')
 const { DATA_KEYS } = require('../src/constants')
 
 const urlToScrape = 'http://covid19.ncdc.gov.ng/'

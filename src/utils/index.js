@@ -1,4 +1,4 @@
-const { DATA_KEYS } = require('./src/constants')
+const { DATA_KEYS } = require('../constants')
 
 const COLOR_BANDS = {
   LESS_THAN_101: { color: '#ff6347', text: '1 - 100' },
@@ -78,16 +78,10 @@ const generatePieChartsData = (stats) => {
     if (stat[DATA_KEYS.CONFIRMED_CASES] > 500 && stat[DATA_KEYS.CONFIRMED_CASES] < 1001) {
       pieChartData.LESS_THAN_1001.value += 1
     }
-    if (
-      stat[DATA_KEYS.CONFIRMED_CASES] > 1000 &&
-      stat[DATA_KEYS.CONFIRMED_CASES] < 3001
-    ) {
+    if (stat[DATA_KEYS.CONFIRMED_CASES] > 1000 && stat[DATA_KEYS.CONFIRMED_CASES] < 3001) {
       pieChartData.LESS_THAN_3001.value += 1
     }
-    if (
-      stat[DATA_KEYS.CONFIRMED_CASES] > 3000 &&
-      stat[DATA_KEYS.CONFIRMED_CASES] < 5001
-    ) {
+    if (stat[DATA_KEYS.CONFIRMED_CASES] > 3000 && stat[DATA_KEYS.CONFIRMED_CASES] < 5001) {
       pieChartData.LESS_THAN_5001.value += 1
     }
     if (stat[DATA_KEYS.CONFIRMED_CASES] > 5000) {

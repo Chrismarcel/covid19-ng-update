@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import ToggleSwitch from './ToggleSwitch'
 import { MoreVertical } from 'react-feather'
-import { isChildNode } from '../../utils'
+import { isChildNode } from '../../src/utils'
 
 const Header = () => {
   const [menuOpen, setMenuOpen] = useState(false)

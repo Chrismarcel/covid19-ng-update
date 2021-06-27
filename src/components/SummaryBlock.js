@@ -1,5 +1,5 @@
 import React from 'react'
-import { formatNumber } from '../../utils'
+import { formatNumber } from '../../src/utils'
 import { DATA_KEYS } from '../constants'
 import SummaryCard from './SummaryCard'
 
