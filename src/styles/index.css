@@ -13,6 +13,22 @@ body {
   color: #1a1b25;
 }
 
+input {
+  min-height: 40px;
+  border: 2px solid;
+  border-radius: 4px;
+  padding: 0 15px;
+  font-family: inherit;
+}
+
+input.default {
+  border-color: #2c8c99;
+}
+
+input.error {
+  border-color: #e34234;
+}
+
 .btn {
   width: 120px;
   height: 50px;
@@ -251,6 +267,16 @@ body {
 .panel.map-container,
 .panel.summary-table {
   max-height: 700px;
+}
+
+.search-container {
+  margin-bottom: 5px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.search-field-wrapper {
+  margin-right: 25px;
 }
 
 .panel.summary-table {
@@ -548,7 +574,7 @@ body {
   }
 
   .summary-table tbody {
-    height: 620px;
+    height: 590px;
   }
 }
 

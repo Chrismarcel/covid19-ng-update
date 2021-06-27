@@ -58,7 +58,7 @@ export const LineChart = ({ stats }) => {
   )
 }
 
-const formatTooltip = (value, label, total) => {
+const formatTooltip = (value, label, {data, total}) => {
   const toPercentage = (value / total) * 100
   const tooltipLabel = data[label].text
   const tooltipValue = `${value} (${toPercentage.toFixed(2)}%)`
@@ -74,7 +74,7 @@ export const PieChart = ({ stats }) => {
         <RPieChart width="100%" height={400}>
           <Pie
             data={data}
-            innerRadius="60%"
+            innerRadius="55%"
             outerRadius="70%"
             fill="#8884d8"
             paddingAngle={5}
@@ -83,7 +83,7 @@ export const PieChart = ({ stats }) => {
               <Cell key={data[index].color} fill={data[index].color} />
             ))}
           </Pie>
-          <Tooltip formatter={(value, label) => formatTooltip(value, label, total)} />
+          <Tooltip formatter={(value, label) => formatTooltip(value, label, {data, total})} />
         </RPieChart>
       </ResponsiveContainer>
     </div>
