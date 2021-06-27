@@ -12,6 +12,7 @@ import {
   Cell,
 } from 'recharts'
 import { generatePieChartsData, reverseSlug, toSentenceCase } from '../../server/utils'
+import { DATA_KEYS } from '../constants'
 
 const mergeStatsWithState = (stats) => {
   const mergedData = []
@@ -20,10 +21,10 @@ const mergeStatsWithState = (stats) => {
     if (state !== 'total') {
       mergedData.push({
         state: toSentenceCase(stateName),
-        'Confirmed cases': data.confirmedCases,
-        'Active cases': data.activeCases,
-        Discharged: data.discharged,
-        Death: data.death,
+        'Confirmed cases': data[DATA_KEYS.CONFIRMED_CASES],
+        'Active cases': data[DATA_KEYS.ACTIVE_CASES],
+        Discharged: data[DATA_KEYS.DISCHARGED],
+        Deaths: data[DATA_KEYS.DEATHS],
       })
     }
   })
@@ -58,7 +59,7 @@ export const LineChart = ({ stats }) => {
   )
 }
 
-const formatTooltip = (value, label, {data, total}) => {
+const formatTooltip = (value, label, { data, total }) => {
   const toPercentage = (value / total) * 100
   const tooltipLabel = data[label].text
   const tooltipValue = `${value} (${toPercentage.toFixed(2)}%)`
@@ -83,7 +84,9 @@ export const PieChart = ({ stats }) => {
               <Cell key={data[index].color} fill={data[index].color} />
             ))}
           </Pie>
-          <Tooltip formatter={(value, label) => formatTooltip(value, label, {data, total})} />
+          <Tooltip
+            formatter={(value, label) => formatTooltip(value, label, { data, total })}
+          />
         </RPieChart>
       </ResponsiveContainer>
     </div>

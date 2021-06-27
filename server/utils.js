@@ -1,3 +1,5 @@
+const { DATA_KEYS } = require('../src/constants')
+
 const COLOR_BANDS = {
   LESS_THAN_101: { color: '#ff6347', text: '1 - 100' },
   LESS_THAN_501: { color: '#f88379', text: '101 - 500' },
@@ -67,22 +69,28 @@ const generatePieChartsData = (stats) => {
   let total = 0
 
   Object.values(stats).forEach((stat) => {
-    if (stat.confirmedCases < 101) {
+    if (stat[DATA_KEYS.CONFIRMED_CASES] < 101) {
       pieChartData.LESS_THAN_101.value += 1
     }
-    if (stat.confirmedCases > 100 && stat.confirmedCases < 501) {
+    if (stat[DATA_KEYS.CONFIRMED_CASES] > 100 && stat[DATA_KEYS.CONFIRMED_CASES] < 501) {
       pieChartData.LESS_THAN_501.value += 1
     }
-    if (stat.confirmedCases > 500 && stat.confirmedCases < 1001) {
+    if (stat[DATA_KEYS.CONFIRMED_CASES] > 500 && stat[DATA_KEYS.CONFIRMED_CASES] < 1001) {
       pieChartData.LESS_THAN_1001.value += 1
     }
-    if (stat.confirmedCases > 1000 && stat.confirmedCases < 3001) {
+    if (
+      stat[DATA_KEYS.CONFIRMED_CASES] > 1000 &&
+      stat[DATA_KEYS.CONFIRMED_CASES] < 3001
+    ) {
       pieChartData.LESS_THAN_3001.value += 1
     }
-    if (stat.confirmedCases > 3000 && stat.confirmedCases < 5001) {
+    if (
+      stat[DATA_KEYS.CONFIRMED_CASES] > 3000 &&
+      stat[DATA_KEYS.CONFIRMED_CASES] < 5001
+    ) {
       pieChartData.LESS_THAN_5001.value += 1
     }
-    if (stat.confirmedCases > 5000) {
+    if (stat[DATA_KEYS.CONFIRMED_CASES] > 5000) {
       pieChartData.GREATER_THAN_5000.value += 1
     }
 
@@ -101,5 +109,5 @@ module.exports = {
   formatNumber,
   isChildNode,
   toSentenceCase,
-  generatePieChartsData
+  generatePieChartsData,
 }

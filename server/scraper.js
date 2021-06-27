@@ -3,6 +3,7 @@ const cheerio = require('cheerio')
 const axios = require('axios')
 const fs = require('fs-extra')
 const { slugifyStr } = require('./utils')
+const { DATA_KEYS } = require('../src/constants')
 
 const urlToScrape = 'http://covid19.ncdc.gov.ng/'
 // For some very weird reasons, writing to .json file prevents the push notification from being triggered
@@ -38,10 +39,10 @@ const scrapePage = async () => {
           if (index === 0) {
             const state = slugifyStr(extractValueFromCell(cell[index]))
             data[state] = {}
-            data[state].confirmedCases = pickMaxValue(cell[index + 1])
-            data[state].activeCases = pickMaxValue(cell[index + 2])
-            data[state].discharged = pickMaxValue(cell[index + 3])
-            data[state].death = pickMaxValue(cell[index + 4])
+            data[state][DATA_KEYS.CONFIRMED_CASES] = pickMaxValue(cell[index + 1])
+            data[state][DATA_KEYS.ACTIVE_CASES] = pickMaxValue(cell[index + 2])
+            data[state][DATA_KEYS.DISCHARGED] = pickMaxValue(cell[index + 3])
+            data[state][DATA_KEYS.DEATHS] = pickMaxValue(cell[index + 4])
           }
         })
       })
@@ -50,25 +51,30 @@ const scrapePage = async () => {
 
     const stats = mapTableToField(statsByStates)
     const initialValue = {
-      confirmedCases: 0,
-      activeCases: 0,
-      discharged: 0,
-      death: 0,
+      [DATA_KEYS.CONFIRMED_CASES]: 0,
+      [DATA_KEYS.ACTIVE_CASES]: 0,
+      [DATA_KEYS.DISCHARGED]: 0,
+      [DATA_KEYS.DEATHS]: 0,
     }
 
-    const currentTotal = Object.values(stats).reduce((accumulator, currentValue) => {
+    const currentTotal = Object.values(stats).reduce((acc, curr) => {
+      const totalConfirmed = acc[DATA_KEYS.CONFIRMED_CASES] + curr[DATA_KEYS.CONFIRMED_CASES]
+      const totalActive = acc[DATA_KEYS.ACTIVE_CASES] + curr[DATA_KEYS.ACTIVE_CASES]
+      const totalDischarged = acc[DATA_KEYS.DISCHARGED] + curr[DATA_KEYS.DISCHARGED]
+      const totalDeaths = acc[DATA_KEYS.DEATHS] + curr[DATA_KEYS.DEATHS]
+
       return {
-        confirmedCases: accumulator.confirmedCases + currentValue.confirmedCases,
-        activeCases: accumulator.activeCases + currentValue.activeCases,
-        discharged: accumulator.discharged + currentValue.discharged,
-        death: accumulator.death + currentValue.death,
+        [DATA_KEYS.CONFIRMED_CASES]: totalConfirmed,
+        [DATA_KEYS.ACTIVE_CASES]: totalActive,
+        [DATA_KEYS.DISCHARGED]: totalDischarged,
+        [DATA_KEYS.DEATHS]: totalDeaths,
       }
     }, initialValue)
 
     stats.total = currentTotal
 
     // If there's a new update
-    if (prevTotal.confirmedCases !== currentTotal.confirmedCases) {
+    if (prevTotal[DATA_KEYS.CONFIRMED_CASES] !== currentTotal[DATA_KEYS.CONFIRMED_CASES]) {
       const updateStatsEndpoint = `${process.env.HOST}/update`
       await fs.writeFile(filePath, JSON.stringify(stats))
       await axios.post(updateStatsEndpoint, { stats })

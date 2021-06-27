@@ -6,6 +6,7 @@ import io from 'socket.io'
 import handleSSR from './ssr'
 import compression from 'compression'
 import firebaseInstance from './firebase-config'
+import { DATA_KEYS } from '../src/constants'
 
 dotenv.config()
 
@@ -35,12 +36,17 @@ const topic = 'covid19updates'
 app.post('/update', (req, res) => {
   const { stats } = req.body
   const {
-    total: { confirmedCases, activeCases, discharged, dead },
+    total: {
+      [DATA_KEYS.CONFIRMED_CASES]: confirmedCases,
+      [DATA_KEYS.ACTIVE_CASES]: activeCases,
+      [DATA_KEYS.DISCHARGED]: discharged,
+      [DATA_KEYS.DEATHS]: deaths,
+    },
   } = stats
 
   const data = {
     title: 'Covid-19 NG Update',
-    body: `Confirmed - ${confirmedCases}, Active - ${activeCases}, Discharged - ${discharged}, Dead - ${dead}`,
+    body: `Confirmed - ${confirmedCases}, Active - ${activeCases}, Discharged - ${discharged}, Deaths - ${deaths}`,
   }
 
   firebaseInstance

@@ -8,7 +8,7 @@ import SummmaryPanel from './SummaryBlock'
 import SummaryTable from './SummaryTable'
 import firebaseInit, { FIREBASE_VAPID_KEY } from '../config/firebaseInit'
 import Header from './Header'
-import { LOCAL_STORAGE_KEYS } from '../constants'
+import { DATA_KEYS, LOCAL_STORAGE_KEYS } from '../constants'
 import { LineChart, PieChart } from './Charts'
 
 dotenv.config()
@@ -19,10 +19,10 @@ export const NotificationContext = createContext()
 
 const initialState = {
   total: {
-    confirmedCases: 0,
-    death: 0,
-    activeCases: 0,
-    discharged: 0,
+    [DATA_KEYS.CONFIRMED_CASES]: 0,
+    [DATA_KEYS.DEATHS]: 0,
+    [DATA_KEYS.ACTIVE_CASES]: 0,
+    [DATA_KEYS.DISCHARGED]: 0,
   },
 }
 
@@ -52,7 +52,10 @@ const Dashboard = () => {
           .register('../../sw.js')
           .then((serviceWorker) => {
             console.log('Successfully registered service worker')
-            messaging.getToken({ vapidKey: FIREBASE_VAPID_KEY, serviceWorkerRegistration: serviceWorker })
+            messaging.getToken({
+              vapidKey: FIREBASE_VAPID_KEY,
+              serviceWorkerRegistration: serviceWorker,
+            })
             // Retrieve token & subscribe user
             // If user has already subscribed but cleared their storage
             // or uninstalled their service worker
@@ -112,7 +115,9 @@ const Dashboard = () => {
     const endpoint = subscribeUser ? 'subscribe' : 'unsubscribe'
     try {
       const registrationToken = localStorage.getItem(REGISTRATION_TOKEN)
-      const { data } = await axios.post(`${process.env.HOST}/${endpoint}`, { registrationToken })
+      const { data } = await axios.post(`${process.env.HOST}/${endpoint}`, {
+        registrationToken,
+      })
       if (data.status === 200 && subscribeUser) {
         setAlertStatus(true)
         localStorage.setItem(ALERT_STATUS, true)

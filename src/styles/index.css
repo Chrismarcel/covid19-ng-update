@@ -19,6 +19,7 @@ input {
   border-radius: 4px;
   padding: 0 15px;
   font-family: inherit;
+  min-width: 240px;
 }
 
 input.default {
@@ -341,8 +342,13 @@ input.error {
   background: rgb(244, 248, 250, 0.6);
 }
 
-.summary-table thead tr th,
-.summary-table tbody tr td {
+.summary-table thead tr th {
+  cursor: pointer;
+  display: flex;
+}
+
+.summary-table thead tr th:first-child,
+.summary-table tbody tr td:first-child {
   width: calc(100% / 5);
   text-align: left;
 }
@@ -351,14 +357,9 @@ input.error {
   text-transform: capitalize;
 }
 
-.summary-table thead tr th:not(:first-child),
 .summary-table tbody tr td:not(:first-child) {
+  min-width: 85px;
   text-align: right;
-}
-
-.summary-table tbody tr td:last-child,
-.summary-table thead tr th:last-child {
-  width: 60px;
 }
 
 /* Keep scrollbar shown */
@@ -593,7 +594,7 @@ input.error {
   }
 
   .panel.summary-table {
-    flex-basis: 35%;
+    flex-basis: 40%;
   }
 }
 

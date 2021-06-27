@@ -4,6 +4,7 @@ import { slugifyStr, generateChloropheth, formatNumber } from '../../server/util
 import ReactTooltip from 'react-tooltip'
 import MapLegends from './MapLegends.js'
 import mapOfNigeria from '../map/map-of-nigeria.json'
+import { DATA_KEYS } from '../constants'
 
 const CountryMap = ({ stats }) => {
   const [stateName, setStateName] = useState('')
@@ -26,7 +27,7 @@ const CountryMap = ({ stats }) => {
               } = geo
 
               const stateName = name === 'Federal Capital Territory' ? 'fct' : slugifyStr(name)
-              const numCases = stats[stateName]?.confirmedCases || 0
+              const numCases = stats[stateName]?.[DATA_KEYS.CONFIRMED_CASES] || 0
               return (
                 <Geography
                   key={geo.rsmKey}
@@ -48,10 +49,10 @@ const CountryMap = ({ stats }) => {
         <ReactTooltip place="bottom">
           <p>{stateName}</p>
           <br />
-          <p>Confirmed: {formatNumber(stats[slug].confirmedCases)}</p>
-          <p>Active: {formatNumber(stats[slug].activeCases)}</p>
-          <p>Discharged: {formatNumber(stats[slug].discharged)}</p>
-          <p>Deaths: {formatNumber(stats[slug].death)}</p>
+          <p>Confirmed: {formatNumber(stats[slug][DATA_KEYS.CONFIRMED_CASES])}</p>
+          <p>Active: {formatNumber(stats[slug][DATA_KEYS.ACTIVE_CASES])}</p>
+          <p>Discharged: {formatNumber(stats[slug][DATA_KEYS.DISCHARGED])}</p>
+          <p>Deaths: {formatNumber(stats[slug][DATA_KEYS.DEATHS])}</p>
         </ReactTooltip>
       )}
     </section>
