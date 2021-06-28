@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from 'react'
 
-const ToggleSwitch = ({ toggleOn, label, ToggleOnIcon, ToggleOffIcon, onToggle }) => {
-  const [isToggleOn, setIsToggleOn] = useState(toggleOn)
+const ToggleSwitch = ({ isEnabled, label, ToggleOnIcon, ToggleOffIcon, onToggle }) => {
+  const [isToggleOn, setIsToggleOn] = useState(isEnabled)
 
   useEffect(() => {
-    setIsToggleOn(toggleOn)
-  }, [toggleOn])
+    setIsToggleOn(isEnabled)
+  }, [isEnabled])
 
   return (
-    <>
-      <span>{label}</span>
+    <div className="notification-menu-item-wrapper">
+      <span className="notificationn-menu-item-text">{label}</span>
       <label className={`toggle-switch ${isToggleOn ? 'on' : 'off'}`}>
         <input
           type="checkbox"
@@ -23,7 +23,7 @@ const ToggleSwitch = ({ toggleOn, label, ToggleOnIcon, ToggleOffIcon, onToggle }
           <span>{isToggleOn ? 'On' : 'Off'}</span>
         </div>
       </label>
-    </>
+    </div>
   )
 }
 

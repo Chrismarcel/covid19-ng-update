@@ -13,6 +13,32 @@ body {
   color: #1a1b25;
 }
 
+.dark {
+  background: #1f1e2c;
+  color: #9c9fab;
+}
+
+.dark .panel {
+  background: #272937;
+  box-shadow: 0 7px 10px -9px #1b1919;
+}
+
+.dark .dashboard-title {
+  color: #e4e5e7;
+}
+
+.dark .notificationn-menu-item-text {
+  color: #9c9fab;
+}
+
+.dark .panel.summary-card.summary-card-title {
+  color: #7fa0a0;
+}
+
+.dark .menu-trigger svg {
+  stroke: #e4e5e7;
+}
+
 input.input {
   min-height: 40px;
   border: 1px solid;
@@ -106,18 +132,27 @@ input.error:focus-visible {
   right: 10px;
   width: 300px;
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  flex-direction: column;
   height: 0;
   max-height: 0;
   overflow: hidden;
   padding: 0;
 }
 
+.notification-menu-item-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.notification-menu-item-wrapper:not(:last-child) {
+  margin-bottom: 15px;
+}
+
 .menu-trigger[data-menu-open='true'] + .panel.notification-menu {
   display: flex;
   height: auto;
-  max-height: 65px;
+  max-height: 120px;
   padding: 15px;
 }
 
@@ -574,9 +609,8 @@ input.error:focus-visible {
 
 @media screen and (min-width: 800px) {
   .panel.notification-menu {
-    top: 50%;
-    right: 25px;
-    transform: translateY(-50%);
+    top: 15px;
+    right: 40px;
   }
 }
 

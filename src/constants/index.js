@@ -3,6 +3,7 @@ export const LOCAL_STORAGE_KEYS = {
   SUBSCRIPTION_STATUS: 'subscribed',
   REGISTRATION_TOKEN: 'registration_token',
   ALERT_STATUS: 'alert_status',
+  DARK_MODE: 'dark_mode',
 }
 
 export const DATA_KEYS = {

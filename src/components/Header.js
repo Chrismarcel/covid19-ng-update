@@ -1,10 +1,13 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import NotificationsToggle from './NotificationsToggle'
 import { Settings } from 'react-feather'
 import { isChildNode } from '../../src/utils'
+import DarkModeToggle from './DarkModeToggle'
+import { ColorSchemeContext } from '../context'
 
 const Header = () => {
   const [menuOpen, setMenuOpen] = useState(false)
+  const {darkModeEnabled} = useContext(ColorSchemeContext)
 
   const notificationMenuListener = ({ target }) => {
     const menuWrapper = document.getElementById('notification-menu')
@@ -32,6 +35,7 @@ const Header = () => {
         </button>
         <div className="panel notification-menu" id="notification-menu">
           <NotificationsToggle />
+          <DarkModeToggle />
         </div>
       </div>
     </header>

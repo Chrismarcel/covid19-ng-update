@@ -10,12 +10,11 @@ import firebaseInit, { FIREBASE_VAPID_KEY } from '../config/firebaseInit'
 import Header from './Header'
 import { DATA_KEYS, LOCAL_STORAGE_KEYS } from '../constants'
 import { LineChart, PieChart } from './Charts'
+import { ColorSchemeContext, NotificationContext } from '../context'
 
 dotenv.config()
 
 const socket = socketClient(process.env.HOST)
-
-export const NotificationContext = createContext()
 
 const initialState = {
   total: {
@@ -27,12 +26,13 @@ const initialState = {
 }
 
 let messaging
-const { ALERT_STATUS, REGISTRATION_TOKEN } = LOCAL_STORAGE_KEYS
+const { ALERT_STATUS, REGISTRATION_TOKEN, DARK_MODE } = LOCAL_STORAGE_KEYS
 
 const Dashboard = () => {
   const [stats, setStats] = useState(initialState)
   const [DOMReady, setDOMReady] = useState(false)
   const [alertStatus, setAlertStatus] = useState(false)
+  const [darkModeEnabled, setDarkModeEnabled] = useState(false)
 
   useEffect(() => {
     // FCM needs to be re-assigned inside of useEffect to prevent Firebase error of 'self is not defined'
@@ -46,6 +46,16 @@ const Dashboard = () => {
       // TODO: Probably migrate notification settings to IndexedDB as LocalStorage is synchronous/blocking
       const parsedStatus = Boolean(localStorage.getItem(ALERT_STATUS)) || false
       setAlertStatus(parsedStatus)
+
+      const userPreferredScheme = localStorage.getItem(DARK_MODE)
+      const validStorageValue = userPreferredScheme === 'true' || userPreferredScheme === 'false'
+
+      const darkModeEnabled = userPreferredScheme
+        ? validStorageValue
+          ? JSON.parse(userPreferredScheme)
+          : false
+        : window?.matchMedia('(prefers-color-scheme: dark)').matches
+      setDarkModeEnabled(darkModeEnabled)
 
       if ('serviceWorker' in navigator) {
         navigator.serviceWorker
@@ -137,18 +147,22 @@ const Dashboard = () => {
     <>
       {DOMReady && (
         <NotificationContext.Provider value={{ handlePermission, alertStatus }}>
-          <main className="dashboard">
-            <Header />
-            <SummmaryPanel total={stats.total} />
-            <section className="charts-container">
-              <LineChart stats={stats} />
-              <PieChart stats={stats} />
-            </section>
-            <section className="map-stats-wrapper">
-              <CountryMap stats={stats} />
-              <SummaryTable stats={stats} />
-            </section>
-          </main>
+          <ColorSchemeContext.Provider value={{ darkModeEnabled, setDarkModeEnabled }}>
+            <div className={darkModeEnabled ? 'dark' : ''}>
+              <main className="dashboard">
+                <Header />
+                <SummmaryPanel total={stats.total} />
+                <section className="charts-container">
+                  <LineChart stats={stats} />
+                  <PieChart stats={stats} />
+                </section>
+                <section className="map-stats-wrapper">
+                  <CountryMap stats={stats} />
+                  <SummaryTable stats={stats} />
+                </section>
+              </main>
+            </div>
+          </ColorSchemeContext.Provider>
         </NotificationContext.Provider>
       )}
     </>

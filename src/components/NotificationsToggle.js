@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react'
-import { NotificationContext } from './Dashboard'
+import { NotificationContext } from '../context'
 import { Bell, BellOff } from 'react-feather'
 import ToggleSwitch from './ToggleSwitch'
 
@@ -21,7 +21,7 @@ const NotificationsToggle = () => {
   return (
     <ToggleSwitch
       label="Real time updates"
-      toggleOn={enabledAlert}
+      isEnabled={enabledAlert}
       ToggleOnIcon={() => <Bell size={16} />}
       ToggleOffIcon={() => <BellOff size={16} />}
       onToggle={requestPermission}

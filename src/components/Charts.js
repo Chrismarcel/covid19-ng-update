@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import {
   LineChart as RLineChart,
   Line,
@@ -14,6 +14,7 @@ import {
 } from 'recharts'
 import { generatePieChartsData, reverseSlug, toSentenceCase } from '../../src/utils'
 import { DATA_KEYS } from '../constants'
+import { ColorSchemeContext } from '../context'
 import CasesDropdown from './CasesDropdown'
 
 const mergeStatsWithState = (stats) => {
@@ -36,6 +37,7 @@ const mergeStatsWithState = (stats) => {
 
 export const LineChart = ({ stats }) => {
   const data = mergeStatsWithState(stats)
+  const { darkModeEnabled } = useContext(ColorSchemeContext)
 
   return (
     <div className="panel chart-wrapper line-chart">
@@ -53,7 +55,11 @@ export const LineChart = ({ stats }) => {
             <YAxis />
             <Tooltip />
             <Legend wrapperStyle={{ bottom: -10 }} />
-            <Line type="monotone" dataKey="Confirmed cases" stroke="#1a1b25" />
+            <Line
+              type="monotone"
+              dataKey="Confirmed cases"
+              stroke={darkModeEnabled ? '#e4e5e7' : '#1a1b25'}
+            />
             <Line type="monotone" dataKey="Active cases" stroke="#757166" />
             <Line type="monotone" dataKey="Discharged" stroke="#1a68e6" />
             <Line type="monotone" dataKey="Death" stroke="#e24e1b" />
