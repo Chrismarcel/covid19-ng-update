@@ -28,12 +28,12 @@ const CountryMap = ({ stats }) => {
         <Geographies geography={mapOfNigeria}>
           {({ geographies }) =>
             geographies.map((geo) => {
-              const {
-                properties: { name },
-              } = geo
+              const { properties } = geo
+              const { name } = properties
 
               const stateName = name === 'Federal Capital Territory' ? 'fct' : slugifyStr(name)
               const numCases = stats[stateName]?.[dataKey] || 0
+
               return (
                 <Geography
                   key={geo.rsmKey}

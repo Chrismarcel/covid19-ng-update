@@ -62,7 +62,7 @@ export const LineChart = ({ stats }) => {
             />
             <Line type="monotone" dataKey="Active cases" stroke="#757166" />
             <Line type="monotone" dataKey="Discharged" stroke="#1a68e6" />
-            <Line type="monotone" dataKey="Death" stroke="#e24e1b" />
+            <Line type="monotone" dataKey="Deaths" stroke="#e24e1b" />
           </RLineChart>
         </ResponsiveContainer>
       </div>

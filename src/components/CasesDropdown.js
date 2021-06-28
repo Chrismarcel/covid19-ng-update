@@ -28,6 +28,8 @@ const CasesDropdown = ({ onChange }) => {
       defaultValue={options[0]}
       onChange={onChange}
       isSearchable={false}
+      classNamePrefix="react-select"
+      className="react-select-container"
     />
   )
 }
