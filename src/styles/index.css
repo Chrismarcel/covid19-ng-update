@@ -13,7 +13,7 @@ body {
   color: #1a1b25;
 }
 
-input {
+input.input {
   min-height: 40px;
   border: 1px solid;
   border-radius: 4px;
@@ -104,7 +104,7 @@ input.error:focus-visible {
 .panel.notification-menu {
   position: absolute;
   right: 10px;
-  width: 240px;
+  width: 300px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -231,6 +231,7 @@ input.error:focus-visible {
 
 .charts-container {
   display: flex;
+  flex-direction: column;
 }
 
 .chart-wrapper {
@@ -241,7 +242,12 @@ input.error:focus-visible {
 
 .chart-wrapper.line-chart {
   flex-basis: 68%;
-  margin-right: 30px;
+  overflow: scroll;
+}
+
+.chart-wrapper.line-chart .scrollable-container {
+  width: 1000px;
+  padding-right: 30px;
 }
 
 .chart-wrapper.pie-chart {
@@ -294,6 +300,11 @@ input.error:focus-visible {
   max-height: 700px;
 }
 
+.panel.map-container .dropdown-wrapper {
+  margin-top: 30px;
+  margin-left: 30px;
+}
+
 .search-container {
   margin-bottom: 5px;
   display: flex;
@@ -307,8 +318,12 @@ input.error:focus-visible {
 .panel.summary-table {
   flex-basis: 100%;
   width: 100%;
-  overflow: scroll;
   padding: 15px;
+}
+
+.panel.summary-table .scrollable-container {
+  overflow: scroll;
+  width: unset;
 }
 
 .panel.map-container {
@@ -504,6 +519,17 @@ input.error:focus-visible {
   }
 }
 
+@media screen and (max-width: 500px) {
+  .input {
+    width: 100%;
+  }
+
+  .search-field-wrapper {
+    width: 100%;
+    margin-right: unset;
+  }
+}
+
 @media screen and (min-width: 451px) {
   .dashboard-title {
     font-size: 36px;
@@ -560,6 +586,18 @@ input.error:focus-visible {
     margin-bottom: 45px;
   }
 
+  .charts-container {
+    flex-direction: row;
+  }
+
+  .chart-wrapper.line-chart {
+    margin-right: 30px;
+  }
+
+  .chart-wrapper.line-chart .scrollable-container {
+    width: unset;
+  }
+
   .panel.map-container {
     flex-grow: 1;
     flex-basis: unset;
@@ -567,6 +605,10 @@ input.error:focus-visible {
     position: relative;
     margin-bottom: unset;
     padding: 30px;
+  }
+
+  .panel.map-container .dropdown-wrapper {
+    margin: unset;
   }
 
   .panel.summary-table {

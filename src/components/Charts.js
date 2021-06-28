@@ -39,25 +39,27 @@ export const LineChart = ({ stats }) => {
 
   return (
     <div className="panel chart-wrapper line-chart">
-      <ResponsiveContainer width="100%" height={400}>
-        <RLineChart data={data} margin={{ right: 10, bottom: 50 }}>
-          <CartesianGrid strokeDasharray="3 3" />
-          <XAxis
-            tick={{ fontSize: 12 }}
-            dataKey="state"
-            angle={-90}
-            textAnchor="end"
-            interval={0}
-          />
-          <YAxis />
-          <Tooltip />
-          <Legend wrapperStyle={{ bottom: -10 }} />
-          <Line type="monotone" dataKey="Confirmed cases" stroke="#1a1b25" />
-          <Line type="monotone" dataKey="Active cases" stroke="#757166" />
-          <Line type="monotone" dataKey="Discharged" stroke="#1a68e6" />
-          <Line type="monotone" dataKey="Death" stroke="#e24e1b" />
-        </RLineChart>
-      </ResponsiveContainer>
+      <div className="scrollable-container">
+        <ResponsiveContainer height={400}>
+          <RLineChart data={data} margin={{ right: 10, bottom: 50 }}>
+            <CartesianGrid strokeDasharray="3 3" />
+            <XAxis
+              tick={{ fontSize: 12 }}
+              dataKey="state"
+              angle={-90}
+              textAnchor="end"
+              interval={0}
+            />
+            <YAxis />
+            <Tooltip />
+            <Legend wrapperStyle={{ bottom: -10 }} />
+            <Line type="monotone" dataKey="Confirmed cases" stroke="#1a1b25" />
+            <Line type="monotone" dataKey="Active cases" stroke="#757166" />
+            <Line type="monotone" dataKey="Discharged" stroke="#1a68e6" />
+            <Line type="monotone" dataKey="Death" stroke="#e24e1b" />
+          </RLineChart>
+        </ResponsiveContainer>
+      </div>
     </div>
   )
 }
@@ -79,8 +81,8 @@ export const PieChart = ({ stats }) => {
         <CasesDropdown onChange={({ value }) => setDataKey(value)} />
       </div>
       <div className="pie-chart-wrapper">
-        <ResponsiveContainer>
-          <RPieChart margin={{ top: -30 }} width="100%" height={400}>
+        <ResponsiveContainer height={400}>
+          <RPieChart margin={{ top: -30 }}>
             <Legend
               iconType="circle"
               wrapperStyle={{ bottom: 40 }}

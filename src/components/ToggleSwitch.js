@@ -1,30 +1,29 @@
-import React, { useContext, useState } from 'react'
-import { NotificationContext } from './Dashboard'
-import { Bell, BellOff } from 'react-feather'
+import React, { useEffect, useState } from 'react'
 
-const ToggleSwitch = () => {
-  const { alertStatus, handlePermission } = useContext(NotificationContext)
-  const [showAlert, setShowAlert] = useState(alertStatus)
+const ToggleSwitch = ({ toggleOn, label, ToggleOnIcon, ToggleOffIcon, onToggle }) => {
+  const [isToggleOn, setIsToggleOn] = useState(toggleOn)
 
-  const requestPermission = () => {
-    setShowAlert(!showAlert)
-    if ('Notification' in window) {
-      Notification.requestPermission((permission) => {
-        if (permission === 'granted') {
-          handlePermission(!showAlert)
-        }
-      })
-    }
-  }
+  useEffect(() => {
+    setIsToggleOn(toggleOn)
+  }, [toggleOn])
 
   return (
-    <label className={`toggle-switch ${showAlert ? 'on' : 'off'}`}>
-      <input type="checkbox" onChange={requestPermission} />
-      <div className="toggle-slider">
-        <div className="knob">{showAlert ? <Bell size={16} /> : <BellOff size={16} />}</div>
-        <span>{showAlert ? 'On' : 'Off'}</span>
-      </div>
-    </label>
+    <>
+      <span>{label}</span>
+      <label className={`toggle-switch ${isToggleOn ? 'on' : 'off'}`}>
+        <input
+          type="checkbox"
+          onChange={() => {
+            onToggle()
+            setIsToggleOn(!isToggleOn)
+          }}
+        />
+        <div className="toggle-slider">
+          <div className="knob">{isToggleOn ? <ToggleOnIcon /> : <ToggleOffIcon />}</div>
+          <span>{isToggleOn ? 'On' : 'Off'}</span>
+        </div>
+      </label>
+    </>
   )
 }
 

@@ -85,34 +85,36 @@ const SummaryTable = ({ stats }) => {
       </div>
       {!filteredStats.length && <p className="no-results">No results found</p>}
       {filteredStats.length > 0 && (
-        <table>
-          <TableHeadRow
-            data={tableHeadData}
-            onSort={({ dataKey, ascending }) => {
-              setSortKey(dataKey)
-              setIsDescendingOrder(ascending)
-            }}
-          />
-          <tbody>
-            {filteredStats.map(([state, data]) => {
-              const totalConfirmedCases = data?.[DATA_KEYS.CONFIRMED_CASES] || 0
-              const totalActiveCases = data?.[DATA_KEYS.ACTIVE_CASES] || 0
-              const totalDischarged = data?.[DATA_KEYS.DISCHARGED] || 0
-              const totalDeaths = data?.[DATA_KEYS.DEATHS] || 0
-              if (state !== 'total') {
-                return (
-                  <tr key={state}>
-                    <td>{state !== 'fct' ? reverseSlug(state) : 'F.C.T'}</td>
-                    <td>{formatNumber(totalConfirmedCases)}</td>
-                    <td>{formatNumber(totalActiveCases)}</td>
-                    <td>{formatNumber(totalDischarged)}</td>
-                    <td>{formatNumber(totalDeaths)}</td>
-                  </tr>
-                )
-              }
-            })}
-          </tbody>
-        </table>
+        <div className="scrollable-container">
+          <table>
+            <TableHeadRow
+              data={tableHeadData}
+              onSort={({ dataKey, ascending }) => {
+                setSortKey(dataKey)
+                setIsDescendingOrder(ascending)
+              }}
+            />
+            <tbody>
+              {filteredStats.map(([state, data]) => {
+                const totalConfirmedCases = data?.[DATA_KEYS.CONFIRMED_CASES] || 0
+                const totalActiveCases = data?.[DATA_KEYS.ACTIVE_CASES] || 0
+                const totalDischarged = data?.[DATA_KEYS.DISCHARGED] || 0
+                const totalDeaths = data?.[DATA_KEYS.DEATHS] || 0
+                if (state !== 'total') {
+                  return (
+                    <tr key={state}>
+                      <td>{state !== 'fct' ? reverseSlug(state) : 'F.C.T'}</td>
+                      <td>{formatNumber(totalConfirmedCases)}</td>
+                      <td>{formatNumber(totalActiveCases)}</td>
+                      <td>{formatNumber(totalDischarged)}</td>
+                      <td>{formatNumber(totalDeaths)}</td>
+                    </tr>
+                  )
+                }
+              })}
+            </tbody>
+          </table>
+        </div>
       )}
     </section>
   )

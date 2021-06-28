@@ -17,7 +17,7 @@ const SearchInput = ({ onChangeCb, isError }) => {
         value={value}
         onChange={handleOnChange}
         placeholder="Search states"
-        className={isError ? 'error' : 'default'}
+        className={`input ${isError ? 'error' : 'default'}`}
       />
     </div>
   )
