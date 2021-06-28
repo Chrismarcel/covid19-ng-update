@@ -63,28 +63,28 @@ const isChildNode = (parentNode, childNode) => {
   }
 }
 
-const generatePieChartsData = (stats) => {
+const generatePieChartsData = ({ stats, dataKey }) => {
   const pieChartData = { ...COLOR_BANDS }
   Object.values(pieChartData).forEach((data) => (data.value = 0))
   let total = 0
 
   Object.values(stats).forEach((stat) => {
-    if (stat[DATA_KEYS.CONFIRMED_CASES] < 101) {
+    if (stat[dataKey] < 101) {
       pieChartData.LESS_THAN_101.value += 1
     }
-    if (stat[DATA_KEYS.CONFIRMED_CASES] > 100 && stat[DATA_KEYS.CONFIRMED_CASES] < 501) {
+    if (stat[dataKey] > 100 && stat[dataKey] < 501) {
       pieChartData.LESS_THAN_501.value += 1
     }
-    if (stat[DATA_KEYS.CONFIRMED_CASES] > 500 && stat[DATA_KEYS.CONFIRMED_CASES] < 1001) {
+    if (stat[dataKey] > 500 && stat[dataKey] < 1001) {
       pieChartData.LESS_THAN_1001.value += 1
     }
-    if (stat[DATA_KEYS.CONFIRMED_CASES] > 1000 && stat[DATA_KEYS.CONFIRMED_CASES] < 3001) {
+    if (stat[dataKey] > 1000 && stat[dataKey] < 3001) {
       pieChartData.LESS_THAN_3001.value += 1
     }
-    if (stat[DATA_KEYS.CONFIRMED_CASES] > 3000 && stat[DATA_KEYS.CONFIRMED_CASES] < 5001) {
+    if (stat[dataKey] > 3000 && stat[dataKey] < 5001) {
       pieChartData.LESS_THAN_5001.value += 1
     }
-    if (stat[DATA_KEYS.CONFIRMED_CASES] > 5000) {
+    if (stat[dataKey] > 5000) {
       pieChartData.GREATER_THAN_5000.value += 1
     }
 

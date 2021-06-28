@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import {
   LineChart as RLineChart,
   Line,
@@ -14,6 +14,7 @@ import {
 } from 'recharts'
 import { generatePieChartsData, reverseSlug, toSentenceCase } from '../../src/utils'
 import { DATA_KEYS } from '../constants'
+import CasesDropdown from './CasesDropdown'
 
 const mergeStatsWithState = (stats) => {
   const mergedData = []
@@ -69,31 +70,37 @@ const formatTooltip = ({ value, index, data, total }) => {
 }
 
 export const PieChart = ({ stats }) => {
-  const { data, total } = generatePieChartsData(stats)
+  const [dataKey, setDataKey] = useState(DATA_KEYS.CONFIRMED_CASES)
+  const { data, total } = generatePieChartsData({ stats, dataKey })
 
   return (
     <div className="panel chart-wrapper pie-chart">
-      <ResponsiveContainer>
-        <RPieChart width="100%" height={400}>
-          <Legend
-            iconType="circle"
-            wrapperStyle={{ bottom: -10 }}
-            formatter={(index) => <span className="pie-chart-legend">{data[index].text}</span>}
-          />
-          <Pie
-            data={data}
-            innerRadius="55%"
-            outerRadius="70%"
-            fill="#8884d8"
-            paddingAngle={5}
-            dataKey="value">
-            {data.map((_, index) => (
-              <Cell key={data[index].color} fill={data[index].color} />
-            ))}
-          </Pie>
-          <Tooltip formatter={(value, index) => formatTooltip({ value, index, data, total })} />
-        </RPieChart>
-      </ResponsiveContainer>
+      <div className="dropdown-wrapper">
+        <CasesDropdown onChange={({ value }) => setDataKey(value)} />
+      </div>
+      <div className="pie-chart-wrapper">
+        <ResponsiveContainer>
+          <RPieChart margin={{ top: -30 }} width="100%" height={400}>
+            <Legend
+              iconType="circle"
+              wrapperStyle={{ bottom: 40 }}
+              formatter={(index) => <span className="pie-chart-legend">{data[index].text}</span>}
+            />
+            <Pie
+              data={data}
+              innerRadius="55%"
+              outerRadius="70%"
+              fill="#8884d8"
+              paddingAngle={5}
+              dataKey="value">
+              {data.map((_, index) => (
+                <Cell key={data[index].color} fill={data[index].color} />
+              ))}
+            </Pie>
+            <Tooltip formatter={(value, index) => formatTooltip({ value, index, data, total })} />
+          </RPieChart>
+        </ResponsiveContainer>
+      </div>
     </div>
   )
 }

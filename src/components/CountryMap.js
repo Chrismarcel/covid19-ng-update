@@ -5,18 +5,24 @@ import ReactTooltip from 'react-tooltip'
 import MapLegends from './MapLegends.js'
 import mapOfNigeria from '../map/map-of-nigeria.json'
 import { DATA_KEYS } from '../constants'
+import CasesDropdown from './CasesDropdown'
 
 const CountryMap = ({ stats }) => {
   const [stateName, setStateName] = useState('')
+  const [dataKey, setDataKey] = useState(DATA_KEYS.CONFIRMED_CASES)
   const slug = stateName === 'Federal Capital Territory' ? 'fct' : slugifyStr(stateName)
 
   return (
     <section className="map-container panel">
+      <div className="dropdown-wrapper">
+        <CasesDropdown onChange={({ value }) => setDataKey(value)} />
+      </div>
       <ComposableMap
+        className="map-svg-wrapper"
         data-tip
         projection="geoAzimuthalEqualArea"
         projectionConfig={{
-          rotate: [-9.2, -8.5],
+          rotate: [-8.5, -8.5, 0],
           scale: 3000,
         }}>
         <Geographies geography={mapOfNigeria}>
@@ -27,7 +33,7 @@ const CountryMap = ({ stats }) => {
               } = geo
 
               const stateName = name === 'Federal Capital Territory' ? 'fct' : slugifyStr(name)
-              const numCases = stats[stateName]?.[DATA_KEYS.CONFIRMED_CASES] || 0
+              const numCases = stats[stateName]?.[dataKey] || 0
               return (
                 <Geography
                   key={geo.rsmKey}
