@@ -14,7 +14,7 @@
     "watch:client": "parcel src/**/*.html -d dist/client",
     "watch:server": "parcel server/app.js -d dist/server --target node",
     "build:client": "parcel build --no-content-hash src/**/*.html -d dist/client",
-    "build:server": "parcel build server/app.js -d dist/server --target node",
+    "build:server": "parcel build server/app.js -dist-dir dist/server --target node",
     "build": "rimraf dist .cache && yarn build:client && yarn build:server",
     "start:dev": "nodemon dist/server/app",
     "start:prod": "node dist/server/app"
