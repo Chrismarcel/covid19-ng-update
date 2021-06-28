@@ -6,13 +6,16 @@
   "repository": "git@github.com:Chrismarcel/covid19-report-app.git",
   "author": "Chrismarcel <cmarcelj@gmail.com>",
   "license": "MIT",
+  "engines": {
+    "node": "14.x"
+  },
   "scripts": {
     "scrape": "node -r esm server/scraper",
     "watch:client": "parcel src/**/*.html -d dist/client",
     "watch:server": "parcel server/app.js -d dist/server --target node",
     "build:client": "parcel build --no-content-hash src/**/*.html -d dist/client",
     "build:server": "parcel build server/app.js -d dist/server --target node",
-    "build:prod": "rimraf dist .cache && yarn build:client && yarn build:server",
+    "build": "rimraf dist .cache && yarn build:client && yarn build:server",
     "start:dev": "nodemon dist/server/app",
     "start:prod": "node dist/server/app"
   },
