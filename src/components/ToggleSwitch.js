@@ -9,7 +9,7 @@ const ToggleSwitch = ({ isEnabled, label, ToggleOnIcon, ToggleOffIcon, onToggle 
 
   return (
     <div className="notification-menu-item-wrapper">
-      <span className="notificationn-menu-item-text">{label}</span>
+      <span className="notification-menu-item-text">{label}</span>
       <label className={`toggle-switch ${isToggleOn ? 'on' : 'off'}`}>
         <input
           type="checkbox"

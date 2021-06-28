@@ -28,7 +28,7 @@ body {
   color: #e4e5e7;
 }
 
-.dark .notificationn-menu-item-text {
+.dark .notification-menu-item-text {
   color: #9c9fab;
 }
 
@@ -55,7 +55,27 @@ input.input {
   background: transparent;
 }
 
-.react-select__control .react-select__single-value {
+.react-select-container .react-select__option {
+  color: #1a1b25;
+}
+
+.dark .react-select-container .react-select__menu-list {
+  background: #272937;
+  box-shadow: 0 7px 10px -9px #1b1919;
+  border-radius: 4px;
+}
+
+.dark .react-select-container .react-select__menu {
+  border-radius: 5px;
+}
+
+.dark .react-select-container .react-select__option--is-selected,
+.dark .react-select-container .react-select__option--is-focused {
+  background: rgba(103, 98, 98, 0.3);
+}
+
+.react-select__control .react-select__single-value,
+.react-select-container .react-select__option {
   color: inherit;
 }
 
@@ -63,15 +83,15 @@ input.input {
   display: none;
 }
 
-input.default {
+.input.default {
   border-color: hsl(0, 0%, 80%);
 }
 
-input.error {
+.input.error {
   border-color: #e34234;
 }
 
-input.error:focus-visible {
+.input.error:focus-visible {
   outline: #e34234 auto 1px;
 }
 
