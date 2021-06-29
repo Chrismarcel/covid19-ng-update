@@ -1,5 +1,5 @@
 import { COLOR_BANDS, ColorBandsMap, CasesRange, DataKey } from '../constants'
-import { StatsAggregate, StatsData, StatsDataField } from '../server/scraper'
+import { StatsData } from '../server/scraper'
 
 export const generateChloropheth = (numCases: number): string => {
   // #E45E2F - Base Color used to generate other shades via https://coolors.co
@@ -66,25 +66,23 @@ export const generatePieChartsData = ({
   let total = 0
 
   Object.values(stats).forEach((stat) => {
-    if (stat[dataKey] !== undefined) {
-      if (stat[dataKey] < 101) {
-        pieChartData.LESS_THAN_101.value += 1
-      }
-      if (stat[dataKey] > 100 && stat[dataKey] < 501) {
-        pieChartData.LESS_THAN_501.value += 1
-      }
-      if (stat[dataKey] > 500 && stat[dataKey] < 1001) {
-        pieChartData.LESS_THAN_1001.value += 1
-      }
-      if (stat[dataKey] > 1000 && stat[dataKey] < 3001) {
-        pieChartData.LESS_THAN_3001.value += 1
-      }
-      if (stat[dataKey] > 3000 && stat[dataKey] < 5001) {
-        pieChartData.LESS_THAN_5001.value += 1
-      }
-      if (stat[dataKey] > 5000) {
-        pieChartData.GREATER_THAN_5000.value += 1
-      }
+    if (stat[dataKey] < 101) {
+      pieChartData.LESS_THAN_101.value += 1
+    }
+    if (stat[dataKey] > 100 && stat[dataKey] < 501) {
+      pieChartData.LESS_THAN_501.value += 1
+    }
+    if (stat[dataKey] > 500 && stat[dataKey] < 1001) {
+      pieChartData.LESS_THAN_1001.value += 1
+    }
+    if (stat[dataKey] > 1000 && stat[dataKey] < 3001) {
+      pieChartData.LESS_THAN_3001.value += 1
+    }
+    if (stat[dataKey] > 3000 && stat[dataKey] < 5001) {
+      pieChartData.LESS_THAN_5001.value += 1
+    }
+    if (stat[dataKey] > 5000) {
+      pieChartData.GREATER_THAN_5000.value += 1
     }
 
     total++

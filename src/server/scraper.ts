@@ -23,13 +23,13 @@ const pickMaxValue = (value: cheerio.Element) => {
   return Math.max(0, Number(extractValueFromCell(value)))
 }
 
-export type StatsDataField =
+type StatsDataField =
   | DataKey.CONFIRMED_CASES
   | DataKey.ACTIVE_CASES
   | DataKey.DISCHARGED
   | DataKey.DEATHS
 
-export type StatsAggregate = {
+type StatsAggregate = {
   [key in StatsDataField]: number
 }
 
