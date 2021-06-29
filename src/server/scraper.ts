@@ -33,7 +33,7 @@ type StatsAggregate = {
   [key in StatsDataField]: number
 }
 
-type StatsDataMap = StatsAggregate & { [DataKey.TOTAL]: number }
+export type StatsDataMap = StatsAggregate & { [DataKey.TOTAL]: number }
 
 export type StatsData = {
   [key: string]: StatsDataMap
@@ -42,7 +42,7 @@ export type StatsData = {
 const scrapePage = async () => {
   try {
     const casesFile = await fs.readFile(filePath)
-    const { total: prevTotal } = JSON.parse(casesFile.toString())
+    const { total: prevTotal } = JSON.parse(casesFile.toString()) as StatsData
 
     const response = await axios.get(urlToScrape)
     const $ = cheerio.load(response.data, { ignoreWhitespace: true })

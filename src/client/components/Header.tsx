@@ -3,13 +3,11 @@ import NotificationsToggle from './NotificationsToggle'
 import { Settings } from 'react-feather'
 import { isChildNode } from '../../utils'
 import DarkModeToggle from './DarkModeToggle'
-import { ColorSchemeContext } from '../context'
 
 const Header = () => {
   const [menuOpen, setMenuOpen] = useState(false)
-  const {darkModeEnabled} = useContext(ColorSchemeContext)
 
-  const notificationMenuListener = ({ target }) => {
+  const notificationMenuListener = ({ target }: { target: EventTarget & HTMLInputElement }) => {
     const menuWrapper = document.getElementById('notification-menu')
     if (menuOpen && !isChildNode(menuWrapper, target)) {
       setMenuOpen(false)
@@ -17,9 +15,9 @@ const Header = () => {
   }
 
   useEffect(() => {
-    document.addEventListener('click', notificationMenuListener)
+    document.addEventListener('click', (notificationMenuListener as unknown as EventListener))
     return () => {
-      document.removeEventListener('click', notificationMenuListener)
+      document.removeEventListener('click', (notificationMenuListener as unknown) as EventListener)
     }
   }, [menuOpen])
 

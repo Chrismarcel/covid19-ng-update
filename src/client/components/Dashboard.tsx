@@ -1,5 +1,5 @@
 import 'regenerator-runtime/runtime'
-import React, { useState, useEffect, createContext } from 'react'
+import React, { useState, useEffect } from 'react'
 import socketClient from 'socket.io-client'
 import dotenv from 'dotenv'
 import axios from 'axios'
@@ -8,7 +8,7 @@ import SummmaryPanel from './SummaryBlock'
 import SummaryTable from './SummaryTable'
 import firebaseClient, { FIREBASE_VAPID_KEY } from '../../config/firebase-client'
 import Header from './Header'
-import { DATA_KEYS, LOCAL_STORAGE_KEYS } from '../../constants'
+import { DataKey, LOCAL_STORAGE_KEYS } from '../../constants'
 import { LineChart, PieChart } from './Charts'
 import { ColorSchemeContext, NotificationContext } from '../context'
 
@@ -18,10 +18,10 @@ const socket = socketClient(process.env.HOST)
 
 const initialState = {
   total: {
-    [DATA_KEYS.CONFIRMED_CASES]: 0,
-    [DATA_KEYS.DEATHS]: 0,
-    [DATA_KEYS.ACTIVE_CASES]: 0,
-    [DATA_KEYS.DISCHARGED]: 0,
+    [DataKey.CONFIRMED_CASES]: 0,
+    [DataKey.DEATHS]: 0,
+    [DataKey.ACTIVE_CASES]: 0,
+    [DataKey.DISCHARGED]: 0,
   },
 }
 
@@ -76,7 +76,7 @@ const Dashboard = () => {
                     messaging.getToken().then(async (registrationToken) => {
                       if (registrationToken) {
                         localStorage.setItem(REGISTRATION_TOKEN, registrationToken)
-                        localStorage.setItem(ALERT_STATUS, true)
+                        localStorage.setItem(ALERT_STATUS, 'true')
 
                         await handleSubscription(true)
                       }
@@ -130,7 +130,7 @@ const Dashboard = () => {
       })
       if (data.status === 200 && subscribeUser) {
         setAlertStatus(true)
-        localStorage.setItem(ALERT_STATUS, true)
+        localStorage.setItem(ALERT_STATUS, 'true')
       } else {
         setAlertStatus(false)
         localStorage.removeItem(ALERT_STATUS)

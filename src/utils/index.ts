@@ -45,11 +45,20 @@ export const toSentenceCase = (str: string) => {
   return firstLetter.toUpperCase() + otherLetters.join('')
 }
 
-export const isChildNode = (parentNode: Node, childNode: Node): boolean => {
-  if ('contains' in parentNode) {
+export const isChildNode = (parentNode: Node | null, childNode: Node): boolean => {
+  if (parentNode && 'contains' in parentNode) {
     return parentNode.contains(childNode)
   }
   return false
+}
+
+export type PieChartStats = StatsData & { [key: string]: { [DataKey.STATES]: number } }
+
+export type PieChartDataMap = ColorBandsMap & { [key in CasesRange]: { value: number } }
+
+export interface PieChartData {
+  data: { value: number; text: string; color: string }[]
+  total: number
 }
 
 export const generatePieChartsData = ({
@@ -58,9 +67,7 @@ export const generatePieChartsData = ({
 }: {
   stats: StatsData & { [key: string]: { [DataKey.STATES]: number } }
   dataKey: DataKey
-}) => {
-  type PieChartDataMap = ColorBandsMap & { [key in CasesRange]: { value: number } }
-
+}): PieChartData => {
   const pieChartData = { ...COLOR_BANDS } as PieChartDataMap
   Object.values(pieChartData).forEach((data) => (data.value = 0))
   let total = 0

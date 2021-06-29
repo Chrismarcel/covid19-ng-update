@@ -2,25 +2,43 @@ import React, { useState } from 'react'
 import { reverseSlug, formatNumber } from '../../utils'
 import SearchInput from './SearchInput'
 import { ChevronDown, ChevronUp } from 'react-feather'
-import { DATA_KEYS } from '../../constants'
+import { DataKey } from '../../constants'
+import { StatsData } from '~/server/scraper'
 
-const tableHeadData = [
-  { columnName: 'States', dataKey: DATA_KEYS.STATES },
-  { columnName: 'Confirmed', dataKey: DATA_KEYS.CONFIRMED_CASES },
-  { columnName: 'Active', dataKey: DATA_KEYS.ACTIVE_CASES },
-  { columnName: 'Discharged', dataKey: DATA_KEYS.DISCHARGED },
-  { columnName: 'Deaths', dataKey: DATA_KEYS.DEATHS },
+interface TableHeadData {
+  columnName: string
+  dataKey: DataKey
+}
+
+const tableHeadData: TableHeadData[] = [
+  { columnName: 'States', dataKey: DataKey.STATES },
+  { columnName: 'Confirmed', dataKey: DataKey.CONFIRMED_CASES },
+  { columnName: 'Active', dataKey: DataKey.ACTIVE_CASES },
+  { columnName: 'Discharged', dataKey: DataKey.DISCHARGED },
+  { columnName: 'Deaths', dataKey: DataKey.DEATHS },
 ]
 
-const ChevronIcon = ({ ascending, ...iconProps }) => {
+interface ChevronIconProps {
+  ascending: boolean
+  className: string
+  size: number
+  strokeWidth: number
+}
+
+const ChevronIcon = ({ ascending, ...iconProps }: ChevronIconProps) => {
   return ascending ? <ChevronUp {...iconProps} /> : <ChevronDown {...iconProps} />
 }
 
-const TableHeadRow = ({ data, onSort }) => {
-  const [activeColumn, setActiveColumn] = useState(data[0].dataKey)
+interface TableHeadRowProps {
+  data: TableHeadData[]
+  onSort: (data: { dataKey: DataKey; ascending: boolean }) => void
+}
+
+const TableHeadRow = ({ data, onSort }: TableHeadRowProps) => {
+  const [activeColumn, setActiveColumn] = useState(DataKey.STATES)
   const [ascending, setAscending] = useState(true)
 
-  const onTableHeadClick = (dataKey, ascending) => {
+  const onTableHeadClick = (dataKey: DataKey, ascending: boolean) => {
     setActiveColumn(dataKey)
     setAscending(dataKey !== activeColumn ? ascending : !ascending)
     if (onSort) {
@@ -51,16 +69,20 @@ const TableHeadRow = ({ data, onSort }) => {
   )
 }
 
-const SummaryTable = ({ stats }) => {
+interface SummaryTableProps {
+  stats: StatsData
+}
+
+const SummaryTable = ({ stats }: SummaryTableProps) => {
   const [searchValue, setSearchValue] = useState('')
-  const [sortKey, setSortKey] = useState(DATA_KEYS.STATES)
+  const [sortKey, setSortKey] = useState(DataKey.STATES)
   const [isDescendingOrder, setIsDescendingOrder] = useState(false)
 
   const filteredStats = React.useMemo(() => {
     const sortedStats = Object.entries(stats)
       .filter(([state]) => state.includes(searchValue.toLowerCase()))
       .sort(([state1, stats1], [state2, stats2]) => {
-        if (sortKey == DATA_KEYS.STATES) {
+        if (sortKey == DataKey.STATES) {
           return state1.localeCompare(state2)
         }
         return stats1[sortKey] - stats2[sortKey]
@@ -96,10 +118,10 @@ const SummaryTable = ({ stats }) => {
             />
             <tbody>
               {filteredStats.map(([state, data]) => {
-                const totalConfirmedCases = data?.[DATA_KEYS.CONFIRMED_CASES] || 0
-                const totalActiveCases = data?.[DATA_KEYS.ACTIVE_CASES] || 0
-                const totalDischarged = data?.[DATA_KEYS.DISCHARGED] || 0
-                const totalDeaths = data?.[DATA_KEYS.DEATHS] || 0
+                const totalConfirmedCases = data?.[DataKey.CONFIRMED_CASES] || 0
+                const totalActiveCases = data?.[DataKey.ACTIVE_CASES] || 0
+                const totalDischarged = data?.[DataKey.DISCHARGED] || 0
+                const totalDeaths = data?.[DataKey.DEATHS] || 0
                 if (state !== 'total') {
                   return (
                     <tr key={state}>

@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 
-type SearchInputProps = {
+interface SearchInputProps {
   onChangeCb: (value: string) => void
   isError: boolean
 }
@@ -8,7 +8,7 @@ type SearchInputProps = {
 const SearchInput = ({ onChangeCb, isError }: SearchInputProps) => {
   const [value, setValue] = useState('')
 
-  const handleOnChange = ({ target }) => {
+  const handleOnChange = ({ target }: { target: EventTarget & HTMLInputElement }) => {
     setValue(target.value)
     if (onChangeCb) {
       onChangeCb(target.value)

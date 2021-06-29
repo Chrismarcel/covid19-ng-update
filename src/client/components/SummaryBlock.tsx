@@ -1,29 +1,30 @@
 import React from 'react'
 import { formatNumber } from '../../utils'
-import { DATA_KEYS } from '../../constants'
+import { DataKey } from '../../constants'
 import SummaryCard from './SummaryCard'
+import { StatsDataMap } from '~/server/scraper'
 
-const SummaryBlock = ({ total }) => {
+const SummaryBlock = ({ total }: {total: StatsDataMap}) => {
   return (
     <section className="summary-wrapper">
       <SummaryCard
         title="Total number of confirmed cases"
-        value={formatNumber(total[DATA_KEYS.CONFIRMED_CASES])}
+        value={formatNumber(total[DataKey.CONFIRMED_CASES])}
       />
       <SummaryCard
         className="active-cases"
         title="Total number of active cases"
-        value={formatNumber(total[DATA_KEYS.ACTIVE_CASES])}
+        value={formatNumber(total[DataKey.ACTIVE_CASES])}
       />
       <SummaryCard
         className="recovered-cases"
         title="Total number of recovered patients"
-        value={formatNumber(total[DATA_KEYS.DISCHARGED])}
+        value={formatNumber(total[DataKey.DISCHARGED])}
       />
       <SummaryCard
         className="death-cases"
         title="Total number of deaths recorded"
-        value={formatNumber(total[DATA_KEYS.DEATHS])}
+        value={formatNumber(total[DataKey.DEATHS])}
       />
     </section>
   )

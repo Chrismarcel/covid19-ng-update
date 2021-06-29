@@ -12,22 +12,34 @@ import {
   Cell,
   Legend,
 } from 'recharts'
-import { generatePieChartsData, reverseSlug, toSentenceCase } from '../../utils'
-import { DATA_KEYS } from '../../constants'
+import {
+  generatePieChartsData,
+  reverseSlug,
+  toSentenceCase,
+  PieChartStats,
+  PieChartDataMap,
+  PieChartData,
+} from '../../utils'
+import { CasesRange, DataKey } from '../../constants'
 import { ColorSchemeContext } from '../context'
 import CasesDropdown from './CasesDropdown'
+import { StatsData } from '~/server/scraper'
 
-const mergeStatsWithState = (stats) => {
-  const mergedData = []
+interface LineChartStats {
+  [key: string]: string
+}
+
+const mergeStatsWithState = (stats: StatsData) => {
+  const mergedData: LineChartStats[] = []
   Object.entries(stats).forEach(([state, data]) => {
     const stateName = state !== 'fct' ? reverseSlug(state) : 'F.C.T'
     if (state !== 'total') {
       mergedData.push({
         state: toSentenceCase(stateName),
-        'Confirmed cases': data[DATA_KEYS.CONFIRMED_CASES],
-        'Active cases': data[DATA_KEYS.ACTIVE_CASES],
-        Discharged: data[DATA_KEYS.DISCHARGED],
-        Deaths: data[DATA_KEYS.DEATHS],
+        'Confirmed cases': `${data[DataKey.CONFIRMED_CASES]}`,
+        'Active cases': `${data[DataKey.ACTIVE_CASES]}`,
+        Discharged: `${data[DataKey.DISCHARGED]}`,
+        Deaths: `${data[DataKey.DEATHS]}`,
       })
     }
   })
@@ -35,7 +47,7 @@ const mergeStatsWithState = (stats) => {
   return mergedData.sort((a, b) => a.state.localeCompare(b.state))
 }
 
-export const LineChart = ({ stats }) => {
+export const LineChart = ({ stats }: { stats: StatsData }) => {
   const data = mergeStatsWithState(stats)
   const { darkModeEnabled } = useContext(ColorSchemeContext)
 
@@ -70,15 +82,22 @@ export const LineChart = ({ stats }) => {
   )
 }
 
-const formatTooltip = ({ value, index, data, total }) => {
+interface TooltipProps {
+  label: number
+  value: number
+  data: { value: number; text: string; color: string }[]
+  total: number
+}
+
+const formatTooltip = ({ label, value, data, total }: TooltipProps) => {
   const toPercentage = (value / total) * 100
-  const tooltipLabel = data[index].text
-  const tooltipValue = `${value} (${toPercentage.toFixed(2)}%)`
+  const tooltipLabel = data[label].text
+  const tooltipValue = `${label} (${toPercentage.toFixed(2)}%)`
   return [tooltipValue, `${tooltipLabel} cases`]
 }
 
-export const PieChart = ({ stats }) => {
-  const [dataKey, setDataKey] = useState(DATA_KEYS.CONFIRMED_CASES)
+export const PieChart = ({ stats }: { stats: PieChartStats }) => {
+  const [dataKey, setDataKey] = useState(DataKey.CONFIRMED_CASES)
   const { data, total } = generatePieChartsData({ stats, dataKey })
 
   return (
@@ -105,7 +124,11 @@ export const PieChart = ({ stats }) => {
                 <Cell key={data[index].color} fill={data[index].color} />
               ))}
             </Pie>
-            <Tooltip formatter={(value, index) => formatTooltip({ value, index, data, total })} />
+            <Tooltip
+              formatter={(value: number, label: number) =>
+                formatTooltip({ value, label, data, total })
+              }
+            />
           </RPieChart>
         </ResponsiveContainer>
       </div>

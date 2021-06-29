@@ -2,14 +2,14 @@ import React, { useState, memo } from 'react'
 import { ComposableMap, Geographies, Geography } from 'react-simple-maps'
 import { slugifyStr, generateChloropheth, formatNumber } from '../../utils'
 import ReactTooltip from 'react-tooltip'
-import MapLegends from './MapLegends.js'
+import MapLegends from './MapLegends'
 import mapOfNigeria from '../map/map-of-nigeria.json'
-import { DATA_KEYS } from '../../constants'
+import { DataKey } from '../../constants'
 import CasesDropdown from './CasesDropdown'
 
 const CountryMap = ({ stats }) => {
   const [stateName, setStateName] = useState('')
-  const [dataKey, setDataKey] = useState(DATA_KEYS.CONFIRMED_CASES)
+  const [dataKey, setDataKey] = useState(DataKey.CONFIRMED_CASES)
   const slug = stateName === 'Federal Capital Territory' ? 'fct' : slugifyStr(stateName)
 
   return (
@@ -55,10 +55,10 @@ const CountryMap = ({ stats }) => {
         <ReactTooltip place="bottom">
           <p>{stateName}</p>
           <br />
-          <p>Confirmed: {formatNumber(stats[slug][DATA_KEYS.CONFIRMED_CASES])}</p>
-          <p>Active: {formatNumber(stats[slug][DATA_KEYS.ACTIVE_CASES])}</p>
-          <p>Discharged: {formatNumber(stats[slug][DATA_KEYS.DISCHARGED])}</p>
-          <p>Deaths: {formatNumber(stats[slug][DATA_KEYS.DEATHS])}</p>
+          <p>Confirmed: {formatNumber(stats[slug][DataKey.CONFIRMED_CASES])}</p>
+          <p>Active: {formatNumber(stats[slug][DataKey.ACTIVE_CASES])}</p>
+          <p>Discharged: {formatNumber(stats[slug][DataKey.DISCHARGED])}</p>
+          <p>Deaths: {formatNumber(stats[slug][DataKey.DEATHS])}</p>
         </ReactTooltip>
       )}
     </section>

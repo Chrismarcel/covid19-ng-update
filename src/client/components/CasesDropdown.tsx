@@ -1,27 +1,27 @@
 import React from 'react'
 import Dropdown from 'react-select'
-import { DATA_KEYS } from '../../constants'
+import { DataKey } from '../../constants'
 
-type SelectOptions = {
+interface SelectOptions {
   value: string
   label: string
 }
 
 const options: SelectOptions[] = [
   {
-    value: DATA_KEYS.CONFIRMED_CASES,
+    value: DataKey.CONFIRMED_CASES,
     label: 'Confirmed cases',
   },
   {
-    value: DATA_KEYS.ACTIVE_CASES,
+    value: DataKey.ACTIVE_CASES,
     label: 'Active cases',
   },
   {
-    value: DATA_KEYS.DISCHARGED,
+    value: DataKey.DISCHARGED,
     label: 'Discharged cases',
   },
   {
-    value: DATA_KEYS.DEATHS,
+    value: DataKey.DEATHS,
     label: 'Deaths cases',
   },
 ]
