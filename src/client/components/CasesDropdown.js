@@ -1,6 +1,6 @@
 import React from 'react'
 import Dropdown from 'react-select'
-import { DATA_KEYS } from '../constants'
+import { DATA_KEYS } from '../../constants'
 
 const options = [
   {

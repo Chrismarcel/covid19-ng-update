@@ -1,6 +1,6 @@
 import React from 'react'
-import { formatNumber } from '../../src/utils'
-import { DATA_KEYS } from '../constants'
+import { formatNumber } from '../../utils'
+import { DATA_KEYS } from '../../constants'
 import SummaryCard from './SummaryCard'
 
 const SummaryBlock = ({ total }) => {

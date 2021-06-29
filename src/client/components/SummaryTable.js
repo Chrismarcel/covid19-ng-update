@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
-import { reverseSlug, formatNumber } from '../../src/utils'
+import { reverseSlug, formatNumber } from '../../utils'
 import SearchInput from './SearchInput'
 import { ChevronDown, ChevronUp } from 'react-feather'
-import { DATA_KEYS } from '../constants'
+import { DATA_KEYS } from '../../constants'
 
 const tableHeadData = [
   { columnName: 'States', dataKey: DATA_KEYS.STATES },

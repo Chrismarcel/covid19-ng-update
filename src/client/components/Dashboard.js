@@ -6,9 +6,9 @@ import axios from 'axios'
 import CountryMap from './CountryMap'
 import SummmaryPanel from './SummaryBlock'
 import SummaryTable from './SummaryTable'
-import firebaseInit, { FIREBASE_VAPID_KEY } from '../config/firebaseInit'
+import firebaseInit, { FIREBASE_VAPID_KEY } from '../../config/firebaseInit'
 import Header from './Header'
-import { DATA_KEYS, LOCAL_STORAGE_KEYS } from '../constants'
+import { DATA_KEYS, LOCAL_STORAGE_KEYS } from '../../constants'
 import { LineChart, PieChart } from './Charts'
 import { ColorSchemeContext, NotificationContext } from '../context'
 
@@ -59,7 +59,7 @@ const Dashboard = () => {
 
       if ('serviceWorker' in navigator) {
         navigator.serviceWorker
-          .register('../../sw.js')
+          .register('../../../sw.js')
           .then((serviceWorker) => {
             console.log('Successfully registered service worker')
             messaging.getToken({

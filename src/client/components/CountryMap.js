@@ -1,10 +1,10 @@
 import React, { useState, memo } from 'react'
 import { ComposableMap, Geographies, Geography } from 'react-simple-maps'
-import { slugifyStr, generateChloropheth, formatNumber } from '../../src/utils'
+import { slugifyStr, generateChloropheth, formatNumber } from '../../utils'
 import ReactTooltip from 'react-tooltip'
 import MapLegends from './MapLegends.js'
 import mapOfNigeria from '../map/map-of-nigeria.json'
-import { DATA_KEYS } from '../constants'
+import { DATA_KEYS } from '../../constants'
 import CasesDropdown from './CasesDropdown'
 
 const CountryMap = ({ stats }) => {

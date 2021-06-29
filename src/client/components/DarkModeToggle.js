@@ -2,7 +2,7 @@ import React, { useContext } from 'react'
 import { Sun, Moon } from 'react-feather'
 import { ColorSchemeContext } from '../context'
 import ToggleSwitch from './ToggleSwitch'
-import { LOCAL_STORAGE_KEYS } from '../constants'
+import { LOCAL_STORAGE_KEYS } from '../../constants'
 
 const DarkModeToggle = () => {
   const { darkModeEnabled, setDarkModeEnabled } = useContext(ColorSchemeContext)

@@ -6,7 +6,7 @@ import io from 'socket.io'
 import handleSSR from './ssr'
 import compression from 'compression'
 import firebaseInstance from './firebase-config'
-import { DATA_KEYS } from '../src/constants'
+import { DATA_KEYS } from '../constants'
 
 dotenv.config()
 

@@ -12,8 +12,8 @@ import {
   Cell,
   Legend,
 } from 'recharts'
-import { generatePieChartsData, reverseSlug, toSentenceCase } from '../../src/utils'
-import { DATA_KEYS } from '../constants'
+import { generatePieChartsData, reverseSlug, toSentenceCase } from '../../utils'
+import { DATA_KEYS } from '../../constants'
 import { ColorSchemeContext } from '../context'
 import CasesDropdown from './CasesDropdown'
 

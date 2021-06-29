@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react'
 import NotificationsToggle from './NotificationsToggle'
 import { Settings } from 'react-feather'
-import { isChildNode } from '../../src/utils'
+import { isChildNode } from '../../utils'
 import DarkModeToggle from './DarkModeToggle'
 import { ColorSchemeContext } from '../context'
 
