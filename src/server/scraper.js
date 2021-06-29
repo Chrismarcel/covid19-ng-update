@@ -3,7 +3,7 @@ const cheerio = require('cheerio')
 const axios = require('axios')
 const fs = require('fs-extra')
 const { slugifyStr } = require('../utils')
-const { DATA_KEYS } = require('../src/constants')
+const { DATA_KEYS } = require('../constants')
 
 const urlToScrape = 'http://covid19.ncdc.gov.ng/'
 // For some very weird reasons, writing to .json file prevents the push notification from being triggered
