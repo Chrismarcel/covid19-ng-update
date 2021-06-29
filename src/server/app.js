@@ -5,7 +5,7 @@ import http from 'http'
 import io from 'socket.io'
 import handleSSR from './ssr'
 import compression from 'compression'
-import firebaseInstance from './firebase-config'
+import firebaseAdmin from '../config/firebase-admin'
 import { DATA_KEYS } from '../constants'
 
 dotenv.config()
@@ -49,7 +49,7 @@ app.post('/update', (req, res) => {
     body: `Confirmed - ${confirmedCases}, Active - ${activeCases}, Discharged - ${discharged}, Deaths - ${deaths}`,
   }
 
-  firebaseInstance
+  firebaseAdmin
     .messaging()
     .send({ data, topic })
     .catch((err) => console.log(err))
@@ -61,7 +61,7 @@ app.post('/update', (req, res) => {
 
 app.post('/subscribe', (req, res) => {
   const { registrationToken } = req.body
-  firebaseInstance
+  firebaseAdmin
     .messaging()
     .subscribeToTopic(registrationToken, topic)
     .then((response) => {
@@ -81,7 +81,7 @@ app.post('/subscribe', (req, res) => {
 
 app.post('/unsubscribe', (req, res) => {
   const { registrationToken } = req.body
-  firebaseInstance
+  firebaseAdmin
     .messaging()
     .unsubscribeFromTopic(registrationToken, topic)
     .then((response) => {

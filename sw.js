@@ -1,4 +1,4 @@
-import firebaseInit from './src/config/firebaseInit'
+import firebaseClient from './src/config/firebase-client'
 
 const CACHE_VERSION = 1
 const CACHE_NAME = `cache-v${CACHE_VERSION}`
@@ -7,7 +7,7 @@ const CACHE_NAME = `cache-v${CACHE_VERSION}`
 // The error is caused by worker scripts being executed twice, first in the global 'window' context
 // Then secondly in the context of the worker
 if (typeof window === 'undefined') {
-  const messaging = firebaseInit.messaging()
+  const messaging = firebaseClient.messaging()
   messaging.onBackgroundMessage(({ data: { title, body } }) => {
     const notificationTitle = title
     const notificationOptions = {

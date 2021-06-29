@@ -6,7 +6,7 @@ import axios from 'axios'
 import CountryMap from './CountryMap'
 import SummmaryPanel from './SummaryBlock'
 import SummaryTable from './SummaryTable'
-import firebaseInit, { FIREBASE_VAPID_KEY } from '../../config/firebaseInit'
+import firebaseClient, { FIREBASE_VAPID_KEY } from '../../config/firebase-client'
 import Header from './Header'
 import { DATA_KEYS, LOCAL_STORAGE_KEYS } from '../../constants'
 import { LineChart, PieChart } from './Charts'
@@ -36,7 +36,7 @@ const Dashboard = () => {
 
   useEffect(() => {
     // FCM needs to be re-assigned inside of useEffect to prevent Firebase error of 'self is not defined'
-    messaging = firebaseInit.messaging()
+    messaging = firebaseClient.messaging()
 
     // TODO: Handle foreground notification, e.g. display a toast once the data is updated
     messaging.onMessage((payload) => console.log(payload))
