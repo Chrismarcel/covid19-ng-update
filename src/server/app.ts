@@ -2,17 +2,17 @@ import express from 'express'
 import dotenv from 'dotenv'
 import bodyParser from 'body-parser'
 import http from 'http'
-import io from 'socket.io'
+import { Server } from 'socket.io'
 import handleSSR from './ssr'
 import compression from 'compression'
 import firebaseAdmin from '../config/firebase-admin'
-import { DATA_KEYS } from '../constants'
+import { DataKey } from '../constants'
 
 dotenv.config()
 
 const app = express()
 const server = http.createServer(app)
-const socket = io(server)
+const socket = new Server(server)
 
 socket.on('connect', (socket) => {
   socket.on('disconnect', () => {
@@ -25,7 +25,7 @@ app.use(bodyParser.json())
 app.use(compression())
 
 app.get('/', (req, res) => {
-  return res.send(handleSSR(req, res))
+  return res.send(handleSSR(req))
 })
 
 app.use('/', express.static(`${__dirname}/../client`))
@@ -37,10 +37,10 @@ app.post('/update', (req, res) => {
   const { stats } = req.body
   const {
     total: {
-      [DATA_KEYS.CONFIRMED_CASES]: confirmedCases,
-      [DATA_KEYS.ACTIVE_CASES]: activeCases,
-      [DATA_KEYS.DISCHARGED]: discharged,
-      [DATA_KEYS.DEATHS]: deaths,
+      [DataKey.CONFIRMED_CASES]: confirmedCases,
+      [DataKey.ACTIVE_CASES]: activeCases,
+      [DataKey.DISCHARGED]: discharged,
+      [DataKey.DEATHS]: deaths,
     },
   } = stats
 

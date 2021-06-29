@@ -6,15 +6,16 @@ export enum LOCAL_STORAGE_KEYS {
   DARK_MODE = 'dark_mode',
 }
 
-export enum DATA_KEYS {
+export enum DataKey {
   STATES = 'states',
   CONFIRMED_CASES = 'confirmedCases',
   ACTIVE_CASES = 'activeCases',
   DISCHARGED = 'discharged',
   DEATHS = 'death',
+  TOTAL = 'total',
 }
 
-type CasesRange =
+export type CasesRange =
   | 'LESS_THAN_101'
   | 'LESS_THAN_501'
   | 'LESS_THAN_1001'
@@ -22,14 +23,14 @@ type CasesRange =
   | 'LESS_THAN_5001'
   | 'GREATER_THAN_5000'
 
-type ColorBands = {
+export type ColorBandsMap = {
   [key in CasesRange]: {
     color: string
     text: string
   }
 }
 
-export const COLOR_BANDS: ColorBands = {
+export const COLOR_BANDS: ColorBandsMap = {
   LESS_THAN_101: { color: '#ff6347', text: '1 - 100' },
   LESS_THAN_501: { color: '#f88379', text: '101 - 500' },
   LESS_THAN_1001: { color: '#cd5c5c', text: '501 - 1000' },
