@@ -6,9 +6,6 @@
   "repository": "git@github.com:Chrismarcel/covid19-report-app.git",
   "author": "Chrismarcel <cmarcelj@gmail.com>",
   "license": "MIT",
-  "engines": {
-    "node": "16.x"
-  },
   "scripts": {
     "scrape": "node -r esm server/scraper",
     "watch:client": "parcel src/**/*.html -d dist/client",
