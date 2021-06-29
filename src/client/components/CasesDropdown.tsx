@@ -2,7 +2,12 @@ import React from 'react'
 import Dropdown from 'react-select'
 import { DATA_KEYS } from '../../constants'
 
-const options = [
+type SelectOptions = {
+  value: string
+  label: string
+}
+
+const options: SelectOptions[] = [
   {
     value: DATA_KEYS.CONFIRMED_CASES,
     label: 'Confirmed cases',
@@ -21,7 +26,7 @@ const options = [
   },
 ]
 
-const CasesDropdown = ({ onChange }) => {
+const CasesDropdown = ({ onChange }: { onChange: ({ value }: { value: any }) => void }) => {
   return (
     <Dropdown
       options={options}
