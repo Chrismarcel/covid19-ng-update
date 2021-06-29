@@ -14,7 +14,8 @@
     "build:server": "parcel build src/server/app.ts -d dist/server --target node",
     "build": "rimraf dist .cache && yarn build:server && yarn build:client",
     "start:dev": "nodemon dist/server/app",
-    "start:prod": "node dist/server/app"
+    "start:prod": "node dist/server/app",
+    "prepare": "husky install"
   },
   "dependencies": {
     "@types/axios": "^0.14.0",
@@ -36,6 +37,10 @@
     "cheerio": "^1.0.0-rc.3",
     "compression": "^1.7.4",
     "dotenv": "^10.0.0",
+    "eslint": "^7.29.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-prettier": "^3.4.0",
+    "eslint-plugin-react": "^7.24.0",
     "express": "^4.17.1",
     "firebase": "^8.6.8",
     "firebase-admin": "^9.10.0",
@@ -44,6 +49,7 @@
     "node-sass": "^6.0.1",
     "nodemon": "^2.0.2",
     "parcel-bundler": "^1.12.5",
+    "prettier": "^2.3.2",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-feather": "^2.0.4",

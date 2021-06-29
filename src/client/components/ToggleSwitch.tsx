@@ -3,12 +3,18 @@ import React, { useEffect, useState } from 'react'
 type ToggleSwitchProps = {
   isEnabled: boolean
   label: string
-  ToggleOnIcon: React.ComponentType<any>
-  ToggleOffIcon: React.ComponentType<any>
+  ToggleOnIcon: React.ComponentType<{}>
+  ToggleOffIcon: React.ComponentType<{}>
   onToggle: () => void
 }
 
-const ToggleSwitch = ({ isEnabled, label, ToggleOnIcon, ToggleOffIcon, onToggle }: ToggleSwitchProps) => {
+const ToggleSwitch = ({
+  isEnabled,
+  label,
+  ToggleOnIcon,
+  ToggleOffIcon,
+  onToggle,
+}: ToggleSwitchProps) => {
   const [isToggleOn, setIsToggleOn] = useState(isEnabled)
 
   useEffect(() => {

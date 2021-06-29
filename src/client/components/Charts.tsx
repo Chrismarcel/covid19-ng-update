@@ -12,15 +12,8 @@ import {
   Cell,
   Legend,
 } from 'recharts'
-import {
-  generatePieChartsData,
-  reverseSlug,
-  toSentenceCase,
-  PieChartStats,
-  PieChartDataMap,
-  PieChartData,
-} from '../../utils'
-import { CasesRange, DataKey } from '../../constants'
+import { generatePieChartsData, reverseSlug, toSentenceCase, PieChartStats } from '../../utils'
+import { DataKey } from '../../constants'
 import { ColorSchemeContext } from '../context'
 import CasesDropdown from './CasesDropdown'
 import { StatsData } from '~/server/scraper'
@@ -103,7 +96,7 @@ export const PieChart = ({ stats }: { stats: PieChartStats }) => {
   return (
     <div className="panel chart-wrapper pie-chart">
       <div className="dropdown-wrapper">
-        <CasesDropdown onChange={({ value }) => setDataKey(value)} />
+        <CasesDropdown onChange={({ value }) => setDataKey(value as DataKey)} />
       </div>
       <div className="pie-chart-wrapper">
         <ResponsiveContainer height={400}>

@@ -4,7 +4,7 @@ import { DataKey } from '../../constants'
 import SummaryCard from './SummaryCard'
 import { StatsDataMap } from '~/server/scraper'
 
-const SummaryBlock = ({ total }: {total: StatsDataMap}) => {
+const SummaryBlock = ({ total }: { total: StatsDataMap }) => {
   return (
     <section className="summary-wrapper">
       <SummaryCard

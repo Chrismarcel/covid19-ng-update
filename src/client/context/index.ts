@@ -7,6 +7,7 @@ type NotificationCtx = {
 
 export const NotificationContext = createContext<NotificationCtx>({
   alertStatus: false,
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
   handlePermission: () => {},
 })
 
@@ -17,5 +18,6 @@ type ColorSchemeCtx = {
 
 export const ColorSchemeContext = createContext<ColorSchemeCtx>({
   darkModeEnabled: false,
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
   setDarkModeEnabled: () => {},
 })

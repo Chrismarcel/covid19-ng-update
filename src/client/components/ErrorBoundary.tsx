@@ -1,7 +1,7 @@
 import React from 'react'
 
 class ErrorBoundary extends React.Component<{}, { hasError: boolean }> {
-  constructor(props) {
+  constructor(props: {} | Readonly<{}>) {
     super(props)
     this.state = { hasError: false }
   }
@@ -10,6 +10,7 @@ class ErrorBoundary extends React.Component<{}, { hasError: boolean }> {
     return { hasError: true }
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   componentDidCatch(error, errorInfo) {
     // TODO: Handle logging error using either New Relic or Sentry
   }

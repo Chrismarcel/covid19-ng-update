@@ -53,7 +53,7 @@ const scrapePage = async () => {
       [DataKey.ACTIVE_CASES]: 0,
       [DataKey.DISCHARGED]: 0,
       [DataKey.DEATHS]: 0,
-      [DataKey.TOTAL]: 0
+      [DataKey.TOTAL]: 0,
     }
 
     const mapTableToField = (rows: cheerio.Cheerio): StatsData => {
@@ -90,7 +90,7 @@ const scrapePage = async () => {
         [DataKey.ACTIVE_CASES]: totalActive,
         [DataKey.DISCHARGED]: totalDischarged,
         [DataKey.DEATHS]: totalDeaths,
-        [DataKey.TOTAL]: 0
+        [DataKey.TOTAL]: 0,
       }
     }, initialStatsValues)
 

@@ -26,7 +26,7 @@ const options: SelectOptions[] = [
   },
 ]
 
-const CasesDropdown = ({ onChange }: { onChange: ({ value }: { value: any }) => void }) => {
+const CasesDropdown = ({ onChange }: { onChange: ({ value }: { value: string }) => void }) => {
   return (
     <Dropdown
       options={options}

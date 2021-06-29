@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react'
+import React, { useState, useEffect } from 'react'
 import NotificationsToggle from './NotificationsToggle'
 import { Settings } from 'react-feather'
 import { isChildNode } from '../../utils'
@@ -15,9 +15,9 @@ const Header = () => {
   }
 
   useEffect(() => {
-    document.addEventListener('click', (notificationMenuListener as unknown as EventListener))
+    document.addEventListener('click', notificationMenuListener as unknown as EventListener)
     return () => {
-      document.removeEventListener('click', (notificationMenuListener as unknown) as EventListener)
+      document.removeEventListener('click', notificationMenuListener as unknown as EventListener)
     }
   }, [menuOpen])
 
