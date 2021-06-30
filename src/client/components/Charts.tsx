@@ -19,7 +19,7 @@ import CasesDropdown from './CasesDropdown'
 import { StatsData } from '~/server/scraper'
 
 interface LineChartStats {
-  [key: string]: string
+  [key: string]: number | string
 }
 
 const mergeStatsWithState = (stats: StatsData) => {
@@ -29,15 +29,15 @@ const mergeStatsWithState = (stats: StatsData) => {
     if (state !== 'total') {
       mergedData.push({
         state: toSentenceCase(stateName),
-        'Confirmed cases': `${data[DataKey.CONFIRMED_CASES]}`,
-        'Active cases': `${data[DataKey.ACTIVE_CASES]}`,
-        Discharged: `${data[DataKey.DISCHARGED]}`,
-        Deaths: `${data[DataKey.DEATHS]}`,
+        'Confirmed cases': data[DataKey.CONFIRMED_CASES],
+        'Active cases': data[DataKey.ACTIVE_CASES],
+        Discharged: data[DataKey.DISCHARGED],
+        Deaths: data[DataKey.DEATHS],
       })
     }
   })
 
-  return mergedData.sort((a, b) => a.state.localeCompare(b.state))
+  return mergedData.sort((a, b) => `${a.state}`.localeCompare(`${b.state}`))
 }
 
 export const LineChart = ({ stats }: { stats: StatsData }) => {
