@@ -98,7 +98,7 @@ const scrapePage = async () => {
 
     // If there's a new update
     if (prevTotal[DataKey.CONFIRMED_CASES] !== currentTotal[DataKey.CONFIRMED_CASES]) {
-      const updateStatsEndpoint = `${process.env.HOST}/update`
+      const updateStatsEndpoint = `${process.env.HOST}/api/update`
       await fs.writeFile(filePath, JSON.stringify(stats))
       await axios.post(updateStatsEndpoint, { stats })
     }

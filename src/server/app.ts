@@ -2,21 +2,33 @@ import express from 'express'
 import dotenv from 'dotenv'
 import bodyParser from 'body-parser'
 import compression from 'compression'
-import { server } from '../config/socket'
 import router from './routes'
+import http from 'http'
+import { sendSSRPage } from './controllers'
+import socketInstance from '../config/socket'
 
 dotenv.config()
 
 const app = express()
 
+export const server = http.createServer(app)
+const socket = socketInstance.init(server)
+
+socket.on('connect', (socket) => {
+  socket.on('disconnect', () => {
+    // TODO: Handle socket disconnection
+  })
+})
+
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
 app.use(compression())
 
-app.use('/', express.static(`${__dirname}/../client`), router)
+app.get('/', sendSSRPage)
+app.use('/', express.static(`${__dirname}/../client`))
 app.use('/src', express.static('./src'))
+app.use('/api', router)
 
-export default app
 const PORT = process.env.PORT || 5000
 
 server.listen(PORT, () => console.log(`Listening on Port ${PORT}`))

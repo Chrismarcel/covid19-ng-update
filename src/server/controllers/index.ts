@@ -1,16 +1,15 @@
 import firebaseAdmin from '../../config/firebase-admin'
-import { socket } from '../../config/socket'
 import { DataKey } from '../../constants'
 import handleSSR from './ssr'
 import { RequestHandler } from 'express'
+import socketInstance from '../../config/socket'
 
 const topic = 'covid19updates'
 
-export const sendSSRPage: RequestHandler = (req, res) => {
-  return res.send(handleSSR(req))
-}
+export const sendSSRPage: RequestHandler = (req, res) => res.send(handleSSR(req))
 
 export const updateStats: RequestHandler = (req, res) => {
+  const socket = socketInstance.get()
   const { stats } = req.body
   const {
     total: {

@@ -1,14 +1,19 @@
-import http from 'http'
 import { Server } from 'socket.io'
-import app from '../server/app'
+import http from 'http'
 
-const server = http.createServer(app)
-const socket = new Server(server)
+let socketInit: Server
 
-socket.on('connect', (socket) => {
-  socket.on('disconnect', () => {
-    // TODO: Handle socket disconnection
-  })
-})
+const initSocket = {
+  init: (server: http.Server) => {
+    socketInit = new Server(server)
+    return socketInit
+  },
+  get: () => {
+    if (!socketInit) {
+      throw new Error('No socket initialized')
+    }
+    return socketInit
+  },
+}
 
-export { server, socket }
+export default initSocket

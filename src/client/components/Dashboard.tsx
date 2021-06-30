@@ -108,7 +108,7 @@ const Dashboard = () => {
     })
   }, [stats])
 
-  const handlePermission = async (alertStatus) => {
+  const handlePermission = async (alertStatus: boolean) => {
     try {
       const registrationToken = await messaging.getToken()
       localStorage.setItem(REGISTRATION_TOKEN, registrationToken)
@@ -121,11 +121,11 @@ const Dashboard = () => {
     }
   }
 
-  const handleSubscription = async (subscribeUser) => {
+  const handleSubscription = async (subscribeUser: boolean) => {
     const endpoint = subscribeUser ? 'subscribe' : 'unsubscribe'
     try {
       const registrationToken = localStorage.getItem(REGISTRATION_TOKEN)
-      const { data } = await axios.post(`${process.env.HOST}/${endpoint}`, {
+      const { data } = await axios.post(`${process.env.HOST}/api/${endpoint}`, {
         registrationToken,
       })
       if (data.status === 200 && subscribeUser) {
