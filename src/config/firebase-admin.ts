@@ -1,4 +1,7 @@
 import admin, { ServiceAccount } from 'firebase-admin'
+import dotenv from 'dotenv'
+
+dotenv.config()
 
 const isDevEnv = process.env.ENV === 'DEV'
 const privateKey = process.env.FIREBASE_PRIVATE_KEY
