@@ -105,8 +105,8 @@ const scrapePage = async () => {
   } catch (error) {
     // TODO: Find more robust ways to handle errors
     console.log(error)
-    // If any error, wait for 2 minutes and scrape page again
-    setInterval(() => scrapePage(), 2 * 60 * 1000)
+    // If any error, wait for 5 minutes and scrape page again
+    setInterval(() => scrapePage(), 5 * 60 * 1000)
   }
 }
 
