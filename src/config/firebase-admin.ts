@@ -1,4 +1,4 @@
-import admin from 'firebase-admin'
+import admin, { ServiceAccount } from 'firebase-admin'
 
 const isDevEnv = process.env.ENV === 'DEV'
 const privateKey = process.env.FIREBASE_PRIVATE_KEY
@@ -22,7 +22,7 @@ const FIREBASE_CONFIG = {
 export const FIREBASE_SERVER_KEY = process.env.FIREBASE_SERVER_KEY
 
 const firebaseInstance = admin.initializeApp({
-  credential: admin.credential.cert(FIREBASE_CONFIG),
+  credential: admin.credential.cert(FIREBASE_CONFIG as ServiceAccount),
   databaseURL: process.env.FIREBASE_DB_URL,
 })
 

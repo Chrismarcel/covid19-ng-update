@@ -4,7 +4,7 @@ import $ from 'cheerio'
 import React from 'react'
 import { StaticRouter } from 'react-router-dom'
 import { renderToString } from 'react-dom/server'
-import App from '../../client/App'
+import App from '../../../client/App'
 
 const templatePath = path.join(__dirname, '..', 'client', 'index.html')
 const HTMLTemplateString = fs.readFileSync(`${templatePath}`)
