@@ -1,5 +1,5 @@
+import { Stats } from '~/client/components/Dashboard'
 import { COLOR_BANDS, ColorBandsMap, CasesRange, DataKey } from '../constants'
-import { StatsData } from '../server/scraper'
 
 export const generateChloropheth = (numCases: number): string => {
   // #E45E2F - Base Color used to generate other shades via https://coolors.co
@@ -32,7 +32,7 @@ export const generateChloropheth = (numCases: number): string => {
   return color
 }
 
-export const slugifyStr = (str: string | undefined) => str?.toLowerCase().replace(/ /g, '_')
+export const slugifyStr = (str: string) => str.toLowerCase().replace(/ /g, '_')
 
 export const reverseSlug = (str: string) => str.replace(/_/g, ' ')
 
@@ -52,7 +52,9 @@ export const isChildNode = (parentNode: Node | null, childNode: Node): boolean =
   return false
 }
 
-export type PieChartStats = StatsData & { [key: string]: { [DataKey.STATES]: number } }
+export type PieChartStats = Stats & {
+  [key: string]: { total?: number }
+}
 
 export type PieChartDataMap = ColorBandsMap & { [key in CasesRange]: { value: number } }
 
@@ -65,7 +67,7 @@ export const generatePieChartsData = ({
   stats,
   dataKey,
 }: {
-  stats: StatsData & { [key: string]: { [DataKey.STATES]: number } }
+  stats: PieChartStats
   dataKey: DataKey
 }): PieChartData => {
   const pieChartData = { ...COLOR_BANDS } as PieChartDataMap

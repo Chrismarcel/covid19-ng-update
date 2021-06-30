@@ -11,7 +11,7 @@ class ErrorBoundary extends React.Component<{}, { hasError: boolean }> {
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  componentDidCatch(error, errorInfo) {
+  componentDidCatch(error: unknown, errorInfo: React.ErrorInfo) {
     // TODO: Handle logging error using either New Relic or Sentry
   }
 

@@ -3,15 +3,19 @@ import { reverseSlug, formatNumber } from '../../utils'
 import SearchInput from './SearchInput'
 import { ChevronDown, ChevronUp } from 'react-feather'
 import { DataKey } from '../../constants'
-import { StatsData } from '~/server/scraper'
+import { Stats } from './Dashboard'
+
+type ColumnKey = DataKey | string
+
+const StateKey: ColumnKey = 'states'
 
 interface TableHeadData {
   columnName: string
-  dataKey: DataKey
+  dataKey: ColumnKey
 }
 
 const tableHeadData: TableHeadData[] = [
-  { columnName: 'States', dataKey: DataKey.STATES },
+  { columnName: 'States', dataKey: StateKey },
   { columnName: 'Confirmed', dataKey: DataKey.CONFIRMED_CASES },
   { columnName: 'Active', dataKey: DataKey.ACTIVE_CASES },
   { columnName: 'Discharged', dataKey: DataKey.DISCHARGED },
@@ -31,14 +35,14 @@ const ChevronIcon = ({ ascending, ...iconProps }: ChevronIconProps) => {
 
 interface TableHeadRowProps {
   data: TableHeadData[]
-  onSort: (data: { dataKey: DataKey; ascending: boolean }) => void
+  onSort: (data: { dataKey: ColumnKey; ascending: boolean }) => void
 }
 
 const TableHeadRow = ({ data, onSort }: TableHeadRowProps) => {
-  const [activeColumn, setActiveColumn] = useState(DataKey.STATES)
+  const [activeColumn, setActiveColumn] = useState(StateKey)
   const [ascending, setAscending] = useState(true)
 
-  const onTableHeadClick = (dataKey: DataKey, ascending: boolean) => {
+  const onTableHeadClick = (dataKey: ColumnKey, ascending: boolean) => {
     setActiveColumn(dataKey)
     setAscending(dataKey !== activeColumn ? ascending : !ascending)
     if (onSort) {
@@ -69,23 +73,26 @@ const TableHeadRow = ({ data, onSort }: TableHeadRowProps) => {
   )
 }
 
-interface SummaryTableProps {
-  stats: StatsData
-}
+type SummaryTableProps = { [key: string]: Stats }
 
 const SummaryTable = ({ stats }: SummaryTableProps) => {
   const [searchValue, setSearchValue] = useState('')
-  const [sortKey, setSortKey] = useState(DataKey.STATES)
+  const [sortKey, setSortKey] = useState(StateKey)
   const [isDescendingOrder, setIsDescendingOrder] = useState(false)
 
   const filteredStats = React.useMemo(() => {
     const sortedStats = Object.entries(stats)
       .filter(([state]) => state.includes(searchValue.toLowerCase()))
       .sort(([state1, stats1], [state2, stats2]) => {
-        if (sortKey == DataKey.STATES) {
+        if (sortKey === StateKey) {
           return state1.localeCompare(state2)
         }
-        return stats1[sortKey] - stats2[sortKey]
+
+        if (sortKey !== StateKey) {
+          return stats1[sortKey] - stats2[sortKey]
+        }
+
+        return -1
       })
 
     if (isDescendingOrder) {

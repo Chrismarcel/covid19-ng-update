@@ -3,7 +3,7 @@ import Dropdown from 'react-select'
 import { DataKey } from '../../constants'
 
 interface SelectOptions {
-  value: string
+  value: DataKey
   label: string
 }
 
@@ -26,7 +26,11 @@ const options: SelectOptions[] = [
   },
 ]
 
-const CasesDropdown = ({ onChange }: { onChange: ({ value }: { value: string }) => void }) => {
+interface CasesDropdownProps {
+  onChange: ({ value }: { value: DataKey }) => void
+}
+
+const CasesDropdown = ({ onChange }: CasesDropdownProps) => {
   return (
     <Dropdown
       options={options}

@@ -11,12 +11,25 @@ import Header from './Header'
 import { DataKey, LOCAL_STORAGE_KEYS } from '../../constants'
 import { LineChart, PieChart } from './Charts'
 import { ColorSchemeContext, NotificationContext } from '../context'
+import firebase from 'firebase'
 
 dotenv.config()
 
-const socket = socketClient(process.env.HOST)
+const host = process.env.HOST as string
+const socket = socketClient(host)
 
-const initialState = {
+// TODO: Refactor the Stats type
+export type Stats = {
+  [key: string]: {
+    [k in DataKey]: number
+  } & {
+    [k: string]: number
+  } & {
+    total?: number
+  }
+}
+
+const initialState: Stats = {
   total: {
     [DataKey.CONFIRMED_CASES]: 0,
     [DataKey.DEATHS]: 0,
@@ -25,7 +38,17 @@ const initialState = {
   },
 }
 
-let messaging
+declare global {
+  interface Window {
+    __INITIAL_DATA__?: Stats
+  }
+
+  interface EventTarget {
+    state: string
+  }
+}
+
+let messaging: firebase.messaging.Messaging
 const { ALERT_STATUS, REGISTRATION_TOKEN, DARK_MODE } = LOCAL_STORAGE_KEYS
 
 const Dashboard = () => {
@@ -70,10 +93,10 @@ const Dashboard = () => {
             // If user has already subscribed but cleared their storage
             // or uninstalled their service worker
             serviceWorker.addEventListener('updatefound', () => {
-              serviceWorker.installing.addEventListener('statechange', (event) => {
-                if (event.target.state === 'activated') {
+              serviceWorker.installing!.addEventListener('statechange', (event) => {
+                if (event.target && event.target.state === 'activated') {
                   if (!alertStatus) {
-                    messaging.getToken().then(async (registrationToken) => {
+                    messaging.getToken().then(async (registrationToken: string) => {
                       if (registrationToken) {
                         localStorage.setItem(REGISTRATION_TOKEN, registrationToken)
                         localStorage.setItem(ALERT_STATUS, 'true')

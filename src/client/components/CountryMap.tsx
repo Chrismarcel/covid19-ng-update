@@ -6,8 +6,9 @@ import MapLegends from './MapLegends'
 import mapOfNigeria from '../map/map-of-nigeria.json'
 import { DataKey } from '../../constants'
 import CasesDropdown from './CasesDropdown'
+import { Stats } from './Dashboard'
 
-const CountryMap = ({ stats }) => {
+const CountryMap = ({ stats }: { stats: Stats }) => {
   const [stateName, setStateName] = useState('')
   const [dataKey, setDataKey] = useState(DataKey.CONFIRMED_CASES)
   const slug = stateName === 'Federal Capital Territory' ? 'fct' : slugifyStr(stateName)
@@ -31,8 +32,9 @@ const CountryMap = ({ stats }) => {
               const { properties } = geo
               const { name } = properties
 
-              const stateName = name === 'Federal Capital Territory' ? 'fct' : slugifyStr(name)
-              const numCases = stats[stateName]?.[dataKey] || 0
+              const stateName: string =
+                name === 'Federal Capital Territory' ? 'fct' : slugifyStr(name)
+              const numCases: number = stats[stateName][dataKey] || 0
 
               return (
                 <Geography

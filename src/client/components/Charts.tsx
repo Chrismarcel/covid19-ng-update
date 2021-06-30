@@ -16,13 +16,13 @@ import { generatePieChartsData, reverseSlug, toSentenceCase, PieChartStats } fro
 import { DataKey } from '../../constants'
 import { ColorSchemeContext } from '../context'
 import CasesDropdown from './CasesDropdown'
-import { StatsData } from '~/server/scraper'
+import { Stats } from './Dashboard'
 
 interface LineChartStats {
   [key: string]: number | string
 }
 
-const mergeStatsWithState = (stats: StatsData) => {
+const mergeStatsWithState = (stats: Stats) => {
   const mergedData: LineChartStats[] = []
   Object.entries(stats).forEach(([state, data]) => {
     const stateName = state !== 'fct' ? reverseSlug(state) : 'F.C.T'
@@ -40,7 +40,7 @@ const mergeStatsWithState = (stats: StatsData) => {
   return mergedData.sort((a, b) => `${a.state}`.localeCompare(`${b.state}`))
 }
 
-export const LineChart = ({ stats }: { stats: StatsData }) => {
+export const LineChart = ({ stats }: { stats: Stats }) => {
   const data = mergeStatsWithState(stats)
   const { darkModeEnabled } = useContext(ColorSchemeContext)
 
@@ -106,13 +106,7 @@ export const PieChart = ({ stats }: { stats: PieChartStats }) => {
               wrapperStyle={{ bottom: 40 }}
               formatter={(index) => <span className="pie-chart-legend">{data[index].text}</span>}
             />
-            <Pie
-              data={data}
-              innerRadius="55%"
-              outerRadius="70%"
-              fill="#8884d8"
-              paddingAngle={5}
-              dataKey="value">
+            <Pie data={data} innerRadius="55%" outerRadius="70%" paddingAngle={5} dataKey="value">
               {data.map((_, index) => (
                 <Cell key={data[index].color} fill={data[index].color} />
               ))}

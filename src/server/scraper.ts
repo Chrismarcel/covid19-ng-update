@@ -29,11 +29,11 @@ type StatsDataField =
   | DataKey.DISCHARGED
   | DataKey.DEATHS
 
-type StatsAggregate = {
+export type StatsAggregate = {
   [key in StatsDataField]: number
 }
 
-export type StatsDataMap = StatsAggregate & { [DataKey.TOTAL]: number }
+export type StatsDataMap = StatsAggregate & { total?: number }
 
 export type StatsData = {
   [key: string]: StatsDataMap
@@ -53,7 +53,6 @@ const scrapePage = async () => {
       [DataKey.ACTIVE_CASES]: 0,
       [DataKey.DISCHARGED]: 0,
       [DataKey.DEATHS]: 0,
-      [DataKey.TOTAL]: 0,
     }
 
     const mapTableToField = (rows: cheerio.Cheerio): StatsData => {
@@ -63,7 +62,7 @@ const scrapePage = async () => {
 
         cell.each((index) => {
           if (index === 0) {
-            const state = slugifyStr(extractValueFromCell(cell[index]))
+            const state = slugifyStr(extractValueFromCell(cell[index]) || '')
             if (state) {
               data[state] = { ...initialStatsValues }
               data[state][DataKey.CONFIRMED_CASES] = pickMaxValue(cell[index + 1])
@@ -90,7 +89,6 @@ const scrapePage = async () => {
         [DataKey.ACTIVE_CASES]: totalActive,
         [DataKey.DISCHARGED]: totalDischarged,
         [DataKey.DEATHS]: totalDeaths,
-        [DataKey.TOTAL]: 0,
       }
     }, initialStatsValues)
 
