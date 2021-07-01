@@ -377,7 +377,7 @@ input.input {
 }
 
 .search-field-wrapper {
-  margin-right: 25px;
+  margin-right: 40px;
 }
 
 .panel.summary-table {
@@ -427,7 +427,7 @@ input.input {
 .summary-table thead tr,
 .summary-table tbody tr {
   display: flex;
-  padding: 15px;
+  padding: 15px 25px 15px 40px;
   justify-content: space-between;
 }
 
@@ -436,7 +436,7 @@ input.input {
 }
 
 .summary-table tbody tr {
-  margin-right: 20px;
+  padding-right: 40px;
   border-bottom: 1px solid;
   border-color: rgba(214, 219, 223, 0.5);
   cursor: pointer;
@@ -681,7 +681,7 @@ input.input {
   }
 
   .panel.summary-table {
-    padding: 25px;
+    padding: 25px 0;
     overflow-y: hidden;
     flex-basis: 50%;
   }
