@@ -12,7 +12,7 @@ import { DataKey, LOCAL_STORAGE_KEYS } from '../../constants'
 import { LineChart, PieChart } from './Charts'
 import { ColorSchemeContext, NotificationContext } from '../context'
 import firebase from 'firebase'
-import { supportsNotification } from '~/utils'
+import { supportsNotification } from '../../utils'
 
 dotenv.config()
 
