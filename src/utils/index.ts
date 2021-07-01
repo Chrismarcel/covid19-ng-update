@@ -99,3 +99,9 @@ export const generatePieChartsData = ({
 
   return { data: Object.values(pieChartData), total }
 }
+
+export const supportsNotification = () => {
+  const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent)
+  const notificationAllowed = 'Notification' in window && Notification.permission !== 'denied'
+  return !isSafari && notificationAllowed
+}

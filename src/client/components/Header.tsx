@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import NotificationsToggle from './NotificationsToggle'
 import { Settings } from 'react-feather'
-import { isChildNode } from '../../utils'
+import { isChildNode, supportsNotification } from '../../utils'
 import DarkModeToggle from './DarkModeToggle'
 
 const Header = () => {
@@ -33,7 +33,7 @@ const Header = () => {
         </button>
         <div className="panel notification-menu" id="notification-menu">
           <NotificationsToggle />
-          <DarkModeToggle />
+          {supportsNotification() && <DarkModeToggle />}
         </div>
       </div>
     </header>

@@ -12,6 +12,7 @@ import { DataKey, LOCAL_STORAGE_KEYS } from '../../constants'
 import { LineChart, PieChart } from './Charts'
 import { ColorSchemeContext, NotificationContext } from '../context'
 import firebase from 'firebase'
+import { supportsNotification } from '~/utils'
 
 dotenv.config()
 
@@ -58,11 +59,13 @@ const Dashboard = () => {
   const [darkModeEnabled, setDarkModeEnabled] = useState(false)
 
   useEffect(() => {
-    // FCM needs to be re-assigned inside of useEffect to prevent Firebase error of 'self is not defined'
-    messaging = firebaseClient.messaging()
+    if (supportsNotification()) {
+      // FCM needs to be re-assigned inside of useEffect to prevent Firebase error of 'self is not defined'
+      messaging = firebaseClient.messaging()
 
-    // TODO: Handle foreground notification, e.g. display a toast once the data is updated
-    messaging.onMessage((payload) => console.log(payload))
+      // TODO: Handle foreground notification, e.g. display a toast once the data is updated
+      messaging.onMessage((payload) => console.log(payload))
+    }
 
     // Prevent Firebase from throwing error about multiple VAPID keys being set
     if (!DOMReady) {
@@ -85,17 +88,19 @@ const Dashboard = () => {
           .register('../../../sw.js')
           .then((serviceWorker) => {
             console.log('Successfully registered service worker')
-            messaging.getToken({
-              vapidKey: FIREBASE_VAPID_KEY,
-              serviceWorkerRegistration: serviceWorker,
-            })
+            if (supportsNotification()) {
+              messaging.getToken({
+                vapidKey: FIREBASE_VAPID_KEY,
+                serviceWorkerRegistration: serviceWorker,
+              })
+            }
             // Retrieve token & subscribe user
             // If user has already subscribed but cleared their storage
             // or uninstalled their service worker
             serviceWorker.addEventListener('updatefound', () => {
               serviceWorker.installing!.addEventListener('statechange', (event) => {
                 if (event.target && event.target.state === 'activated') {
-                  if (!alertStatus) {
+                  if (!alertStatus && supportsNotification()) {
                     messaging.getToken().then(async (registrationToken: string) => {
                       if (registrationToken) {
                         localStorage.setItem(REGISTRATION_TOKEN, registrationToken)
