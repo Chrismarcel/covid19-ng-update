@@ -32,8 +32,8 @@ const Header = () => {
           <Settings />
         </button>
         <div className="panel notification-menu" id="notification-menu">
-          <NotificationsToggle />
-          {supportsNotification() && <DarkModeToggle />}
+          {supportsNotification() && <NotificationsToggle />}
+          <DarkModeToggle />
         </div>
       </div>
     </header>
