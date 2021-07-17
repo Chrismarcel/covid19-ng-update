@@ -1,6 +1,6 @@
 import firebaseClient from './src/config/firebase-client'
 
-const CACHE_VERSION = 2
+const CACHE_VERSION = 1
 const CACHE_NAME = `cache-v${CACHE_VERSION}`
 
 // In order to prevent the Firebase error: (messaging/only-available-in-sw).
@@ -20,7 +20,6 @@ if (typeof window === 'undefined') {
 
 const urlsToCache = [
   '/',
-  '/styles.03504a8d.js',
   '/src.f69400ca.js',
   '/styles.03504a8d.css',
   'https://fonts.googleapis.com/css2?family=Sen:wght@400;700&family=Poppins:wght@600;700&display=swap',
