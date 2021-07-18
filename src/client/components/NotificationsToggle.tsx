@@ -8,11 +8,12 @@ const NotificationsToggle = () => {
   const [enabledAlert, setEnabledAlert] = useState(alertStatus)
 
   const requestPermission = () => {
-    setEnabledAlert(!enabledAlert)
+    const toggleStatus = !enabledAlert
+    setEnabledAlert(toggleStatus)
     if ('Notification' in window) {
       Notification.requestPermission((permission) => {
         if (permission === 'granted') {
-          handlePermission(!enabledAlert)
+          handlePermission(toggleStatus)
         }
       })
     }

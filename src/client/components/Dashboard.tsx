@@ -12,7 +12,7 @@ import { DataKey, LOCAL_STORAGE_KEYS } from '../../constants'
 import { LineChart, PieChart } from './Charts'
 import { ColorSchemeContext, NotificationContext } from '../context'
 import firebase from 'firebase'
-import { supportsNotification } from '../../utils'
+import { deviceSupportsNotification } from '../../utils'
 
 dotenv.config()
 
@@ -59,7 +59,7 @@ const Dashboard = () => {
   const [darkModeEnabled, setDarkModeEnabled] = useState(false)
 
   useEffect(() => {
-    if (supportsNotification()) {
+    if (deviceSupportsNotification()) {
       // FCM needs to be re-assigned inside of useEffect to prevent Firebase error of 'self is not defined'
       messaging = firebaseClient.messaging()
 
@@ -74,10 +74,10 @@ const Dashboard = () => {
       setAlertStatus(parsedStatus)
 
       const userPreferredScheme = localStorage.getItem(DARK_MODE)
-      const validStorageValue = userPreferredScheme === 'true' || userPreferredScheme === 'false'
+      const validSchemeValue = userPreferredScheme === 'true' || userPreferredScheme === 'false'
 
       const darkModeEnabled = userPreferredScheme
-        ? validStorageValue
+        ? validSchemeValue
           ? JSON.parse(userPreferredScheme)
           : false
         : window?.matchMedia('(prefers-color-scheme: dark)').matches
@@ -88,7 +88,7 @@ const Dashboard = () => {
           .register('../../../sw.js')
           .then((serviceWorker) => {
             console.log('Successfully registered service worker')
-            if (supportsNotification()) {
+            if (deviceSupportsNotification()) {
               messaging.getToken({
                 vapidKey: FIREBASE_VAPID_KEY,
                 serviceWorkerRegistration: serviceWorker,
@@ -100,15 +100,18 @@ const Dashboard = () => {
             serviceWorker.addEventListener('updatefound', () => {
               serviceWorker.installing!.addEventListener('statechange', (event) => {
                 if (event.target && event.target.state === 'activated') {
-                  if (!alertStatus && supportsNotification()) {
-                    messaging.getToken().then(async (registrationToken: string) => {
-                      if (registrationToken) {
-                        localStorage.setItem(REGISTRATION_TOKEN, registrationToken)
-                        localStorage.setItem(ALERT_STATUS, 'true')
+                  if (!alertStatus && deviceSupportsNotification()) {
+                    messaging
+                      .getToken()
+                      .then(async (registrationToken: string) => {
+                        if (registrationToken) {
+                          localStorage.setItem(REGISTRATION_TOKEN, registrationToken)
+                          localStorage.setItem(ALERT_STATUS, 'true')
 
-                        await handleSubscription(true)
-                      }
-                    })
+                          await handleSubscription(true)
+                        }
+                      })
+                      .catch((error) => console.log('Error getting token', error))
                   }
                 }
               })

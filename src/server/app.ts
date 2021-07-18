@@ -1,6 +1,5 @@
 import express from 'express'
 import dotenv from 'dotenv'
-import bodyParser from 'body-parser'
 import compression from 'compression'
 import router from './routes'
 import http from 'http'
@@ -20,8 +19,8 @@ socket.on('connect', (socket) => {
   })
 })
 
-app.use(bodyParser.urlencoded({ extended: true }))
-app.use(bodyParser.json())
+app.use(express.urlencoded({ extended: true }))
+app.use(express.json())
 app.use(compression())
 
 app.get('/', sendSSRPage)
