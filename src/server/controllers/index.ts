@@ -3,10 +3,29 @@ import { DataKey } from '../../constants'
 import handleSSR from './ssr'
 import { RequestHandler } from 'express'
 import socketInstance from '../../config/socket'
+import scrapePage from '../scraper'
 
 const topic = 'covid19updates'
+const title = 'Covid-19 NG Update'
+const headerKey = 'X-Scraper-Auth-Token'
 
 export const sendSSRPage: RequestHandler = (req, res) => res.send(handleSSR(req))
+
+export const scrapeData: RequestHandler = (req, res) => {
+  const headers = req.headers
+  const scraperToken = headers[headerKey.toLowerCase()]
+
+  if (scraperToken !== process.env.SCRAPER_TOKEN) {
+    return res.status(401).json({ status: 'unauthorized' })
+  }
+
+  scrapePage()
+    .then(() => res.status(200).json({ status: 'ok' }))
+    .catch((error) => {
+      console.log(error)
+      return res.status(500).json({ status: 'server error' })
+    })
+}
 
 export const updateStats: RequestHandler = (req, res) => {
   const socket = socketInstance.get()
@@ -21,7 +40,7 @@ export const updateStats: RequestHandler = (req, res) => {
   } = stats
 
   const data = {
-    title: 'Covid-19 NG Update',
+    title,
     body: `Confirmed - ${confirmedCases}, Active - ${activeCases}, Discharged - ${discharged}, Deaths - ${deaths}`,
   }
 

@@ -5,10 +5,11 @@ import React from 'react'
 import { StaticRouter } from 'react-router-dom'
 import { renderToString } from 'react-dom/server'
 import App from '../../../client/App'
+import { casesFilePath } from '../../scraper'
 
 const templatePath = path.join(__dirname, '..', 'client', 'index.html')
 const HTMLTemplateString = fs.readFileSync(`${templatePath}`)
-const cases = fs.readFileSync(path.join(__dirname, '../..', 'src/server', 'cases.txt'))
+const cases = fs.readFileSync(casesFilePath)
 
 const handleSSR = (req) => {
   const renderedTemplate = $.load(HTMLTemplateString)
