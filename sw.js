@@ -1,6 +1,6 @@
 import firebaseClient from './src/config/firebase-client'
 
-const CACHE_VERSION = 1
+const CACHE_VERSION = 2
 const CACHE_NAME = `cache-v${CACHE_VERSION}`
 
 // In order to prevent the Firebase error: (messaging/only-available-in-sw).
