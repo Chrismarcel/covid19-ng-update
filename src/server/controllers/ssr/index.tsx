@@ -36,7 +36,7 @@ const handleSSR = (req: Request): Promise<string> => {
 
   // Heroku runs an ephemeral file system, so there are chances that data we write don't get persisted
   // To fix this, on PROD, we would only be reading from a remote file on Cloudinary
-  if (process.env.APP_ENV === APP_ENV.DEV) {
+  if (process.env.APP_ENV === APP_ENV.PROD) {
     return axios.get(process.env.CLOUDINARY_FILE_URL).then((res) => {
       return renderInitialData(JSON.stringify(res.data), renderedTemplate)
     })
