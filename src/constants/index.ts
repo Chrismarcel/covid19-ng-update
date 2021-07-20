@@ -36,3 +36,8 @@ export const COLOR_BANDS: ColorBandsMap = {
   LESS_THAN_5001: { color: '#ff2400', text: '3001 - 5000' },
   GREATER_THAN_5000: { color: '#8b0000', text: '5000+' },
 }
+
+export enum APP_ENV {
+  DEV = 'development',
+  PROD = 'production',
+}

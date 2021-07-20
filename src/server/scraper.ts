@@ -1,6 +1,6 @@
 import dotenv from 'dotenv'
 import cheerio from 'cheerio'
-import { DataKey } from '../constants'
+import { APP_ENV, DataKey } from '../constants'
 import { slugifyStr } from '../utils'
 import fs from 'fs-extra'
 import axios from 'axios'
@@ -101,7 +101,9 @@ const scrapePage = async () => {
     if (prevTotal[DataKey.CONFIRMED_CASES] !== currentTotal[DataKey.CONFIRMED_CASES]) {
       const updateStatsEndpoint = `${process.env.HOST}/api/update`
       await fs.writeFile(casesFilePath, JSON.stringify(stats)).then(() => {
-        uploadFile(casesFilePath)
+        if (process.env.APP_ENV === APP_ENV.PROD) {
+          uploadFile(casesFilePath)
+        }
       })
       await axios.post(updateStatsEndpoint, { stats })
     }

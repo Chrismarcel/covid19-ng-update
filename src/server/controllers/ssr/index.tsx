@@ -6,12 +6,23 @@ import { StaticRouter } from 'react-router-dom'
 import { renderToString } from 'react-dom/server'
 import App from '../../../client/App'
 import { casesFilePath } from '../../scraper'
+import https from 'https'
+import { APP_ENV } from '../../../constants'
+import { Request } from 'express'
 
 const templatePath = path.join(__dirname, '..', 'client', 'index.html')
 const HTMLTemplateString = fs.readFileSync(`${templatePath}`)
+
+if (process.env.APP_ENV === APP_ENV.PROD) {
+  const casesFile: fs.WriteStream = fs.createWriteStream(casesFilePath)
+  https.get(process.env.CLOUDINARY_FILE_URL || '', (res) => {
+    res.pipe(casesFile)
+  })
+}
+
 const cases = fs.readFileSync(casesFilePath)
 
-const handleSSR = (req) => {
+const handleSSR = (req: Request) => {
   const renderedTemplate = $.load(HTMLTemplateString)
   const context = {}
 
