@@ -9,8 +9,9 @@ const topic = 'covid19updates'
 const title = 'Covid-19 NG Update'
 const headerKey = 'X-Scraper-Auth-Token'
 
-export const sendSSRPage: RequestHandler = (req, res) => {
-  return handleSSR(req).then((page) => res.send(page))
+export const sendSSRPage: RequestHandler = async (req, res) => {
+  const page = await handleSSR(req)
+  return res.send(page)
 }
 
 export const scrapeData: RequestHandler = (req, res) => {
@@ -46,9 +47,17 @@ export const updateStats: RequestHandler = (req, res) => {
     body: `Confirmed - ${confirmedCases}, Active - ${activeCases}, Discharged - ${discharged}, Deaths - ${deaths}`,
   }
 
+  const webpush = {
+    notification: { ...data, requireInteraction: true },
+    // icon: 'path/to/icon' TODO: Add icon/logo },
+    fcm_options: {
+      link: process.env.HOST,
+    },
+  }
+
   firebaseAdmin
     .messaging()
-    .send({ data, topic })
+    .send({ data, webpush, topic })
     .catch((err) => console.log(err))
 
   socket.emit('update_cases', { message: stats })
