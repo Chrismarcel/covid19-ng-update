@@ -9,7 +9,9 @@ const topic = 'covid19updates'
 const title = 'Covid-19 NG Update'
 const headerKey = 'X-Scraper-Auth-Token'
 
-export const sendSSRPage: RequestHandler = (req, res) => res.send(handleSSR(req))
+export const sendSSRPage: RequestHandler = (req, res) => {
+  return handleSSR(req).then((page) => res.send(page))
+}
 
 export const scrapeData: RequestHandler = (req, res) => {
   const headers = req.headers
