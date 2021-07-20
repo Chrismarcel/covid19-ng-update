@@ -18,7 +18,7 @@ const handleSSR = (req: Request) => {
   const context = {}
   const cases = fs.readFileSync(casesFilePath).toString()
 
-  if (process.env.APP_ENV === APP_ENV.DEV) {
+  if (process.env.APP_ENV === APP_ENV.PROD) {
     const casesFile: fs.WriteStream = fs.createWriteStream(casesFilePath)
     https.get(process.env.CLOUDINARY_FILE_URL || '', (res) => {
       res.pipe(casesFile)
