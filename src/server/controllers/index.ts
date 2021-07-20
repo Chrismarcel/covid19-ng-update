@@ -2,7 +2,7 @@ import firebaseAdmin from '../../config/firebase-admin'
 import { DataKey } from '../../constants'
 import handleSSR from './ssr'
 import { RequestHandler } from 'express'
-import socketInstance from '../../config/socket'
+import socketConfig from '../../config/socket'
 import scrapePage from '../scraper'
 
 const topic = 'covid19updates'
@@ -28,7 +28,7 @@ export const scrapeData: RequestHandler = (req, res) => {
 }
 
 export const updateStats: RequestHandler = (req, res) => {
-  const socket = socketInstance.get()
+  const socket = socketConfig.get()
   const { stats } = req.body
   const {
     total: {

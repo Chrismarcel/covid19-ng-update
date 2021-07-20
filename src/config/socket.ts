@@ -1,19 +1,19 @@
 import { Server } from 'socket.io'
 import http from 'http'
 
-let socketInit: Server
+let socketServer: Server
 
-const initSocket = {
+const socketConfig = {
   init: (server: http.Server) => {
-    socketInit = new Server(server)
-    return socketInit
+    socketServer = new Server(server)
+    return socketServer
   },
   get: () => {
-    if (!socketInit) {
-      throw new Error('No socket initialized')
+    if (!socketServer) {
+      throw new Error('No socket server initialized')
     }
-    return socketInit
+    return socketServer
   },
 }
 
-export default initSocket
+export default socketConfig

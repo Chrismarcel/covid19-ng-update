@@ -4,14 +4,14 @@ import compression from 'compression'
 import router from './routes'
 import http from 'http'
 import { sendSSRPage } from './controllers'
-import socketInstance from '../config/socket'
+import socketConfig from '../config/socket'
 
 dotenv.config()
 
 const app = express()
 
 export const server = http.createServer(app)
-const socket = socketInstance.init(server)
+const socket = socketConfig.init(server)
 
 socket.on('connect', (socket) => {
   socket.on('disconnect', () => {

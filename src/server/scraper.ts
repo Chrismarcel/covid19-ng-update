@@ -5,13 +5,15 @@ import { slugifyStr } from '../utils'
 import fs from 'fs-extra'
 import axios from 'axios'
 import path from 'path'
+import { uploadFile } from '../config/cloudinary'
 
 dotenv.config()
 
 const urlToScrape = 'http://covid19.ncdc.gov.ng/'
 // For some very weird reasons, writing to .json file prevents the push notification from being triggered
 // Spent a lot of time trying to figure out what the issue is, I had to resort to using a .txt file instead
-export const casesFilePath = path.join(__dirname, '../..', 'src/server', 'cases.txt')
+const fileName = process.env.CLOUDINARY_FILE_NAME as string
+export const casesFilePath = path.join(__dirname, '../..', 'src/server', fileName)
 
 const extractValueFromCell = (cell: cheerio.Element): string | undefined => {
   const value = (cell as cheerio.TagElement).children[0].data
@@ -98,7 +100,9 @@ const scrapePage = async () => {
     // If there's a new update
     if (prevTotal[DataKey.CONFIRMED_CASES] !== currentTotal[DataKey.CONFIRMED_CASES]) {
       const updateStatsEndpoint = `${process.env.HOST}/api/update`
-      await fs.writeFile(casesFilePath, JSON.stringify(stats))
+      await fs.writeFile(casesFilePath, JSON.stringify(stats)).then(() => {
+        uploadFile(casesFilePath)
+      })
       await axios.post(updateStatsEndpoint, { stats })
     }
   } catch (error) {
@@ -109,6 +113,8 @@ const scrapePage = async () => {
   }
 }
 
-scrapePage()
+if (require.main === module) {
+  scrapePage()
+}
 
 export default scrapePage
