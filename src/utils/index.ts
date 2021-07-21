@@ -1,4 +1,4 @@
-import { StatsData } from '../server/scraper'
+import { StateStats } from '../server/scraper'
 import { COLOR_BANDS, ColorBandsMap, CasesRange, DataKey } from '../constants'
 
 export const generateChloropheth = (numCases: number): string => {
@@ -63,14 +63,14 @@ export const generatePieChartsData = ({
   stats,
   dataKey,
 }: {
-  stats: StatsData
+  stats: StateStats[]
   dataKey: DataKey
 }): PieChartData => {
   const pieChartData = { ...COLOR_BANDS } as PieChartDataMap
   Object.values(pieChartData).forEach((data) => (data.value = 0))
   let total = 0
 
-  Object.values(stats).forEach((stat) => {
+  stats.forEach((stat) => {
     if (stat[dataKey] < 101) {
       pieChartData.LESS_THAN_101.value += 1
     }

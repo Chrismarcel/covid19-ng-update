@@ -29,6 +29,18 @@ const ChevronIcon = ({ ascending, ...iconProps }: ChevronIconProps) => {
   return ascending ? <ChevronUp {...iconProps} /> : <ChevronDown {...iconProps} />
 }
 
+const TableRow = ({ stat }: { stat: StateStats }) => {
+  return (
+    <tr>
+      <td>{stat.state !== 'fct' ? reverseSlug(stat.state) : 'F.C.T'}</td>
+      <td>{formatNumber(stat[DataKey.CONFIRMED_CASES])}</td>
+      <td>{formatNumber(stat[DataKey.ACTIVE_CASES])}</td>
+      <td>{formatNumber(stat[DataKey.DISCHARGED])}</td>
+      <td>{formatNumber(stat[DataKey.DEATHS])}</td>
+    </tr>
+  )
+}
+
 interface TableHeadRowProps {
   data: TableHeadData[]
   onSort: (data: { dataKey: DataKey; ascending: boolean }) => void
@@ -118,20 +130,8 @@ const SummaryTable = ({ stats }: { stats: StateStats[] }) => {
               }}
             />
             <tbody>
-              {filteredStats.map(({ state, ...cases }) => {
-                const totalConfirmedCases = cases[DataKey.CONFIRMED_CASES]
-                const totalActiveCases = cases[DataKey.ACTIVE_CASES]
-                const totalDischarged = cases[DataKey.DISCHARGED]
-                const totalDeaths = cases[DataKey.DEATHS]
-                return (
-                  <tr key={state}>
-                    <td>{state !== 'fct' ? reverseSlug(state) : 'F.C.T'}</td>
-                    <td>{formatNumber(totalConfirmedCases)}</td>
-                    <td>{formatNumber(totalActiveCases)}</td>
-                    <td>{formatNumber(totalDischarged)}</td>
-                    <td>{formatNumber(totalDeaths)}</td>
-                  </tr>
-                )
+              {filteredStats.map((stat) => {
+                return <TableRow key={stat.state} stat={stat} />
               })}
             </tbody>
           </table>

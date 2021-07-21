@@ -1,13 +1,13 @@
 import React, { useContext, useState } from 'react'
 import {
-  LineChart as RLineChart,
+  LineChart as RCLineChart,
   Line,
   XAxis,
   YAxis,
   Tooltip,
   CartesianGrid,
   ResponsiveContainer,
-  PieChart as RPieChart,
+  PieChart as RCPieChart,
   Pie,
   Cell,
   Legend,
@@ -46,7 +46,7 @@ export const LineChart = ({ stats }: { stats: StatsData }) => {
     <div className="panel chart-wrapper line-chart">
       <div className="scrollable-container">
         <ResponsiveContainer height={400}>
-          <RLineChart data={data} margin={{ right: 10, bottom: 50 }}>
+          <RCLineChart data={data} margin={{ right: 10, bottom: 50 }}>
             <CartesianGrid strokeDasharray="3 3" />
             <XAxis
               tick={{ fontSize: 12 }}
@@ -66,7 +66,7 @@ export const LineChart = ({ stats }: { stats: StatsData }) => {
             <Line type="monotone" dataKey="Active cases" stroke="#757166" />
             <Line type="monotone" dataKey="Discharged" stroke="#1a68e6" />
             <Line type="monotone" dataKey="Deaths" stroke="#e24e1b" />
-          </RLineChart>
+          </RCLineChart>
         </ResponsiveContainer>
       </div>
     </div>
@@ -89,7 +89,8 @@ const formatTooltip = ({ label, value, data, total }: TooltipProps) => {
 
 export const PieChart = ({ stats }: { stats: StatsData }) => {
   const [dataKey, setDataKey] = useState(DataKey.CONFIRMED_CASES)
-  const { data, total } = generatePieChartsData({ stats, dataKey })
+  const { data, total } = generatePieChartsData({ stats: stats.states, dataKey })
+  console.log(data)
 
   return (
     <div className="panel chart-wrapper pie-chart">
@@ -98,7 +99,7 @@ export const PieChart = ({ stats }: { stats: StatsData }) => {
       </div>
       <div className="pie-chart-wrapper">
         <ResponsiveContainer height={400}>
-          <RPieChart margin={{ top: -30 }}>
+          <RCPieChart margin={{ top: -30 }}>
             <Legend
               iconType="circle"
               wrapperStyle={{ bottom: 40 }}
@@ -114,7 +115,7 @@ export const PieChart = ({ stats }: { stats: StatsData }) => {
                 formatTooltip({ value, label, data, total })
               }
             />
-          </RPieChart>
+          </RCPieChart>
         </ResponsiveContainer>
       </div>
     </div>

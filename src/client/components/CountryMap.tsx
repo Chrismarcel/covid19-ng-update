@@ -1,12 +1,20 @@
 import React, { useState, memo } from 'react'
 import { ComposableMap, Geographies, Geography } from 'react-simple-maps'
-import { slugifyStr, generateChloropheth, formatNumber } from '../../utils'
+import {
+  slugifyStr,
+  generateChloropheth,
+  formatNumber,
+  reverseSlug,
+  toSentenceCase,
+} from '../../utils'
 import ReactTooltip from 'react-tooltip'
 import MapLegends from './MapLegends'
 import mapOfNigeria from '../map/map-of-nigeria.json'
 import { DataKey } from '../../constants'
 import CasesDropdown from './CasesDropdown'
 import { StateStats } from '~/server/scraper'
+
+const FCT = 'Federal Capital Territory'
 
 const CountryMap = ({ stats }: { stats: StateStats[] }) => {
   const [stateIdx, setStateIdx] = useState(0)
@@ -33,7 +41,7 @@ const CountryMap = ({ stats }: { stats: StateStats[] }) => {
               const { properties } = geo
               const { name } = properties
 
-              const stateName = name === 'Federal Capital Territory' ? 'fct' : slugifyStr(name)
+              const stateName = name === FCT ? 'fct' : slugifyStr(name)
               const idx = stats.findIndex((stat) => stat.state === stateName) || 0
               const numCases = stats[idx][dataKey] as number
 
@@ -56,7 +64,7 @@ const CountryMap = ({ stats }: { stats: StateStats[] }) => {
       <MapLegends />
       {stateName && (
         <ReactTooltip place="bottom">
-          <p>{stateName}</p>
+          <p>{stateName === 'fct' ? FCT : toSentenceCase(reverseSlug(stateName))}</p>
           <br />
           <p>Confirmed: {formatNumber(stats[stateIdx][DataKey.CONFIRMED_CASES])}</p>
           <p>Active: {formatNumber(stats[stateIdx][DataKey.ACTIVE_CASES])}</p>
