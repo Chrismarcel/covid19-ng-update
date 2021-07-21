@@ -90,7 +90,6 @@ const formatTooltip = ({ label, value, data, total }: TooltipProps) => {
 export const PieChart = ({ stats }: { stats: StatsData }) => {
   const [dataKey, setDataKey] = useState(DataKey.CONFIRMED_CASES)
   const { data, total } = generatePieChartsData({ stats: stats.states, dataKey })
-  console.log(data)
 
   return (
     <div className="panel chart-wrapper pie-chart">
