@@ -17,7 +17,7 @@ const initServiceWorker = ({
   alertStatus,
 }: InitServiceWorkerParams) => {
   navigator.serviceWorker
-    .register('../../sw.js')
+    .register('../sw.js')
     .then((serviceWorker) => {
       console.log('Successfully registered service worker')
       if (deviceSupportsNotification()) {

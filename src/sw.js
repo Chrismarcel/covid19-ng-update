@@ -1,4 +1,4 @@
-import firebaseClient from './src/config/firebase-client'
+import firebaseClient from './config/firebase-client'
 
 const CACHE_VERSION = 1
 const CACHE_NAME = `cache-v${CACHE_VERSION}`
