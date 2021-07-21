@@ -17,10 +17,10 @@ import { StateStats } from '~/server/scraper'
 const FCT = 'Federal Capital Territory'
 
 const CountryMap = ({ stats }: { stats: StateStats[] }) => {
-  const [stateIdx, setStateIdx] = useState(0)
+  const [stateIdx, setStateIdx] = useState(-1)
   const [dataKey, setDataKey] = useState(DataKey.CONFIRMED_CASES)
   const data = stats[stateIdx]
-  const stateName = data.state
+  const stateName = data?.state
 
   return (
     <section className="map-container panel">
@@ -54,7 +54,7 @@ const CountryMap = ({ stats }: { stats: StateStats[] }) => {
                   stroke="#008751"
                   strokeWidth={0.7}
                   onMouseEnter={() => setStateIdx(idx)}
-                  onMouseLeave={() => setStateIdx(0)}
+                  onMouseLeave={() => setStateIdx(-1)}
                 />
               )
             })
