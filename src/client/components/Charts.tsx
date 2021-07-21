@@ -12,35 +12,33 @@ import {
   Cell,
   Legend,
 } from 'recharts'
-import { generatePieChartsData, reverseSlug, toSentenceCase, PieChartStats } from '../../utils'
+import { generatePieChartsData, reverseSlug, toSentenceCase } from '../../utils'
 import { DataKey } from '../../constants'
 import { ColorSchemeContext } from '../context'
 import CasesDropdown from './CasesDropdown'
-import { Stats } from './Dashboard'
+import { StatsData } from '../../server/scraper'
 
 interface LineChartStats {
   [key: string]: number | string
 }
 
-const mergeStatsWithState = (stats: Stats) => {
+const mergeStatsWithState = (stats: StatsData) => {
   const mergedData: LineChartStats[] = []
-  Object.entries(stats).forEach(([state, data]) => {
-    const stateName = state !== 'fct' ? reverseSlug(state) : 'F.C.T'
-    if (state !== 'total') {
-      mergedData.push({
-        state: toSentenceCase(stateName),
-        'Confirmed cases': data[DataKey.CONFIRMED_CASES],
-        'Active cases': data[DataKey.ACTIVE_CASES],
-        Discharged: data[DataKey.DISCHARGED],
-        Deaths: data[DataKey.DEATHS],
-      })
-    }
+  stats.states.forEach((data) => {
+    const stateName = data.state !== 'fct' ? reverseSlug(data.state) : 'F.C.T'
+    mergedData.push({
+      state: toSentenceCase(stateName),
+      'Confirmed cases': data[DataKey.CONFIRMED_CASES],
+      'Active cases': data[DataKey.ACTIVE_CASES],
+      Discharged: data[DataKey.DISCHARGED],
+      Deaths: data[DataKey.DEATHS],
+    })
   })
 
   return mergedData.sort((a, b) => `${a.state}`.localeCompare(`${b.state}`))
 }
 
-export const LineChart = ({ stats }: { stats: Stats }) => {
+export const LineChart = ({ stats }: { stats: StatsData }) => {
   const data = mergeStatsWithState(stats)
   const { darkModeEnabled } = useContext(ColorSchemeContext)
 
@@ -89,7 +87,7 @@ const formatTooltip = ({ label, value, data, total }: TooltipProps) => {
   return [tooltipValue, `${tooltipLabel} cases`]
 }
 
-export const PieChart = ({ stats }: { stats: PieChartStats }) => {
+export const PieChart = ({ stats }: { stats: StatsData }) => {
   const [dataKey, setDataKey] = useState(DataKey.CONFIRMED_CASES)
   const { data, total } = generatePieChartsData({ stats, dataKey })
 

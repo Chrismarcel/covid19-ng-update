@@ -1,4 +1,4 @@
-import { Stats } from '~/client/components/Dashboard'
+import { StatsData } from '../server/scraper'
 import { COLOR_BANDS, ColorBandsMap, CasesRange, DataKey } from '../constants'
 
 export const generateChloropheth = (numCases: number): string => {
@@ -32,7 +32,7 @@ export const generateChloropheth = (numCases: number): string => {
   return color
 }
 
-export const slugifyStr = (str: string) => str.toLowerCase().replace(/ /g, '_')
+export const slugifyStr = (str: string | undefined) => str?.toLowerCase().replace(/ /g, '_')
 
 export const reverseSlug = (str: string) => str.replace(/_/g, ' ')
 
@@ -52,10 +52,6 @@ export const isChildNode = (parentNode: Node | null, childNode: Node): boolean =
   return false
 }
 
-export type PieChartStats = Stats & {
-  [key: string]: { total?: number }
-}
-
 export type PieChartDataMap = ColorBandsMap & { [key in CasesRange]: { value: number } }
 
 export interface PieChartData {
@@ -67,7 +63,7 @@ export const generatePieChartsData = ({
   stats,
   dataKey,
 }: {
-  stats: PieChartStats
+  stats: StatsData
   dataKey: DataKey
 }): PieChartData => {
   const pieChartData = { ...COLOR_BANDS } as PieChartDataMap

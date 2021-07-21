@@ -7,10 +7,11 @@ export enum LOCAL_STORAGE_KEYS {
 }
 
 export enum DataKey {
-  CONFIRMED_CASES = 'confirmedCases',
-  ACTIVE_CASES = 'activeCases',
+  CONFIRMED_CASES = 'confirmed_cases',
+  ACTIVE_CASES = 'active_cases',
   DISCHARGED = 'discharged',
   DEATHS = 'death',
+  STATE = 'state',
 }
 
 export type CasesRange =

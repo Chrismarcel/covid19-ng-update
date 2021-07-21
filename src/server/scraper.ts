@@ -32,14 +32,24 @@ type StatsDataField =
   | DataKey.DISCHARGED
   | DataKey.DEATHS
 
-export type StatsAggregate = {
+export type Stats = {
   [key in StatsDataField]: number
 }
 
-export type StatsDataMap = StatsAggregate & { total?: number }
+export interface StateStats extends Stats {
+  [DataKey.STATE]: string
+}
 
-export type StatsData = {
-  [key: string]: StatsDataMap
+export interface StatsData {
+  states: StateStats[]
+  total: Stats
+}
+
+const initialTotalStats: Stats = {
+  [DataKey.CONFIRMED_CASES]: 0,
+  [DataKey.ACTIVE_CASES]: 0,
+  [DataKey.DISCHARGED]: 0,
+  [DataKey.DEATHS]: 0,
 }
 
 const scrapePage = async () => {
@@ -51,15 +61,8 @@ const scrapePage = async () => {
     const $ = cheerio.load(response.data, { ignoreWhitespace: true })
     const statsByStates = $('table#custom1 tbody tr')
 
-    const initialStatsValues: StatsDataMap = {
-      [DataKey.CONFIRMED_CASES]: 0,
-      [DataKey.ACTIVE_CASES]: 0,
-      [DataKey.DISCHARGED]: 0,
-      [DataKey.DEATHS]: 0,
-    }
-
     const mapTableToField = (rows: cheerio.Cheerio): StatsData => {
-      const data: StatsData = {}
+      const data: StatsData = { states: [], total: initialTotalStats }
       rows.each((_, node) => {
         const cell = $(node).find('td')
 
@@ -67,21 +70,24 @@ const scrapePage = async () => {
           if (index === 0) {
             const state = slugifyStr(extractValueFromCell(cell[index]) || '')
             if (state) {
-              data[state] = { ...initialStatsValues }
-              data[state][DataKey.CONFIRMED_CASES] = pickMaxValue(cell[index + 1])
-              data[state][DataKey.ACTIVE_CASES] = pickMaxValue(cell[index + 2])
-              data[state][DataKey.DISCHARGED] = pickMaxValue(cell[index + 3])
-              data[state][DataKey.DEATHS] = pickMaxValue(cell[index + 4])
+              data.states.push({
+                [DataKey.STATE]: state,
+                [DataKey.CONFIRMED_CASES]: pickMaxValue(cell[index + 1]),
+                [DataKey.ACTIVE_CASES]: pickMaxValue(cell[index + 2]),
+                [DataKey.DISCHARGED]: pickMaxValue(cell[index + 3]),
+                [DataKey.DEATHS]: pickMaxValue(cell[index + 4]),
+              })
             }
           }
         })
       })
+
       return data
     }
 
     const stats = mapTableToField(statsByStates)
 
-    const currentTotal = Object.values(stats).reduce((acc, curr) => {
+    const currentTotal = stats.states.reduce((acc, curr) => {
       const totalConfirmed = acc[DataKey.CONFIRMED_CASES] + curr[DataKey.CONFIRMED_CASES]
       const totalActive = acc[DataKey.ACTIVE_CASES] + curr[DataKey.ACTIVE_CASES]
       const totalDischarged = acc[DataKey.DISCHARGED] + curr[DataKey.DISCHARGED]
@@ -93,7 +99,7 @@ const scrapePage = async () => {
         [DataKey.DISCHARGED]: totalDischarged,
         [DataKey.DEATHS]: totalDeaths,
       }
-    }, initialStatsValues)
+    }, initialTotalStats)
 
     stats.total = currentTotal
 
@@ -110,8 +116,10 @@ const scrapePage = async () => {
   } catch (error) {
     // TODO: Find more robust ways to handle errors
     console.log(error)
-    // If any error, wait for 5 minutes and scrape page again
-    setInterval(() => scrapePage(), 5 * 60 * 1000)
+    // If timeout error, wait for 5 minutes and scrape page again
+    if (error.code === 'ENOTFOUND') {
+      setInterval(() => scrapePage(), 5 * 60 * 1000)
+    }
   }
 }
 

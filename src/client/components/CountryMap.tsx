@@ -6,12 +6,13 @@ import MapLegends from './MapLegends'
 import mapOfNigeria from '../map/map-of-nigeria.json'
 import { DataKey } from '../../constants'
 import CasesDropdown from './CasesDropdown'
-import { Stats } from './Dashboard'
+import { StateStats } from '~/server/scraper'
 
-const CountryMap = ({ stats }: { stats: Stats }) => {
-  const [stateName, setStateName] = useState('')
+const CountryMap = ({ stats }: { stats: StateStats[] }) => {
+  const [stateIdx, setStateIdx] = useState(0)
   const [dataKey, setDataKey] = useState(DataKey.CONFIRMED_CASES)
-  const slug = stateName === 'Federal Capital Territory' ? 'fct' : slugifyStr(stateName)
+  const data = stats[stateIdx]
+  const stateName = data.state
 
   return (
     <section className="map-container panel">
@@ -32,9 +33,9 @@ const CountryMap = ({ stats }: { stats: Stats }) => {
               const { properties } = geo
               const { name } = properties
 
-              const stateName: string =
-                name === 'Federal Capital Territory' ? 'fct' : slugifyStr(name)
-              const numCases: number = stats[stateName][dataKey] || 0
+              const stateName = name === 'Federal Capital Territory' ? 'fct' : slugifyStr(name)
+              const idx = stats.findIndex((stat) => stat.state === stateName) || 0
+              const numCases = stats[idx][dataKey] as number
 
               return (
                 <Geography
@@ -44,8 +45,8 @@ const CountryMap = ({ stats }: { stats: Stats }) => {
                   fill={generateChloropheth(numCases)}
                   stroke="#008751"
                   strokeWidth={0.7}
-                  onMouseEnter={() => setStateName(name)}
-                  onMouseLeave={() => setStateName('')}
+                  onMouseEnter={() => setStateIdx(idx)}
+                  onMouseLeave={() => setStateIdx(0)}
                 />
               )
             })
@@ -57,10 +58,10 @@ const CountryMap = ({ stats }: { stats: Stats }) => {
         <ReactTooltip place="bottom">
           <p>{stateName}</p>
           <br />
-          <p>Confirmed: {formatNumber(stats[slug][DataKey.CONFIRMED_CASES])}</p>
-          <p>Active: {formatNumber(stats[slug][DataKey.ACTIVE_CASES])}</p>
-          <p>Discharged: {formatNumber(stats[slug][DataKey.DISCHARGED])}</p>
-          <p>Deaths: {formatNumber(stats[slug][DataKey.DEATHS])}</p>
+          <p>Confirmed: {formatNumber(stats[stateIdx][DataKey.CONFIRMED_CASES])}</p>
+          <p>Active: {formatNumber(stats[stateIdx][DataKey.ACTIVE_CASES])}</p>
+          <p>Discharged: {formatNumber(stats[stateIdx][DataKey.DISCHARGED])}</p>
+          <p>Deaths: {formatNumber(stats[stateIdx][DataKey.DEATHS])}</p>
         </ReactTooltip>
       )}
     </section>

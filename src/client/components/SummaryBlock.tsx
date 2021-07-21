@@ -2,9 +2,9 @@ import React from 'react'
 import { formatNumber } from '../../utils'
 import { DataKey } from '../../constants'
 import SummaryCard from './SummaryCard'
-import { StatsAggregate } from '~/server/scraper'
+import { Stats } from '~/server/scraper'
 
-const SummaryBlock = ({ total }: { total: StatsAggregate }) => {
+const SummaryBlock = ({ total }: { total: Stats }) => {
   return (
     <section className="summary-wrapper">
       <SummaryCard

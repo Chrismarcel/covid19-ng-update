@@ -13,35 +13,28 @@ import { LineChart, PieChart } from './Charts'
 import { ColorSchemeContext, NotificationContext } from '../context'
 import firebase from 'firebase'
 import { deviceSupportsNotification } from '../../utils'
+import { StatsData } from '../../server/scraper'
 
 dotenv.config()
 
 const host = process.env.HOST as string
 const socket = socketClient(host)
 
-// TODO: Refactor the Stats type
-export type Stats = {
-  [key: string]: {
-    [k in DataKey]: number
-  } & {
-    [k: string]: number
-  } & {
-    total?: number
-  }
+const initialStats = {
+  [DataKey.CONFIRMED_CASES]: 0,
+  [DataKey.ACTIVE_CASES]: 0,
+  [DataKey.DISCHARGED]: 0,
+  [DataKey.DEATHS]: 0,
 }
 
-const initialState: Stats = {
-  total: {
-    [DataKey.CONFIRMED_CASES]: 0,
-    [DataKey.DEATHS]: 0,
-    [DataKey.ACTIVE_CASES]: 0,
-    [DataKey.DISCHARGED]: 0,
-  },
+export const initialState: StatsData = {
+  states: [{ state: '', ...initialStats }],
+  total: initialStats,
 }
 
 declare global {
   interface Window {
-    __INITIAL_DATA__?: Stats
+    __INITIAL_DATA__?: StatsData
   }
 
   interface EventTarget {
@@ -123,14 +116,16 @@ const Dashboard = () => {
       }
     }
 
+    setDOMReady(true)
+  }, [alertStatus])
+
+  useEffect(() => {
     if (window.__INITIAL_DATA__) {
       const initialData = window.__INITIAL_DATA__
       setStats(initialData)
       delete window.__INITIAL_DATA__
     }
-
-    setDOMReady(true)
-  }, [alertStatus])
+  }, [stats])
 
   useEffect(() => {
     // Update stats if there are new cases
@@ -188,8 +183,8 @@ const Dashboard = () => {
                   <PieChart stats={stats} />
                 </section>
                 <section className="map-stats-wrapper">
-                  <CountryMap stats={stats} />
-                  <SummaryTable stats={stats} />
+                  <CountryMap stats={stats.states} />
+                  <SummaryTable stats={stats.states} />
                 </section>
               </main>
             </div>
