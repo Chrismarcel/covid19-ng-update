@@ -47,17 +47,19 @@ export const updateStats: RequestHandler = (req, res) => {
     body: `Confirmed - ${confirmedCases}, Active - ${activeCases}, Discharged - ${discharged}, Deaths - ${deaths}`,
   }
 
-  const webpush = {
-    notification: { ...data, requireInteraction: true },
-    // icon: 'path/to/icon' TODO: Add icon/logo },
-    fcm_options: {
-      link: process.env.HOST,
+  const message = {
+    topic,
+    notification: data,
+    webpush: {
+      fcmOptions: {
+        link: '/',
+      },
     },
   }
 
   firebaseAdmin
     .messaging()
-    .send({ data, webpush, topic })
+    .send(message)
     .catch((err) => console.log(err))
 
   socket.emit('update_cases', { message: stats })

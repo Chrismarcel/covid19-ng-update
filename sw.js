@@ -8,7 +8,7 @@ const CACHE_NAME = `cache-v${CACHE_VERSION}`
 // Then secondly in the context of the worker
 if (typeof window === 'undefined') {
   const messaging = firebaseClient.messaging()
-  messaging.onBackgroundMessage(({ data: { title, body } }) => {
+  messaging.onBackgroundMessage(({ notification: { title, body } }) => {
     const notificationTitle = title
     const notificationOptions = {
       body,
