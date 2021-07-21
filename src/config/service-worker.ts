@@ -35,12 +35,12 @@ const initServiceWorker = ({
             if (!alertStatus && deviceSupportsNotification()) {
               messaging
                 .getToken()
-                .then(async (registrationToken: string) => {
+                .then((registrationToken: string) => {
                   if (registrationToken) {
                     localStorage.setItem(REGISTRATION_TOKEN, registrationToken)
                     localStorage.setItem(ALERT_STATUS, 'true')
 
-                    await handleSubscription(true)
+                    handleSubscription(true)
                   }
                 })
                 .catch((error) => console.log('Error getting token', error))
