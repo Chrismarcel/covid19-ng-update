@@ -45,6 +45,7 @@ self.addEventListener('install', (event) => {
 })
 
 self.addEventListener('fetch', (event) => {
+  console.log(event.request)
   event.respondWith(
     caches.match(event.request).then((response) => {
       if (response) {
@@ -57,7 +58,8 @@ self.addEventListener('fetch', (event) => {
 
         const clonedResponse = response.clone()
         caches.open(CACHE_NAME).then((cache) => {
-          if (event.request.method !== 'POST') {
+          const isSocketRequest = event.request.url.includes('socket.io/?')
+          if (event.request.method !== 'POST' && !isSocketRequest) {
             return cache.put(event.request, clonedResponse)
           }
         })
