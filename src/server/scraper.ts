@@ -52,75 +52,101 @@ const initialTotalStats: Stats = {
   [DataKey.DEATHS]: 0,
 }
 
-const scrapePage = async () => {
-  try {
-    const casesFile = await fs.readFile(casesFilePath)
-    const { total: prevTotal } = JSON.parse(casesFile.toString()) as StatsData
-
-    const response = await axios.get(urlToScrape)
-    const $ = cheerio.load(response.data, { ignoreWhitespace: true })
-    const statsByStates = $('table#custom1 tbody tr')
-
-    const mapTableToField = (rows: cheerio.Cheerio): StatsData => {
-      const data: StatsData = { states: [], total: initialTotalStats }
-      rows.each((_, node) => {
-        const cell = $(node).find('td')
-
-        cell.each((index) => {
-          if (index === 0) {
-            const state = slugifyStr(extractValueFromCell(cell[index]) || '')
-            if (state) {
-              data.states.push({
-                [DataKey.STATE]: state,
-                [DataKey.CONFIRMED_CASES]: pickMaxValue(cell[index + 1]),
-                [DataKey.ACTIVE_CASES]: pickMaxValue(cell[index + 2]),
-                [DataKey.DISCHARGED]: pickMaxValue(cell[index + 3]),
-                [DataKey.DEATHS]: pickMaxValue(cell[index + 4]),
-              })
-            }
-          }
-        })
-      })
-
-      return data
-    }
-
-    const stats = mapTableToField(statsByStates)
-
-    const currentTotal = stats.states.reduce((acc, curr) => {
-      const totalConfirmed = acc[DataKey.CONFIRMED_CASES] + curr[DataKey.CONFIRMED_CASES]
-      const totalActive = acc[DataKey.ACTIVE_CASES] + curr[DataKey.ACTIVE_CASES]
-      const totalDischarged = acc[DataKey.DISCHARGED] + curr[DataKey.DISCHARGED]
-      const totalDeaths = acc[DataKey.DEATHS] + curr[DataKey.DEATHS]
-
-      return {
-        [DataKey.CONFIRMED_CASES]: totalConfirmed,
-        [DataKey.ACTIVE_CASES]: totalActive,
-        [DataKey.DISCHARGED]: totalDischarged,
-        [DataKey.DEATHS]: totalDeaths,
-      }
-    }, initialTotalStats)
-
-    stats.total = currentTotal
-
-    // If there's a new update
-    if (prevTotal[DataKey.CONFIRMED_CASES] !== currentTotal[DataKey.CONFIRMED_CASES]) {
-      const updateStatsEndpoint = `${process.env.HOST}/api/update`
-      await fs.writeFile(casesFilePath, JSON.stringify(stats)).then(() => {
-        if (process.env.APP_ENV === APP_ENV.PROD) {
-          uploadFile(casesFilePath)
-        }
-      })
-      await axios.post(updateStatsEndpoint, { stats })
-    }
-  } catch (error) {
-    // TODO: Find more robust ways to handle errors
-    console.log(error)
-    // If timeout error, wait for 5 minutes and scrape page again
-    if (error.code === 'ENOTFOUND') {
-      setInterval(() => scrapePage(), 5 * 60 * 1000)
-    }
+const getStatsData = async () => {
+  if (process.env.APP_ENV === APP_ENV.PROD) {
+    const { data } = await axios.get(process.env.CLOUDINARY_FILE_URL || '')
+    return data
   }
+
+  const casesFile = await fs.readFile(casesFilePath)
+  return JSON.parse(casesFile.toString()) as StatsData
+}
+
+interface PageScraperResponse {
+  stats: Stats
+  updated_stats: boolean
+}
+
+const scrapePage = (): Promise<PageScraperResponse> => {
+  return new Promise((resolve, reject) => {
+    ;(async () => {
+      try {
+        const { total: prevTotal } = await getStatsData()
+
+        const response = await axios.get(urlToScrape)
+        const $ = cheerio.load(response.data, { ignoreWhitespace: true })
+        const statsByStates = $('table#custom1 tbody tr')
+
+        const mapTableToField = (rows: cheerio.Cheerio): StatsData => {
+          const data: StatsData = { states: [], total: initialTotalStats }
+          rows.each((_, node) => {
+            const cell = $(node).find('td')
+
+            cell.each((index) => {
+              if (index === 0) {
+                const state = slugifyStr(extractValueFromCell(cell[index]) || '')
+                if (state) {
+                  data.states.push({
+                    [DataKey.STATE]: state,
+                    [DataKey.CONFIRMED_CASES]: pickMaxValue(cell[index + 1]),
+                    [DataKey.ACTIVE_CASES]: pickMaxValue(cell[index + 2]),
+                    [DataKey.DISCHARGED]: pickMaxValue(cell[index + 3]),
+                    [DataKey.DEATHS]: pickMaxValue(cell[index + 4]),
+                  })
+                }
+              }
+            })
+          })
+
+          return data
+        }
+
+        const stats = mapTableToField(statsByStates)
+
+        const currentTotal = stats.states.reduce((acc, curr) => {
+          const totalConfirmed = acc[DataKey.CONFIRMED_CASES] + curr[DataKey.CONFIRMED_CASES]
+          const totalActive = acc[DataKey.ACTIVE_CASES] + curr[DataKey.ACTIVE_CASES]
+          const totalDischarged = acc[DataKey.DISCHARGED] + curr[DataKey.DISCHARGED]
+          const totalDeaths = acc[DataKey.DEATHS] + curr[DataKey.DEATHS]
+
+          return {
+            [DataKey.CONFIRMED_CASES]: totalConfirmed,
+            [DataKey.ACTIVE_CASES]: totalActive,
+            [DataKey.DISCHARGED]: totalDischarged,
+            [DataKey.DEATHS]: totalDeaths,
+          }
+        }, initialTotalStats)
+
+        stats.total = currentTotal
+        const updatedStats =
+          prevTotal[DataKey.CONFIRMED_CASES] !== currentTotal[DataKey.CONFIRMED_CASES]
+
+        // If there's a new update
+        if (updatedStats) {
+          const updateStatsEndpoint = `${process.env.HOST}/api/update`
+          await fs.writeFile(casesFilePath, JSON.stringify(stats)).then(() => {
+            if (process.env.APP_ENV === APP_ENV.PROD) {
+              uploadFile(casesFilePath)
+            }
+          })
+          await axios.post(updateStatsEndpoint, { stats })
+        }
+        resolve({
+          stats: stats.total,
+          updated_stats: updatedStats,
+        })
+      } catch (error) {
+        // If timeout error, wait for 5 minutes and scrape page again
+        if (error.code === 'ENOTFOUND') {
+          setInterval(() => scrapePage(), 5 * 60 * 1000)
+        } else {
+          // TODO: Find more robust ways to handle errors
+          console.log(error)
+          reject(error)
+        }
+      }
+    })()
+  })
 }
 
 if (require.main === module) {

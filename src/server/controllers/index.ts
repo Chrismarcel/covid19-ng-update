@@ -23,10 +23,10 @@ export const scrapeData: RequestHandler = (req, res) => {
   }
 
   scrapePage()
-    .then(() => res.status(200).json({ status: 'ok' }))
+    .then((data) => res.status(200).json({ status: 'ok', ...data }))
     .catch((error) => {
-      console.log(error)
-      return res.status(500).json({ status: 'server error' })
+      console.log('error', error)
+      return res.status(500).json({ status: 'server error', error })
     })
 }
 
