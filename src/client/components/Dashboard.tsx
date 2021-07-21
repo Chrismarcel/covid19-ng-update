@@ -6,7 +6,7 @@ import axios from 'axios'
 import CountryMap from './CountryMap'
 import SummmaryPanel from './SummaryBlock'
 import SummaryTable from './SummaryTable'
-import firebaseClient, { FIREBASE_VAPID_KEY } from '../../config/firebase-client'
+import firebaseClient from '../../config/firebase-client'
 import Header from './Header'
 import { DataKey, LOCAL_STORAGE_KEYS } from '../../constants'
 import { LineChart, PieChart } from './Charts'
@@ -14,6 +14,7 @@ import { ColorSchemeContext, NotificationContext } from '../context'
 import firebase from 'firebase'
 import { deviceSupportsNotification } from '../../utils'
 import { StatsData } from '../../server/scraper'
+import initServiceWorker from '../../config/service-worker'
 
 dotenv.config()
 
@@ -55,9 +56,6 @@ const Dashboard = () => {
     if (deviceSupportsNotification()) {
       // FCM needs to be re-assigned inside of useEffect to prevent Firebase error of 'self is not defined'
       messaging = firebaseClient.messaging()
-
-      // TODO: Handle foreground notification, e.g. display a toast once the data is updated
-      messaging.onMessage((payload) => console.log(payload))
     }
 
     // Prevent Firebase from throwing error about multiple VAPID keys being set
@@ -77,42 +75,7 @@ const Dashboard = () => {
       setDarkModeEnabled(darkModeEnabled)
 
       if ('serviceWorker' in navigator) {
-        navigator.serviceWorker
-          .register('../../../sw.js')
-          .then((serviceWorker) => {
-            console.log('Successfully registered service worker')
-            if (deviceSupportsNotification()) {
-              messaging.getToken({
-                vapidKey: FIREBASE_VAPID_KEY,
-                serviceWorkerRegistration: serviceWorker,
-              })
-            }
-            // Retrieve token & subscribe user
-            // If user has already subscribed but cleared their storage
-            // or uninstalled their service worker
-            serviceWorker.addEventListener('updatefound', () => {
-              serviceWorker.installing!.addEventListener('statechange', (event) => {
-                if (event.target && event.target.state === 'activated') {
-                  if (!alertStatus && deviceSupportsNotification()) {
-                    messaging
-                      .getToken()
-                      .then(async (registrationToken: string) => {
-                        if (registrationToken) {
-                          localStorage.setItem(REGISTRATION_TOKEN, registrationToken)
-                          localStorage.setItem(ALERT_STATUS, 'true')
-
-                          await handleSubscription(true)
-                        }
-                      })
-                      .catch((error) => console.log('Error getting token', error))
-                  }
-                }
-              })
-            })
-          })
-          .catch((error) => {
-            console.log('Failed to register service worker', error)
-          })
+        initServiceWorker({ messaging, handleSubscription, alertStatus })
       }
     }
 
@@ -125,7 +88,7 @@ const Dashboard = () => {
       setStats(initialData)
       delete window.__INITIAL_DATA__
     }
-  }, [stats])
+  }, [])
 
   useEffect(() => {
     // Update stats if there are new cases
