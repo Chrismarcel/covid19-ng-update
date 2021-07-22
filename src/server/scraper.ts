@@ -68,6 +68,7 @@ interface PageScraperResponse {
 }
 
 const scrapePage = (): Promise<PageScraperResponse> => {
+  console.log('Scraping started..........')
   return new Promise((resolve, reject) => {
     ;(async () => {
       try {
@@ -126,7 +127,14 @@ const scrapePage = (): Promise<PageScraperResponse> => {
           const updateStatsEndpoint = `${process.env.HOST}/api/update`
           await fs.writeFile(casesFilePath, JSON.stringify(stats)).then(() => {
             if (process.env.APP_ENV === APP_ENV.PROD) {
+              console.log('Uploading cases file..........')
               uploadFile(casesFilePath)
+                .then(() => console.log('Upload done..........'))
+                .catch((error) => {
+                  console.log('Upload complete..........')
+                  console.log('\n')
+                  console.log(error)
+                })
             }
           })
           await axios.post(updateStatsEndpoint, { stats })
@@ -144,6 +152,8 @@ const scrapePage = (): Promise<PageScraperResponse> => {
           console.log(error)
           reject(error)
         }
+      } finally {
+        console.log('Scraping complete..........')
       }
     })()
   })

@@ -57,8 +57,10 @@ self.addEventListener('fetch', (event) => {
 
         const clonedResponse = response.clone()
         caches.open(CACHE_NAME).then((cache) => {
-          const isSocketRequest = event.request.url.includes('socket.io/?')
-          if (event.request.method !== 'POST' && !isSocketRequest) {
+          const { url, method } = event.request
+          const validScheme = url.match(/^https?/)
+          const isSocketRequest = url.includes('socket.io/?')
+          if (validScheme && method !== 'POST' && !isSocketRequest) {
             return cache.put(event.request, clonedResponse)
           }
         })

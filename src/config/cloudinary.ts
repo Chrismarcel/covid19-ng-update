@@ -12,16 +12,19 @@ const CLOUDINARY_OPTIONS: UploadApiOptions = {
   format: 'txt',
   use_filename: true,
   unique_filename: false,
+  invalidate: true,
 }
 
 cloudinary.config(CLOUDINARY_CONFIG)
 
 export const uploadFile = (file: string) => {
-  cloudinary.uploader.upload(file, CLOUDINARY_OPTIONS, (err, result) => {
-    if (err) {
-      return Promise.reject()
-    }
+  return new Promise((resolve, reject) => {
+    cloudinary.uploader.upload(file, CLOUDINARY_OPTIONS, (error, result) => {
+      if (error) {
+        reject(error)
+      }
 
-    return Promise.resolve(result)
+      resolve(result)
+    })
   })
 }
