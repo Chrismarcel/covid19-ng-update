@@ -13,7 +13,7 @@
     "build:client": "parcel build --no-content-hash src/**/*.html -d dist/client",
     "build:server": "parcel build src/server/app.ts -d dist/server --target node",
     "build": "rimraf dist .cache && yarn build:server && yarn build:client",
-    "start:dev": "nodemon dist/server/app",
+    "start:dev": "concurrently \"yarn watch:client\" \"yarn watch:server\" \"nodemon dist/server/app\"",
     "start:prod": "node dist/server/app",
     "prepare": "husky install"
   },
@@ -38,6 +38,7 @@
     "cheerio": "^1.0.0-rc.3",
     "cloudinary": "^1.26.2",
     "compression": "^1.7.4",
+    "concurrently": "^6.2.0",
     "dotenv": "^10.0.0",
     "eslint": "^7.29.0",
     "eslint-config-prettier": "^8.3.0",
