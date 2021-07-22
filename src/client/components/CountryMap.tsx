@@ -10,16 +10,14 @@ import {
 import ReactTooltip from 'react-tooltip'
 import MapLegends from './MapLegends'
 import mapOfNigeria from '../map/map-of-nigeria.json'
-import { DataKey } from '../../constants'
+import { DataKey, FCT } from '../../constants'
 import CasesDropdown from './CasesDropdown'
 import { StateStats } from '~/server/scraper'
-
-const FCT = 'Federal Capital Territory'
 
 const CountryMap = ({ stats }: { stats: StateStats[] }) => {
   const [stateIdx, setStateIdx] = useState(-1)
   const [dataKey, setDataKey] = useState(DataKey.CONFIRMED_CASES)
-  const data = stats[stateIdx]
+  const stat = stats[stateIdx]
 
   return (
     <section className="map-container panel">
@@ -40,7 +38,7 @@ const CountryMap = ({ stats }: { stats: StateStats[] }) => {
               const { properties } = geo
               const { name } = properties
 
-              const stateName = name === FCT ? 'fct' : slugifyStr(name)
+              const stateName = name === FCT.FULL_NAME ? FCT.ABBR : slugifyStr(name)
               const idx = stats.findIndex((stat) => stat.state === stateName) || 0
               const numCases = stats[idx][dataKey] as number
 
@@ -61,14 +59,16 @@ const CountryMap = ({ stats }: { stats: StateStats[] }) => {
         </Geographies>
       </ComposableMap>
       <MapLegends />
-      {data && (
+      {stat && (
         <ReactTooltip place="bottom">
-          <p>{data.state === 'fct' ? FCT : toSentenceCase(reverseSlug(data.state))}</p>
+          <p>
+            {stat.state === FCT.FULL_NAME ? FCT.FULL_NAME : toSentenceCase(reverseSlug(stat.state))}
+          </p>
           <br />
-          <p>Confirmed: {formatNumber(data[DataKey.CONFIRMED_CASES])}</p>
-          <p>Active: {formatNumber(data[DataKey.ACTIVE_CASES])}</p>
-          <p>Discharged: {formatNumber(data[DataKey.DISCHARGED])}</p>
-          <p>Deaths: {formatNumber(data[DataKey.DEATHS])}</p>
+          <p>Confirmed: {formatNumber(stat[DataKey.CONFIRMED_CASES])}</p>
+          <p>Active: {formatNumber(stat[DataKey.ACTIVE_CASES])}</p>
+          <p>Discharged: {formatNumber(stat[DataKey.DISCHARGED])}</p>
+          <p>Deaths: {formatNumber(stat[DataKey.DEATHS])}</p>
         </ReactTooltip>
       )}
     </section>

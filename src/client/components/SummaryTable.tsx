@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { reverseSlug, formatNumber } from '../../utils'
 import SearchInput from './SearchInput'
 import { ChevronDown, ChevronUp } from 'react-feather'
-import { DataKey } from '../../constants'
+import { DataKey, FCT } from '../../constants'
 import { StateStats } from '~/server/scraper'
 
 interface TableHeadData {
@@ -30,9 +30,10 @@ const ChevronIcon = ({ ascending, ...iconProps }: ChevronIconProps) => {
 }
 
 const TableRow = ({ stat }: { stat: StateStats }) => {
+  const capitalizedAbbr = FCT.ABBR.toLowerCase().split('').join('.')
   return (
     <tr>
-      <td>{stat.state !== 'fct' ? reverseSlug(stat.state) : 'F.C.T'}</td>
+      <td>{stat.state !== FCT.ABBR ? reverseSlug(stat.state) : capitalizedAbbr}</td>
       <td>{formatNumber(stat[DataKey.CONFIRMED_CASES])}</td>
       <td>{formatNumber(stat[DataKey.ACTIVE_CASES])}</td>
       <td>{formatNumber(stat[DataKey.DISCHARGED])}</td>

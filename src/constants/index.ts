@@ -42,3 +42,8 @@ export enum APP_ENV {
   DEV = 'development',
   PROD = 'production',
 }
+
+export enum FCT {
+  ABBR = 'fct',
+  FULL_NAME = 'Federal Capital Territory',
+}

@@ -13,7 +13,7 @@ import {
   Legend,
 } from 'recharts'
 import { generatePieChartsData, reverseSlug, toSentenceCase } from '../../utils'
-import { DataKey } from '../../constants'
+import { DataKey, FCT } from '../../constants'
 import { ColorSchemeContext } from '../context'
 import CasesDropdown from './CasesDropdown'
 import { StatsData } from '../../server/scraper'
@@ -25,7 +25,8 @@ interface LineChartStats {
 const mergeStatsWithState = (stats: StatsData) => {
   const mergedData: LineChartStats[] = []
   stats.states.forEach((data) => {
-    const stateName = data.state !== 'fct' ? reverseSlug(data.state) : 'F.C.T'
+    const capitalizedAbbr = FCT.ABBR.toLowerCase().split('').join('.')
+    const stateName = data.state !== FCT.ABBR ? reverseSlug(data.state) : capitalizedAbbr
     mergedData.push({
       state: toSentenceCase(stateName),
       'Confirmed cases': data[DataKey.CONFIRMED_CASES],
