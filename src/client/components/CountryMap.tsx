@@ -20,7 +20,6 @@ const CountryMap = ({ stats }: { stats: StateStats[] }) => {
   const [stateIdx, setStateIdx] = useState(-1)
   const [dataKey, setDataKey] = useState(DataKey.CONFIRMED_CASES)
   const data = stats[stateIdx]
-  const stateName = data?.state
 
   return (
     <section className="map-container panel">
@@ -62,14 +61,14 @@ const CountryMap = ({ stats }: { stats: StateStats[] }) => {
         </Geographies>
       </ComposableMap>
       <MapLegends />
-      {stateName && (
+      {data && (
         <ReactTooltip place="bottom">
-          <p>{stateName === 'fct' ? FCT : toSentenceCase(reverseSlug(stateName))}</p>
+          <p>{data.state === 'fct' ? FCT : toSentenceCase(reverseSlug(data.state))}</p>
           <br />
-          <p>Confirmed: {formatNumber(stats[stateIdx][DataKey.CONFIRMED_CASES])}</p>
-          <p>Active: {formatNumber(stats[stateIdx][DataKey.ACTIVE_CASES])}</p>
-          <p>Discharged: {formatNumber(stats[stateIdx][DataKey.DISCHARGED])}</p>
-          <p>Deaths: {formatNumber(stats[stateIdx][DataKey.DEATHS])}</p>
+          <p>Confirmed: {formatNumber(data[DataKey.CONFIRMED_CASES])}</p>
+          <p>Active: {formatNumber(data[DataKey.ACTIVE_CASES])}</p>
+          <p>Discharged: {formatNumber(data[DataKey.DISCHARGED])}</p>
+          <p>Deaths: {formatNumber(data[DataKey.DEATHS])}</p>
         </ReactTooltip>
       )}
     </section>
