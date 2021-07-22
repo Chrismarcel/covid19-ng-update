@@ -129,9 +129,9 @@ const scrapePage = (): Promise<PageScraperResponse> => {
             if (process.env.APP_ENV === APP_ENV.PROD) {
               console.log('Uploading cases file..........')
               uploadFile(casesFilePath)
-                .then(() => console.log('Upload done..........'))
+                .then(() => console.log('Upload complete..........'))
                 .catch((error) => {
-                  console.log('Upload complete..........')
+                  console.log('Upload failed..........')
                   console.log('\n')
                   console.log(error)
                 })
