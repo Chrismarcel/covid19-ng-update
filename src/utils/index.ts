@@ -1,5 +1,6 @@
 import { StateStats } from '../server/scraper'
 import { COLOR_BANDS, ColorBandsMap, CasesRange, DataKey } from '../constants'
+import firebase from 'firebase/app'
 
 export const generateChloropheth = (numCases: number): string => {
   // #E45E2F - Base Color used to generate other shades via https://coolors.co
@@ -97,7 +98,8 @@ export const generatePieChartsData = ({
 }
 
 export const deviceSupportsNotification = () => {
+  const firebaseSupported = firebase.messaging.isSupported()
   const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent)
   const notificationAllowed = 'Notification' in window && Notification.permission !== 'denied'
-  return !isSafari && notificationAllowed
+  return firebaseSupported && !isSafari && notificationAllowed
 }
