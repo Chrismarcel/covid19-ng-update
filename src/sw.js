@@ -64,11 +64,8 @@ self.addEventListener('fetch', (event) => {
 
         return response
       })
-      .catch(async () => {
-        const response = await caches.match(event.request)
-        if (response) {
-          return response
-        }
+      .catch(() => {
+        return caches.match(event.request)
       })
   )
 })
