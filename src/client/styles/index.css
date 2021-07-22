@@ -300,7 +300,7 @@ input.input {
 }
 
 .chart-wrapper {
-  padding: 40px 30px;
+  padding: 40px 15px;
   margin-bottom: 45px;
   max-height: 480px;
 }
@@ -383,7 +383,7 @@ input.input {
 .panel.summary-table {
   flex-basis: 100%;
   width: 100%;
-  padding: 15px;
+  padding: 15px 0;
 }
 
 .panel.summary-table .scrollable-container {
@@ -427,7 +427,7 @@ input.input {
 .summary-table thead tr,
 .summary-table tbody tr {
   display: flex;
-  padding: 15px 25px 15px 40px;
+  padding: 15px 20px;
   justify-content: space-between;
 }
 
@@ -503,13 +503,13 @@ input.input {
 
 .map-legends-wrapper {
   position: relative;
-  padding: 10px;
   margin-top: 30px;
   bottom: 20px;
   display: flex;
   flex-wrap: wrap;
   right: 0;
   width: auto;
+  justify-content: center;
 }
 
 .map-legend {
@@ -589,9 +589,13 @@ input.input {
   }
 }
 
-@media screen and (max-width: 500px) {
+@media screen and (max-width: 1200px) {
   .input {
     width: 100%;
+  }
+
+  .search-container {
+    padding: 0 20px;
   }
 
   .search-field-wrapper {
@@ -638,6 +642,10 @@ input.input {
     width: 90%;
     margin: 0 auto;
     padding: 10px 18px;
+  }
+
+  .chart-wrapper {
+    padding: 40px 30px;
   }
 }
 
@@ -720,11 +728,17 @@ input.input {
   }
 }
 
+@media screen and (min-width: 1200px) {
+  .summary-table thead tr,
+  .summary-table tbody tr {
+    padding: 15px 25px 15px 40px;
+  }
+}
+
 @media screen and (min-width: 1281px) {
   .map-legends-wrapper {
     width: auto;
     bottom: 70px;
-    justify-content: center;
   }
 }
 
